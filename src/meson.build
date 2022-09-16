@@ -66,15 +66,16 @@ libstartool = library('startool',
 	startool_dat_sources,
 	startool_tileset_sources,
 	include_directories : config_incdir,
-	dependencies : [casc_dep, storm_dep, zlib_dep, png_dep, imagemagickpp_dep, log4cxx_dep, bzip2_dep],
-	link_with : [libsauwetter],
+	dependencies : [casc_dep, storm_dep, zlib_dep, png_dep, imagemagickpp_dep, log4cxx_dep, bzip2_dep, libsauwetter_dep],
 	install : true)
+	
+libstartool_dep = declare_dependency(include_directories : [config_incdir, inc],
+  link_with : libstartool)
 
 executable('startool',
 	startool_sources,
 	include_directories : config_incdir,
-	dependencies : [log4cxx_dep],
-	link_with : [libsauwetter, libstartool],
+	dependencies : [log4cxx_dep, libsauwetter_dep, libstartool_dep],
 	install : true)
 
 executable('stargus',

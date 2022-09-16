@@ -6,7 +6,7 @@
 
 // project
 #include "dat/DataHub.h"
-#include "dat/CSVExporter.h"
+#include "CSVExporter.h"
 #include "sauwetter/Breeze.h"
 #include "sauwetter/FileUtil.h"
 #include "sauwetter/Logger.h"
@@ -167,7 +167,7 @@ int main(int argc, const char **argv)
   shared_ptr<Breeze> storm = make_shared<Breeze>(dat_files_directory);
   dat::DataHub datahub(storm);
 
-  dat::CSVExporter csvexporter(datahub);
+  CSVExporter csvexporter(datahub);
 
   csvexporter.print();
 

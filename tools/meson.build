@@ -10,3 +10,4 @@ executable('iscript',
 executable('json_transition', 
 	json_transition_sources,
 	install : false)
+	

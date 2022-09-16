@@ -5,7 +5,7 @@ startool_dat_sources = files(
 	'Sprite.cpp',
 	'Image.cpp',
 	'Tbl.cpp',
-	'CSVExporter.cpp',
+	#'CSVExporter.cpp',
 	'UnitsConverter.cpp',
 	'PortraitsConverter.cpp',
 	'ImagesConverter.cpp',

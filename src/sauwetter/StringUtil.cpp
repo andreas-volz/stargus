@@ -84,6 +84,16 @@ std::string to_lower(std::string line)
   return line;
 }
 
+std::string to_upper(std::string line)
+{
+  std::for_each(line.begin(), line.end(), [](char & c)
+  {
+      c = ::toupper(c);
+  });
+
+  return line;
+}
+
 // TODO: check if this helps to detect encoding https://github.com/freedesktop/uchardet
 char *iconvISO2UTF8(char *iso)
 {
