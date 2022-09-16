@@ -6,9 +6,9 @@
 
 // project
 #include "UIConsole.h"
-#include "Logger.h"
-#include "Hurricane.h"
-#include "platform.h"
+#include "sauwetter/Logger.h"
+#include "sauwetter/Hurricane.h"
+#include "sauwetter/platform.h"
 
 using namespace std;
 

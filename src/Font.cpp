@@ -9,11 +9,11 @@
 #include <PngExporter.h>
 #include "Font.h"
 #include "endian.h"
-#include "FileUtil.h"
-#include "Storm.h"
+#include "sauwetter/FileUtil.h"
+#include "sauwetter/Storm.h"
 #include "Preferences.h"
-#include "StringUtil.h"
-#include "Logger.h"
+#include "sauwetter/StringUtil.h"
+#include "sauwetter/Logger.h"
 
 // C
 #include <stdlib.h>

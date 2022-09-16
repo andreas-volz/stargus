@@ -5,10 +5,10 @@
  */
 
 // Local
-#include "Hurricane.h"
-#include "StringUtil.h"
+#include "sauwetter/Hurricane.h"
+#include "sauwetter/StringUtil.h"
 #include "Tbl.h"
-#include "Logger.h"
+#include "sauwetter/Logger.h"
 
 // System
 #include <iostream>

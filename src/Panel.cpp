@@ -6,7 +6,7 @@
 
 // Local
 #include "Panel.h"
-#include "FileUtil.h"
+#include "sauwetter/FileUtil.h"
 #include "Preferences.h"
 
 // System

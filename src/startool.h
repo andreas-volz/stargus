@@ -66,7 +66,7 @@ const char NameLine[] =
 #include <ctype.h>
 #include <png.h>
 
-#include "Storm.h"
+#include "sauwetter/Storm.h"
 
 #ifndef __GNUC__
 	#define __attribute__(args)  // Does nothing for non GNU CC

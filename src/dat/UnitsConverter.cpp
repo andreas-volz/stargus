@@ -7,9 +7,9 @@
 // project
 #include "UnitsConverter.h"
 #include "Preferences.h"
-#include "FileUtil.h"
-#include "Logger.h"
-#include "StringUtil.h"
+#include "sauwetter/FileUtil.h"
+#include "sauwetter/Logger.h"
+#include "sauwetter/StringUtil.h"
 #include "Grp.h"
 #include "luagen.h"
 #include "DataHub.h"

@@ -5,7 +5,7 @@
  */
 
 #include "Flingy.h"
-#include "Logger.h"
+#include "sauwetter/Logger.h"
 
 using namespace std;
 

@@ -5,9 +5,9 @@
  */
 
 #include "Portrait.h"
-#include "Logger.h"
-#include "StringUtil.h"
-#include "platform.h"
+#include "sauwetter/Logger.h"
+#include "sauwetter/StringUtil.h"
+#include "sauwetter/platform.h"
 
 using namespace std;
 

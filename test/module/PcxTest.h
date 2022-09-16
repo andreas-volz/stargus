@@ -11,7 +11,7 @@
 
 // project
 #include "Pcx.h"
-#include "Breeze.h"
+#include "sauwetter/Breeze.h"
 #include "TestHelpers.h"
 
 class PcxTest : public CPPUNIT_NS::TestFixture

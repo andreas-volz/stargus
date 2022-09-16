@@ -5,15 +5,15 @@
  */
 
 // Local
-#include "Logger.h"
+#include "sauwetter/Logger.h"
 #include "luagen.h"
 #include "DataHub.h"
-#include "StringUtil.h"
+#include "sauwetter/StringUtil.h"
 #include "Grp.h"
 #include "Unit.h"
 #include "Preferences.h"
-#include "FileUtil.h"
-#include "Hurricane.h"
+#include "sauwetter/FileUtil.h"
+#include "sauwetter/Hurricane.h"
 
 // System
 #include <iostream>

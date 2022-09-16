@@ -8,7 +8,7 @@
 #define PALETTE_H
 
 // project
-#include "DataChunk.h"
+#include "sauwetter/DataChunk.h"
 #include "Color.h"
 #include "Converter.h"
 

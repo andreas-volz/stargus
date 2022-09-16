@@ -9,7 +9,7 @@
 #include <cstdio>
 
 // project
-#include "DataChunk.h"
+#include "sauwetter/DataChunk.h"
 
 class DataChunkTest : public CPPUNIT_NS::TestFixture
 {

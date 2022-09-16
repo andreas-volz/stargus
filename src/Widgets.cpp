@@ -7,9 +7,9 @@
 #include <Palette.h>
 #include <PngExporter.h>
 #include "Widgets.h"
-#include "Storm.h"
+#include "sauwetter/Storm.h"
 #include "Preferences.h"
-#include "FileUtil.h"
+#include "sauwetter/FileUtil.h"
 
 Widgets::Widgets(std::shared_ptr<Hurricane> hurricane) :
   Grp(hurricane)

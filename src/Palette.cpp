@@ -5,7 +5,7 @@
  */
 
 #include <Palette.h>
-#include "Logger.h"
+#include "sauwetter/Logger.h"
 
 // C++
 #include <iostream>

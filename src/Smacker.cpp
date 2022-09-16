@@ -6,10 +6,10 @@
 
 // Local
 #include <Smacker.h>
-#include "Hurricane.h"
-#include "FileUtil.h"
-#include "platform.h"
-#include "Logger.h"
+#include "sauwetter/Hurricane.h"
+#include "sauwetter/FileUtil.h"
+#include "sauwetter/platform.h"
+#include "sauwetter/Logger.h"
 
 // System
 #include <iostream>

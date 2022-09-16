@@ -9,7 +9,7 @@
 #include "PaletteImage.h"
 #include "PngExporter.h"
 #include "MegaTile.h"
-#include "FileUtil.h"
+#include "sauwetter/FileUtil.h"
 #include "luagen.h"
 #include "Preferences.h"
 

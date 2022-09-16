@@ -5,7 +5,7 @@
  */
 
 #include "TiledPaletteImage.h"
-#include "Logger.h"
+#include "sauwetter/Logger.h"
 
 namespace tileset
 {

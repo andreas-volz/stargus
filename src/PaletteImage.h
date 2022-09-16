@@ -8,7 +8,7 @@
 #define PALETTEIMAGE_H
 
 // Project
-#include "DataChunk.h"
+#include "sauwetter/DataChunk.h"
 #include "Size.h"
 #include "Pos.h"
 

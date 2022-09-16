@@ -9,9 +9,9 @@
 #include "Chk.h"
 #include "WorldMap.h"
 #include "endian.h"
-#include "Hurricane.h"
-#include "FileUtil.h"
-#include "Logger.h"
+#include "sauwetter/Hurricane.h"
+#include "sauwetter/FileUtil.h"
+#include "sauwetter/Logger.h"
 
 // system
 #include <cstring>

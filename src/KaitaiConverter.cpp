@@ -6,8 +6,8 @@
 
 // project
 #include "KaitaiConverter.h"
-#include "DataChunk.h"
-#include "Hurricane.h"
+#include "sauwetter/DataChunk.h"
+#include "sauwetter/Hurricane.h"
 
 using namespace std;
 

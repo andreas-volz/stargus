@@ -31,11 +31,11 @@
 // Lcoal
 #include "Scm.h"
 #include "Chk.h"
-#include "Hurricane.h"
+#include "sauwetter/Hurricane.h"
 #include "endian.h"
-#include "FileUtil.h"
-#include "Storm.h"
-#include "platform.h"
+#include "sauwetter/FileUtil.h"
+#include "sauwetter/Storm.h"
+#include "sauwetter/platform.h"
 
 // System
 #include <stdio.h>

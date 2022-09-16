@@ -8,11 +8,11 @@
 #include "SfxConverter.h"
 #include "Storage.h"
 #include "Preferences.h"
-#include "FileUtil.h"
+#include "sauwetter/FileUtil.h"
 #include "Sfx.h"
 #include "Wav.h"
-#include "Logger.h"
-#include "StringUtil.h"
+#include "sauwetter/Logger.h"
+#include "sauwetter/StringUtil.h"
 
 // system
 #include <iostream>

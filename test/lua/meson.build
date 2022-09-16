@@ -10,7 +10,7 @@ executable('LuaTest',
 			LuaTest_sources,
 			include_directories : [LuaTest_incdir, config_incdir],
 			dependencies : [log4cxx_dep],
-			link_with : libstartool,
+			link_with : [libsauwetter, libstartool],
 			install : false)
 
 

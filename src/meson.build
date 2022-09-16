@@ -1,4 +1,3 @@
-
 subdir('kaitai')
 subdir('dat')
 subdir('tileset')
@@ -8,8 +7,8 @@ startool_sources = files(
 )
 
 startool_lib_sources = files(
-	'Casc.cpp',
-	'FileUtil.cpp',
+	#'Casc.cpp',
+	#'FileUtil.cpp',
 	'Palette.cpp',
 	'PngExporter.cpp',
 	'Chk.cpp',
@@ -18,14 +17,14 @@ startool_lib_sources = files(
 	'Panel.cpp',
 	'Preferences.cpp',
 	'Widgets.cpp',
-	'DataChunk.cpp',
-	'Hurricane.cpp',
+	#'DataChunk.cpp',
+	#'Hurricane.cpp',
 	'Pcx.cpp',
 	'Scm.cpp',
-	'Storm.cpp',
+	#'Storm.cpp',
 	'WorldMap.cpp',
 	'Dds.cpp',
-	'Breeze.cpp',
+	#'Breeze.cpp',
 	'Smacker.cpp',
 	'Converter.cpp',
 	'KaitaiConverter.cpp',
@@ -34,9 +33,9 @@ startool_lib_sources = files(
 	'Color.cpp',
 	'Wav.cpp',
 	'Palette2D.cpp',
-	'StringUtil.cpp',
+	#'StringUtil.cpp',
 	'luagen.cpp',
-	'platform.cpp',
+	#'platform.cpp',
 	'UIConsole.cpp',
 	'pacman.cpp',
 	'FileNotFoundException.cpp'
@@ -59,6 +58,8 @@ message('Using stratagus: ' + stratagus_bin)
 
 stargus_sources = files('stargus.cpp')
 
+subdir('sauwetter')
+
 libstartool = library('startool',
 	startool_lib_sources,
 	startool_kaitai_sources,
@@ -66,13 +67,14 @@ libstartool = library('startool',
 	startool_tileset_sources,
 	include_directories : config_incdir,
 	dependencies : [casc_dep, storm_dep, zlib_dep, png_dep, imagemagickpp_dep, log4cxx_dep, bzip2_dep],
+	link_with : [libsauwetter],
 	install : true)
 
 executable('startool',
 	startool_sources,
 	include_directories : config_incdir,
 	dependencies : [log4cxx_dep],
-	link_with : libstartool,
+	link_with : [libsauwetter, libstartool],
 	install : true)
 
 executable('stargus',

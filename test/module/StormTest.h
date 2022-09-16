@@ -10,8 +10,8 @@
 
 
 // project
-#include "Storm.h"
-#include "StringUtil.h"
+#include "sauwetter/Storm.h"
+#include "sauwetter/StringUtil.h"
 
 class StormTest : public CPPUNIT_NS::TestFixture
 {

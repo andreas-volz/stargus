@@ -9,12 +9,12 @@ StartoolUnitTest_sources = files(
   'BreezeTest.cpp',
   'PcxTest.cpp',
   'TiledPaletteImageTest.cpp',
-  'luagenTest.cpp',
+  'luagenTest.cpp'
   )
 
 executable('StartoolUnitTest',
 			StartoolUnitTest_sources,
 			include_directories : [StartoolUnitTest_incdir, config_incdir],
 			dependencies : [cppunit_dep, zlib_dep, log4cxx_dep],
-			link_with : libstartool,
+			link_with : [libsauwetter, libstartool],
 			install : false)

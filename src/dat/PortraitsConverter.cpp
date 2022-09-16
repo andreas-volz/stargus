@@ -8,12 +8,12 @@
 #include "PortraitsConverter.h"
 #include "Portrait.h"
 #include "Smacker.h"
-#include "StringUtil.h"
+#include "sauwetter/StringUtil.h"
 #include "Preferences.h"
-#include "FileUtil.h"
-#include "platform.h"
+#include "sauwetter/FileUtil.h"
+#include "sauwetter/platform.h"
 #include "luagen.h"
-#include "Logger.h"
+#include "sauwetter/Logger.h"
 
 // system
 #include <iostream>

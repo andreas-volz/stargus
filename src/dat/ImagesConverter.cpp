@@ -6,13 +6,13 @@
 
 // project
 #include "ImagesConverter.h"
-#include "Logger.h"
+#include "sauwetter/Logger.h"
 #include "Preferences.h"
 #include "Storage.h"
 #include "luagen.h"
-#include "FileUtil.h"
+#include "sauwetter/FileUtil.h"
 #include "Image.h"
-#include "StringUtil.h"
+#include "sauwetter/StringUtil.h"
 #include "Grp.h"
 
 // system

@@ -7,7 +7,7 @@
 #include "tileset/TiledPaletteImage.h"
 #include "PngExporter.h"
 #include "TestHelpers.h"
-#include "platform.h"
+#include "sauwetter/platform.h"
 
 
 // System

@@ -7,7 +7,7 @@
 
 // Project
 #include "StormTest.h"
-#include "platform.h"
+#include "sauwetter/platform.h"
 
 using namespace std;
 

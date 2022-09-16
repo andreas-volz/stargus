@@ -8,9 +8,9 @@
 #include <PngExporter.h>
 #include "endian.h"
 #include "Pcx.h"
-#include "Storm.h"
-#include "Hurricane.h"
-#include "Logger.h"
+#include "sauwetter/Storm.h"
+#include "sauwetter/Hurricane.h"
+#include "sauwetter/Logger.h"
 
 // System
 #include <stdlib.h>

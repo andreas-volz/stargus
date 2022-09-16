@@ -7,9 +7,9 @@
 // project
 #include "dat/DataHub.h"
 #include "dat/CSVExporter.h"
-#include "Breeze.h"
-#include "FileUtil.h"
-#include "Logger.h"
+#include "sauwetter/Breeze.h"
+#include "sauwetter/FileUtil.h"
+#include "sauwetter/Logger.h"
 
 // as this is 3rd party code I don't fix it ->
 #ifndef _MSC_VER

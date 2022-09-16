@@ -8,8 +8,8 @@
 
 // Local
 #include "Dds.h"
-#include "Hurricane.h"
-#include "FileUtil.h"
+#include "sauwetter/Hurricane.h"
+#include "sauwetter/FileUtil.h"
 #include "Preferences.h"
 
 // System

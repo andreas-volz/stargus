@@ -9,7 +9,7 @@
 #include <cstdio>
 
 // project
-#include "Breeze.h"
+#include "sauwetter/Breeze.h"
 
 class BreezeTest : public CPPUNIT_NS::TestFixture
 {

@@ -6,10 +6,10 @@
 
 // project
 #include "Wav.h"
-#include "Hurricane.h"
-#include "platform.h"
-#include "Logger.h"
-#include "FileUtil.h"
+#include "sauwetter/Hurricane.h"
+#include "sauwetter/platform.h"
+#include "sauwetter/Logger.h"
+#include "sauwetter/FileUtil.h"
 
 // system
 

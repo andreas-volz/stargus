@@ -8,7 +8,7 @@
 #include "MegaTile.h"
 #include "kaitai/tileset_vr4.h"
 #include "kaitai/tileset_vx4.h"
-#include "Logger.h"
+#include "sauwetter/Logger.h"
 
 // system
 #include <string>
