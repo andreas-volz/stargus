@@ -26,6 +26,7 @@ public:
   json export_upgrades_dat();
   json export_techdata_dat();
   json export_mapdata_dat();
+  json export_iscript_bin();
 
   json export_file_tbl(std::vector<dat::TblEntry> &tblentry_vec);
 

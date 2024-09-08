@@ -36,7 +36,7 @@ json SCJsonExporter::export_unit_dat()
 
   json j;
 
-  j["flingy"] = json(*units->flingy());
+  j["graphics"] = json(*units->flingy());
 
   j["subunit1"] = json(*units->subunit1());
 

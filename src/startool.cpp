@@ -427,7 +427,7 @@ void testHook()
   dat::Unit unit(datahub, 0, "test");
   cout << "unit: " << unit.name_tbl().name1() << endl;
 
-  dat::IScript is = unit.flingy_obj().sprite_obj().image_obj().iscript_obj();
+  dat::IScript is = unit.graphics_obj().sprite_obj().image_obj().iscript_obj();
 
   int animation_count = is.getAnimationCount();
 
@@ -438,7 +438,7 @@ void testHook()
   {
     cout << "animation: " << i << endl;
     std::vector<iscript_bin_t::opcode_type_t*> opcode_vec =
-        unit.flingy_obj().sprite_obj().image_obj().iscript_obj().getAnimationScript(i);
+        unit.graphics_obj().sprite_obj().image_obj().iscript_obj().getAnimationScript(i);
 
     for(auto opcode : opcode_vec)
     {

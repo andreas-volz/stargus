@@ -27,8 +27,8 @@ public:
 
   TblEntry name_tbl();
 
-  uint8_t flingy();
-  Flingy flingy_obj();
+  uint8_t graphics();
+  Flingy graphics_obj();
 
   uint16_t subunit1();
   Unit subunit1_obj();

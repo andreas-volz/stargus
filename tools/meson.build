@@ -1,11 +1,11 @@
 
-iscript_sources = files('iscript.c')
+#iscript_sources = files('iscript.c')
 
 json_transition_sources = files('json_transition.cpp')
 
-executable('iscript', 
-	iscript_sources,
-	install : false)
+#executable('iscript', 
+#	iscript_sources,
+#	install : false)
 	
 executable('json_transition', 
 	json_transition_sources,

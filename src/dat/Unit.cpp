@@ -43,16 +43,16 @@ TblEntry Unit::name_tbl()
   return mDatahub.stat_txt_tbl_vec.at(mId);
 }
 
-uint8_t Unit::flingy()
+uint8_t Unit::graphics()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
   return mDatahub.units->flingy()->at(mId);
 }
 
-Flingy Unit::flingy_obj()
+Flingy Unit::graphics_obj()
 {
   LOG4CXX_TRACE(logger,  to_string(mId) + "=>" + LOG_CUR_FUNC + "()");
-  return Flingy(mDatahub, flingy());
+  return Flingy(mDatahub, graphics());
 }
 
 uint16_t Unit::subunit1()

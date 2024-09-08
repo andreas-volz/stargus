@@ -985,8 +985,8 @@ void to_json(json &j, Unit u)
   j["id"] = json(u.id());
   j["id_string"] = json(u.getIDString());
   j["name_tbl"] = json(u.name_tbl());
-  j["flingy"] = json(u.flingy());
-  j["flingy_obj"] = json(u.flingy_obj());
+  j["graphics"] = json(u.graphics());
+  j["graphics_obj"] = json(u.graphics_obj());
   j["subunit1"] = json(u.subunit1());
 
   try

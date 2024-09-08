@@ -89,7 +89,7 @@ bool UnitsConverter::convert(json &unitsJson)
     {
       Unit unit(mDatahub, unit_id, unit_name);
 
-      string grp_arcfile =  "unit\\" + unit.flingy_obj().sprite_obj().image_obj().grp_tbl().name1();
+      string grp_arcfile =  "unit\\" + unit.graphics_obj().sprite_obj().image_obj().grp_tbl().name1();
 
       // for the LUA reference it's enough to use the idle name as we save only one LUA for idle+talking portrait
       string unit_portraits;
@@ -169,7 +169,7 @@ bool UnitsConverter::convert(json &unitsJson)
 
       // generate images and other properties Lua -->
 
-      string image_id = unit.flingy_obj().sprite_obj().image_obj().getIDString();
+      string image_id = unit.graphics_obj().sprite_obj().image_obj().getIDString();
       string image_lua = image_id;
       string unit_image = lg::assign("Image", image_lua);
 

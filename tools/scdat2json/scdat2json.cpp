@@ -24,6 +24,7 @@
 #include <iostream>
 #include <nlohmann/json.hpp>
 #include <fstream>
+#include <bits/stdc++.h>
 
 using namespace std;
 using namespace dat;
@@ -229,7 +230,6 @@ int main(int argc, const char **argv)
 #endif // HAVE_LOG4CXX
 
   parseOptions(argc, argv);
-  CheckPath(destination_directory);
 
   bool archive_exists = FileExists(archive);
   if(!archive_exists)
@@ -273,7 +273,10 @@ int main(int argc, const char **argv)
   dat::DataHub datahub(hurricane);
 
   Storage jsonStorage;
-  jsonStorage.setDataPath(destination_directory);
+  string unit_directory = destination_directory + "/units/";
+  CheckPath(unit_directory);
+  jsonStorage.setDataPath(unit_directory);
+
 
   //UnitsJsonExporter unitsjsonexporter(datahub);
   for(auto &array : units_json)
@@ -289,6 +292,33 @@ int main(int argc, const char **argv)
     saveJson(j_unit, jsonStorage(id_string + ".json"), pretty);
   }
 
+  set<uint32_t> iscript_set;
+  for (unsigned int i = 0; i < datahub.images->grp()->size(); i++)
+  {
+    Image image(datahub, i);
+
+    iscript_set.insert(image.iscript());
+  }
+
+  // export all the image iscript files as json
+
+  string iscript_directory = destination_directory + "/iscript/";
+  CheckPath(iscript_directory);
+  jsonStorage.setDataPath(iscript_directory);
+
+  for(auto iscript : iscript_set)
+  {
+    IScript iscript_obj(datahub, iscript);
+    json j_iscript(iscript_obj);
+    string num_string = to_string(iscript);
+    saveJson(j_iscript, jsonStorage("iscript_" + num_string + ".json"), pretty);
+  }
+
+
+
+
+
+
   /*for(unsigned int i = 0; i < datahub.images->grp()->size(); i++)
   {
     Image image(datahub, i);
@@ -297,6 +327,11 @@ int main(int argc, const char **argv)
 
     saveJson(j_image, jsonStorage(image.getIDString() + ".json"), pretty);
   }*/
+
+  //jsonStorage.setDataPath(destination_directory);
+
+  CheckPath(destination_directory);
+  jsonStorage.setDataPath(destination_directory);
 
   SCJsonExporter scjsonexporter(datahub);
 
