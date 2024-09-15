@@ -42,6 +42,7 @@ string backend;
 string archive;
 string destination_directory;
 bool pretty = true;
+bool nested_objects = false;
 
 bool CheckCASCDataFolder(const std::string &dir)
 {
@@ -103,7 +104,7 @@ struct Arg: public option::Arg
 
 enum optionIndex
 {
-  UNKNOWN, HELP, BACKEND, PRETTY
+  UNKNOWN, HELP, BACKEND, PRETTY, OBJECTS
 };
 const option::Descriptor usage[] =
 {
@@ -113,6 +114,7 @@ const option::Descriptor usage[] =
   },
   { HELP, 0, "h", "help", option::Arg::None, "  --help, -h  \t\tPrint usage and exit" },
   { PRETTY, 0, "p", "pretty", Arg::Required, "  --pretty=[yes/no], -p  \t\tPretty print the formated JSON file (default: yes)" },
+  { OBJECTS, 0, "o", "objects", Arg::Required, "  --objects=[yes/no], -o  \t\tGenerate nested objects in the data (default: no)" },
   { BACKEND, 0, "b", "backend", Arg::Required, "  --backend, -b  \t\tChoose a backend (Storm=St*arcr*ft1/Br**dwar;Casc=Remastered;Breeze=Folder)" },
   {
     UNKNOWN, 0, "", "", option::Arg::None,
@@ -149,6 +151,18 @@ int parseOptions(int argc, const char **argv)
     else if (string(options[PRETTY].arg) == "no")
     {
       pretty = false;
+    }
+  }
+
+  if ( options[OBJECTS].count() > 0 )
+  {
+    if (string(options[OBJECTS].arg) == "yes")
+    {
+      nested_objects = true;
+    }
+    else if (string(options[OBJECTS].arg) == "no")
+    {
+      nested_objects = false;
     }
   }
 
@@ -271,37 +285,76 @@ int main(int argc, const char **argv)
   }
 
   dat::DataHub datahub(hurricane);
-
   Storage jsonStorage;
+
+  // export all units
   string unit_directory = destination_directory + "/units/";
   CheckPath(unit_directory);
   jsonStorage.setDataPath(unit_directory);
 
-
-  //UnitsJsonExporter unitsjsonexporter(datahub);
+  // TODO: decide to generate from units_json list or every unit available...
   for(auto &array : units_json)
   {
     string id_string = array.at("name");
     int id = array.at("id");
-    //unitsjsonexporter.exportUnit(id, id_string);
 
-    Unit unit(datahub, id, id_string);
+    Unit unit_obj(datahub, id, id_string);
+    unit_obj.set_generate_objects(nested_objects);
 
-    json j_unit(unit);
+    json j_unit(unit_obj);
 
     saveJson(j_unit, jsonStorage(id_string + ".json"), pretty);
   }
 
-  set<uint32_t> iscript_set;
-  for (unsigned int i = 0; i < datahub.images->grp()->size(); i++)
-  {
-    Image image(datahub, i);
+  // export all graphics (flingy)
+  string flingy_directory = destination_directory + "/flingy/";
+  CheckPath(flingy_directory);
+  jsonStorage.setDataPath(flingy_directory);
 
-    iscript_set.insert(image.iscript());
+  for (unsigned int graphics = 0; graphics < datahub.flingy->sprite()->size(); graphics++)
+  {
+    Flingy flingy_obj(datahub, graphics);
+    flingy_obj.set_generate_objects(nested_objects);
+
+    json j_flingy(flingy_obj);
+    string num_string = to_string(graphics);
+    saveJson(j_flingy, jsonStorage("flingy_" + num_string + ".json"), pretty);
   }
 
-  // export all the image iscript files as json
+  // export all sprites
+  string sprite_directory = destination_directory + "/sprites/";
+  CheckPath(sprite_directory);
+  jsonStorage.setDataPath(sprite_directory);
 
+  for (unsigned int sprite = 0; sprite < datahub.sprites->image()->size(); sprite++)
+  {
+    Sprite sprite_obj(datahub, sprite);
+    sprite_obj.set_generate_objects(nested_objects);
+
+    json j_sprite(sprite_obj);
+    string num_string = to_string(sprite);
+    saveJson(j_sprite, jsonStorage("sprite_" + num_string + ".json"), pretty);
+  }
+
+  // export all images
+  string image_directory = destination_directory + "/images/";
+  CheckPath(image_directory);
+  jsonStorage.setDataPath(image_directory);
+
+  set<uint32_t> iscript_set;
+  for (unsigned int image = 0; image < datahub.images->iscript()->size(); image++)
+  {
+    Image image_obj(datahub, image);
+    image_obj.set_generate_objects(nested_objects);
+
+    iscript_set.insert(image_obj.iscript());
+
+    json j_image(image_obj);
+    string num_string = to_string(image);
+    saveJson(j_image, jsonStorage("image_" + num_string + ".json"), pretty);
+  }
+
+  // export all iscript from all generated images. This should be enough to get all used script
   string iscript_directory = destination_directory + "/iscript/";
   CheckPath(iscript_directory);
   jsonStorage.setDataPath(iscript_directory);
@@ -316,19 +369,7 @@ int main(int argc, const char **argv)
 
 
 
-
-
-
-  /*for(unsigned int i = 0; i < datahub.images->grp()->size(); i++)
-  {
-    Image image(datahub, i);
-
-    json j_image(image);
-
-    saveJson(j_image, jsonStorage(image.getIDString() + ".json"), pretty);
-  }*/
-
-  //jsonStorage.setDataPath(destination_directory);
+  // generate raw dat files
 
   CheckPath(destination_directory);
   jsonStorage.setDataPath(destination_directory);

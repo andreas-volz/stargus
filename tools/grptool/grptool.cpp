@@ -12,6 +12,7 @@
 #include "Breeze.h"
 #include "NoValidPaletteException.h"
 #include "Palette2D.h"
+#include "Storage.h"
 
 // system
 #include <iostream>
@@ -32,6 +33,7 @@ bool duplicates = true;
 bool single_stiched = true;
 int image_per_row = 10;
 bool rgba = false;
+string destination_directory;
 
 
 /** option parser **/
@@ -94,7 +96,7 @@ enum optionIndex
 const option::Descriptor usage[] =
 {
   {
-    UNKNOWN, 0, "", "", option::Arg::None, "USAGE: grptool [options] grp-file\n\n"
+    UNKNOWN, 0, "", "", option::Arg::None, "USAGE: grptool [options] grp-file destination-directory\n\n"
     "Options:"
   },
   { HELP, 0, "h", "help", option::Arg::None, "  --help, -h  \t\tPrint usage and exit" },
@@ -106,6 +108,7 @@ const option::Descriptor usage[] =
   {
     UNKNOWN, 0, "", "", option::Arg::None,
     "\ngrp-file \t\tThe GRP file which should be converted.\n"
+    "\ndestination-directory \t\tWhere to save the extracted file with same relative path.\n"
 
   },
   { 0, 0, 0, 0, 0, 0 }
@@ -178,6 +181,10 @@ int parseOptions(int argc, const char **argv)
     case 0:
       grp_file = parse.nonOption(i);
       break;
+    case 1:
+      //cerr << "destination-directory #" << i << ": " << parse.nonOption(i) << "\n";
+      destination_directory = parse.nonOption(i);
+      break;
     default:
       break;
     }
@@ -185,7 +192,14 @@ int parseOptions(int argc, const char **argv)
 
   if (grp_file.empty())
   {
-    cerr << "Error: 'archive' not given!" << endl << endl;
+    cout << "Error: 'archive' not given!" << endl << endl;
+    option::printUsage(std::cout, usage);
+    exit(1);
+  }
+
+  if (destination_directory.empty())
+  {
+    cout << "Error: 'destination_directory' not given!" << endl << endl;
     option::printUsage(std::cout, usage);
     exit(1);
   }
@@ -207,6 +221,10 @@ int main(int argc, const char **argv)
 #endif // HAVE_LOG4CXX
 
   parseOptions(argc, argv);
+
+   Storage pngStorage;
+   CheckPath(destination_directory);
+   pngStorage.setDataPath(destination_directory);
 
   std::shared_ptr<AbstractPalette> myGRPPallete;
   try
@@ -237,11 +255,11 @@ int main(int argc, const char **argv)
     //image_per_row=17 => starcraft
     if(single_stiched)
     {
-      myGRPImage.SaveStitchedPNG("output_frame.png", 0, myGRPImage.getNumberOfFrames(), image_per_row, rgba);
+      myGRPImage.SaveStitchedPNG(pngStorage("output_frame.png"), 0, myGRPImage.getNumberOfFrames(), image_per_row, rgba);
     }
     else
     {
-      myGRPImage.SaveSinglePNG("output_frame%d.png", 0, myGRPImage.getNumberOfFrames(), rgba);
+      myGRPImage.SaveSinglePNG(pngStorage("output_frame%d.png"), 0, myGRPImage.getNumberOfFrames(), rgba);
     }
 
     //myGRPImage.SaveConvertedImage("output_frame_magic.png", 0, myGRPImage.getNumberOfFrames(), single_stiched, image_per_row);

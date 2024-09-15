@@ -255,415 +255,412 @@ void to_json(json &j, iscript_bin_t::opcode_type_t *opcode)
 
   switch (opcode_code_enum)
   {
-  case iscript_bin_t::OPCODE_TURN1CWISE:
-  {
-    j[opcode_code_name] = nullptr;
-    break;
+    case iscript_bin_t::OPCODE_TURN1CWISE:
+    {
+      j[opcode_code_name] = nullptr;
+      break;
+    }
+    case iscript_bin_t::OPCODE_IMGOLORIG:
+    {
+      iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_UNKNOWN_3E:
+    {
+      j[opcode_code_name] = nullptr;
+      break;
+    }
+    case iscript_bin_t::OPCODE_SIGORDER:
+    {
+      iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_ENGFRAME:
+    {
+      iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_TURNCCWISE:
+    {
+      iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_UNKNOWN_2D:
+    {
+      j[opcode_code_name] = nullptr;
+      break;
+    }
+    case iscript_bin_t::OPCODE_END:
+    {
+      j[opcode_code_name] = nullptr;
+      break;
+    }
+    case iscript_bin_t::OPCODE_PLAYFRAM:
+    {
+      iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_TMPRMGRAPHICSTART:
+    {
+      j[opcode_code_name] = nullptr;
+      break;
+    }
+    case iscript_bin_t::OPCODE_IMGULNEXTID:
+    {
+      iscript_bin_t::pos_type_t *casted_args = static_cast<iscript_bin_t::pos_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_PLAYSNDBTWN:
+    {
+      iscript_bin_t::playsndbtwn_type_t *casted_args = static_cast<iscript_bin_t::playsndbtwn_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_UNKNOWN_0C:
+    {
+      j[opcode_code_name] = nullptr;
+      break;
+    }
+    case iscript_bin_t::OPCODE_ENGSET:
+    {
+      iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_SWITCHUL:
+    {
+      iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_TRGTARCCONDJMP:
+    {
+      iscript_bin_t::trgcondjmp_type_t *casted_args = static_cast<iscript_bin_t::trgcondjmp_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_SETFLIPSTATE:
+    {
+      iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_SETPOS:
+    {
+      iscript_bin_t::pos_type_t *casted_args = static_cast<iscript_bin_t::pos_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_IMGOLUSELO:
+    {
+      iscript_bin_t::imgl_type_t *casted_args = static_cast<iscript_bin_t::imgl_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_LOWSPRUL:
+    {
+      iscript_bin_t::sprl_type_t *casted_args = static_cast<iscript_bin_t::sprl_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_TURNRAND:
+    {
+      iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_DOMISSILEDMG:
+    {
+      j[opcode_code_name] = nullptr;
+      break;
+    }
+    case iscript_bin_t::OPCODE_HIGHSPROL:
+    {
+      iscript_bin_t::sprl_type_t *casted_args = static_cast<iscript_bin_t::sprl_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_SETFLSPEED:
+    {
+      iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_USEWEAPON:
+    {
+      iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_WARPOVERLAY:
+    {
+      iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_GOTOREPEATATTK:
+    {
+      j[opcode_code_name] = nullptr;
+      break;
+    }
+    case iscript_bin_t::OPCODE_UFLUNSTABLE:
+    {
+      iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_ORDERDONE:
+    {
+      iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_TRGTRANGECONDJMP:
+    {
+      iscript_bin_t::trgtrangecondjmp_type_t *casted_args = static_cast<iscript_bin_t::trgtrangecondjmp_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_RETURN:
+    {
+      j[opcode_code_name] = nullptr;
+      break;
+    }
+    case iscript_bin_t::OPCODE_CASTSPELL:
+    {
+      j[opcode_code_name] = nullptr;
+      break;
+    }
+    case iscript_bin_t::OPCODE_FOLLOWMAINGRAPHIC:
+    {
+      j[opcode_code_name] = nullptr;
+      break;
+    }
+    case iscript_bin_t::OPCODE_RANDCONDJMP:
+    {
+      iscript_bin_t::randcondjmp_type_t *casted_args = static_cast<iscript_bin_t::randcondjmp_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_NOBRKCODEEND:
+    {
+      j[opcode_code_name] = nullptr;
+      break;
+    }
+    case iscript_bin_t::OPCODE_CALL:
+    {
+      iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_NOBRKCODESTART:
+    {
+      j[opcode_code_name] = nullptr;
+      break;
+    }
+    case iscript_bin_t::OPCODE_WAIT:
+    {
+      iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_SPROL:
+    {
+      iscript_bin_t::sprl_type_t *casted_args = static_cast<iscript_bin_t::sprl_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_TMPRMGRAPHICEND:
+    {
+      j[opcode_code_name] = nullptr;
+      break;
+    }
+    case iscript_bin_t::OPCODE_CREATEGASOVERLAYS:
+    {
+      iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_SETFLDIRECT:
+    {
+      iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_PWRUPCONDJMP:
+    {
+      iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_SETHORPOS:
+    {
+      iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_SPRULUSELO:
+    {
+      iscript_bin_t::sprl_type_t *casted_args = static_cast<iscript_bin_t::sprl_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_SPRUL:
+    {
+      iscript_bin_t::sprl_type_t *casted_args = static_cast<iscript_bin_t::sprl_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_GRDSPROL:
+    {
+      iscript_bin_t::sprl_type_t *casted_args = static_cast<iscript_bin_t::sprl_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_MOVE:
+    {
+      iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_GOTO:
+    {
+      iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_IMGUL:
+    {
+      iscript_bin_t::imgl_type_t *casted_args = static_cast<iscript_bin_t::imgl_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_PLAYFRAMTILE:
+    {
+      iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_ATTKSHIFTPROJ:
+    {
+      iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_LIFTOFFCONDJMP:
+    {
+      iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_IMGOL:
+    {
+      iscript_bin_t::imgl_type_t *casted_args = static_cast<iscript_bin_t::imgl_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_IMGULUSELO:
+    {
+      iscript_bin_t::imgl_type_t *casted_args = static_cast<iscript_bin_t::imgl_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_ATTACK:
+    {
+      j[opcode_code_name] = nullptr;
+      break;
+    }
+    case iscript_bin_t::OPCODE_ATTACKMELEE:
+    {
+      iscript_bin_t::playsounds_type_t *casted_args = static_cast<iscript_bin_t::playsounds_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_SPROLUSELO:
+    {
+      iscript_bin_t::sprov_type_t *casted_args = static_cast<iscript_bin_t::sprov_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_PLAYSNDRAND:
+    {
+      iscript_bin_t::playsounds_type_t *casted_args = static_cast<iscript_bin_t::playsounds_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_IGNOREREST:
+    {
+      j[opcode_code_name] = nullptr;
+      break;
+    }
+    case iscript_bin_t::OPCODE_PLAYSND:
+    {
+      iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_UNKNOWN_43:
+    {
+      j[opcode_code_name] = nullptr;
+      break;
+    }
+    case iscript_bin_t::OPCODE_SETVERTPOS:
+    {
+      iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_DOGRDDAMAGE:
+    {
+      j[opcode_code_name] = nullptr;
+      break;
+    }
+    case iscript_bin_t::OPCODE_WAITRAND:
+    {
+      iscript_bin_t::waitrand_type_t *casted_args = static_cast<iscript_bin_t::waitrand_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_TURNCWISE:
+    {
+      iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_CURDIRECTCONDJMP:
+    {
+      iscript_bin_t::trgcondjmp_type_t *casted_args = static_cast<iscript_bin_t::trgcondjmp_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_SETSPAWNFRAME:
+    {
+      iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    case iscript_bin_t::OPCODE_ATTACKWITH:
+    {
+      iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
+      j[opcode_code_name] = json(casted_args);
+      break;
+    }
+    default:
+    {
+      j[opcode_code_name] = nullptr;
+      break;
+    }
   }
-  case iscript_bin_t::OPCODE_IMGOLORIG:
-  {
-    iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_UNKNOWN_3E:
-  {
-    j[opcode_code_name] = nullptr;
-    break;
-  }
-  case iscript_bin_t::OPCODE_SIGORDER:
-  {
-    iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_ENGFRAME:
-  {
-    iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_TURNCCWISE:
-  {
-    iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_UNKNOWN_2D:
-  {
-    j[opcode_code_name] = nullptr;
-    break;
-  }
-  case iscript_bin_t::OPCODE_END:
-  {
-    j[opcode_code_name] = nullptr;
-    break;
-  }
-  case iscript_bin_t::OPCODE_PLAYFRAM:
-  {
-    iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_TMPRMGRAPHICSTART:
-  {
-    j[opcode_code_name] = nullptr;
-    break;
-  }
-  case iscript_bin_t::OPCODE_IMGULNEXTID:
-  {
-    iscript_bin_t::pos_type_t *casted_args = static_cast<iscript_bin_t::pos_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_PLAYSNDBTWN:
-  {
-    iscript_bin_t::playsndbtwn_type_t *casted_args = static_cast<iscript_bin_t::playsndbtwn_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_UNKNOWN_0C:
-  {
-    j[opcode_code_name] = nullptr;
-    break;
-  }
-  case iscript_bin_t::OPCODE_ENGSET:
-  {
-    iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_SWITCHUL:
-  {
-    iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_TRGTARCCONDJMP:
-  {
-    iscript_bin_t::trgcondjmp_type_t *casted_args = static_cast<iscript_bin_t::trgcondjmp_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_SETFLIPSTATE:
-  {
-    iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_SETPOS:
-  {
-    iscript_bin_t::pos_type_t *casted_args = static_cast<iscript_bin_t::pos_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_IMGOLUSELO:
-  {
-    iscript_bin_t::imgl_type_t *casted_args = static_cast<iscript_bin_t::imgl_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_LOWSPRUL:
-  {
-    iscript_bin_t::sprl_type_t *casted_args = static_cast<iscript_bin_t::sprl_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_TURNRAND:
-  {
-    iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_DOMISSILEDMG:
-  {
-    j[opcode_code_name] = nullptr;
-    break;
-  }
-  case iscript_bin_t::OPCODE_HIGHSPROL:
-  {
-    iscript_bin_t::sprl_type_t *casted_args = static_cast<iscript_bin_t::sprl_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_SETFLSPEED:
-  {
-    iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_USEWEAPON:
-  {
-    iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_WARPOVERLAY:
-  {
-    iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_GOTOREPEATATTK:
-  {
-    j[opcode_code_name] = nullptr;
-    break;
-  }
-  case iscript_bin_t::OPCODE_UFLUNSTABLE:
-  {
-    iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_ORDERDONE:
-  {
-    iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_TRGTRANGECONDJMP:
-  {
-    iscript_bin_t::trgtrangecondjmp_type_t *casted_args = static_cast<iscript_bin_t::trgtrangecondjmp_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_RETURN:
-  {
-    j[opcode_code_name] = nullptr;
-    break;
-  }
-  case iscript_bin_t::OPCODE_CASTSPELL:
-  {
-    j[opcode_code_name] = nullptr;
-    break;
-  }
-  case iscript_bin_t::OPCODE_FOLLOWMAINGRAPHIC:
-  {
-    j[opcode_code_name] = nullptr;
-    break;
-  }
-  case iscript_bin_t::OPCODE_RANDCONDJMP:
-  {
-    iscript_bin_t::randcondjmp_type_t *casted_args = static_cast<iscript_bin_t::randcondjmp_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_NOBRKCODEEND:
-  {
-    j[opcode_code_name] = nullptr;
-    break;
-  }
-  case iscript_bin_t::OPCODE_CALL:
-  {
-    iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_NOBRKCODESTART:
-  {
-    j[opcode_code_name] = nullptr;
-    break;
-  }
-  case iscript_bin_t::OPCODE_WAIT:
-  {
-    iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_SPROL:
-  {
-    iscript_bin_t::sprl_type_t *casted_args = static_cast<iscript_bin_t::sprl_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_TMPRMGRAPHICEND:
-  {
-    j[opcode_code_name] = nullptr;
-    break;
-  }
-  case iscript_bin_t::OPCODE_CREATEGASOVERLAYS:
-  {
-    iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_SETFLDIRECT:
-  {
-    iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_PWRUPCONDJMP:
-  {
-    iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_SETHORPOS:
-  {
-    iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_SPRULUSELO:
-  {
-    iscript_bin_t::sprl_type_t *casted_args = static_cast<iscript_bin_t::sprl_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_SPRUL:
-  {
-    iscript_bin_t::sprl_type_t *casted_args = static_cast<iscript_bin_t::sprl_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_GRDSPROL:
-  {
-    iscript_bin_t::sprl_type_t *casted_args = static_cast<iscript_bin_t::sprl_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_MOVE:
-  {
-    iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_GOTO:
-  {
-    iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_IMGUL:
-  {
-    iscript_bin_t::imgl_type_t *casted_args = static_cast<iscript_bin_t::imgl_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_PLAYFRAMTILE:
-  {
-    iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_ATTKSHIFTPROJ:
-  {
-    iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_LIFTOFFCONDJMP:
-  {
-    iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_IMGOL:
-  {
-    iscript_bin_t::imgl_type_t *casted_args = static_cast<iscript_bin_t::imgl_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_IMGULUSELO:
-  {
-    iscript_bin_t::imgl_type_t *casted_args = static_cast<iscript_bin_t::imgl_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_ATTACK:
-  {
-    j[opcode_code_name] = nullptr;
-    break;
-  }
-  case iscript_bin_t::OPCODE_ATTACKMELEE:
-  {
-    iscript_bin_t::playsounds_type_t *casted_args = static_cast<iscript_bin_t::playsounds_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_SPROLUSELO:
-  {
-    iscript_bin_t::sprov_type_t *casted_args = static_cast<iscript_bin_t::sprov_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_PLAYSNDRAND:
-  {
-    iscript_bin_t::playsounds_type_t *casted_args = static_cast<iscript_bin_t::playsounds_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_IGNOREREST:
-  {
-    j[opcode_code_name] = nullptr;
-    break;
-  }
-  case iscript_bin_t::OPCODE_PLAYSND:
-  {
-    iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_UNKNOWN_43:
-  {
-    j[opcode_code_name] = nullptr;
-    break;
-  }
-  case iscript_bin_t::OPCODE_SETVERTPOS:
-  {
-    iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_DOGRDDAMAGE:
-  {
-    j[opcode_code_name] = nullptr;
-    break;
-  }
-  case iscript_bin_t::OPCODE_WAITRAND:
-  {
-    iscript_bin_t::waitrand_type_t *casted_args = static_cast<iscript_bin_t::waitrand_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_TURNCWISE:
-  {
-    iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_CURDIRECTCONDJMP:
-  {
-    iscript_bin_t::trgcondjmp_type_t *casted_args = static_cast<iscript_bin_t::trgcondjmp_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_SETSPAWNFRAME:
-  {
-    iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  case iscript_bin_t::OPCODE_ATTACKWITH:
-  {
-    iscript_bin_t::u1_type_t *casted_args = static_cast<iscript_bin_t::u1_type_t *>(opcode->args());
-    j[opcode_code_name] = json(casted_args);
-    break;
-  }
-  default:
-  {
-    j[opcode_code_name] = nullptr;
-    break;
-  }
-  }
-
 }
 
 void to_json(json &j, std::vector<iscript_bin_t::opcode_type_t *> opcode_vec)
 {
-  j = json::array();
-
   for (auto opcode : opcode_vec)
   {
     j.push_back(opcode);
@@ -726,20 +723,25 @@ void to_json(json &j, Order o)
   j["unknown12"] = json(o.unknown12());
 
   j["targeting"] = json(o.targeting());
-  try
+  if(o.get_generate_objects())
   {
-    j["targeting_obj"] = json(o.targeting_obj());
+    try
+    {
+      j["targeting_obj"] = json(o.targeting_obj());
+    }
+    catch (PropertyNotAvailableException &ex)
+    { /*it's fine, do nothing */ }
   }
-  catch (PropertyNotAvailableException &ex)
-  { /*it's fine, do nothing */ }
-
   j["energy"] = json(o.energy());
-  try
-  {
-    j["energy_obj"] = json(o.energy_obj());
+  if(o.get_generate_objects())
+    {
+    try
+    {
+      j["energy_obj"] = json(o.energy_obj());
+    }
+    catch (PropertyNotAvailableException &ex)
+    { /*it's fine, do nothing */ }
   }
-  catch (PropertyNotAvailableException &ex)
-  { /*it's fine, do nothing */ }
 
   j["animation"] = json(o.animation());
   j["highlight"] = json(o.highlight());
@@ -773,13 +775,19 @@ void to_json(json &j, Weapon w)
   j["label"] = json(w.label());
   j["label_tbl"] = json(w.label_tbl());
   j["graphics"] = json(w.graphics());
-  j["graphics_obj"] = json(w.graphics_obj());
+  if(w.get_generate_objects())
+  {
+    j["graphics_obj"] = json(w.graphics_obj());
+  }
   j["explosion"] = json(w.explosion());
   j["target_flags"] = json(w.target_flags());
   j["minimum_range"] = json(w.minimum_range());
   j["maximum_range"] = json(w.maximum_range());
   j["damage_upgrade"] = json(w.damage_upgrade());
-  j["damage_upgrade_obj"] = json(w.damage_upgrade_obj());
+  if(w.get_generate_objects())
+  {
+    j["damage_upgrade_obj"] = json(w.damage_upgrade_obj());
+  }
   j["weapon_type"] = json(w.weapon_type());
   j["weapon_behaviour"] = json(w.weapon_behaviour());
   j["remove_after"] = json(w.remove_after());
@@ -875,6 +883,7 @@ void to_json(json &j, IScript is)
     std::vector<iscript_bin_t::opcode_type_t *> opcode_vec = is.getAnimationScript(i);
 
     j[anim_name] = json(opcode_vec);
+
   }
 }
 
@@ -890,7 +899,10 @@ void to_json(json &j, Image i)
   j["draw_function"] = json(i.draw_function());
   j["remapping"] = json(i.remapping());
   j["iscript"] = json(i.iscript());
-  j["iscript_obj"] = json(i.iscript_obj());
+  if(i.get_generate_objects())
+  {
+    j["iscript_obj"] = json(i.iscript_obj());
+  }
 
   j["shield_overlay"] = json(i.shield_overlay());
   try
@@ -937,7 +949,10 @@ void to_json(json &j, Sprite s)
 {
   j["id"] = json(s.id());
   j["image"] = json(s.image());
-  j["image_obj"] = json(s.image_obj());
+  if(s.get_generate_objects())
+  {
+    j["image_obj"] = json(s.image_obj());
+  }
 
   try
   {
@@ -966,18 +981,19 @@ void to_json(json &j, Sprite s)
 
 void to_json(json &j, Flingy f)
 {
-  j = json
+  j["id"] = json(f.id());
+  j["sprite"] = json(f.sprite());
+  if(f.get_generate_objects())
   {
-    {"id", f.id()},
-    {"sprite", f.sprite()},
-    {"sprite_obj", f.sprite_obj()},
-    {"speed", f.speed()},
-    {"acceleration", f.acceleration()},
-    {"halt_distance", f.halt_distance()},
-    {"turn_radius", f.turn_radius()},
-    {"unused", f.unused()},
-    {"movement_control", f.movement_control()}
-  };
+    j["sprite_obj"] = json(f.sprite_obj());
+  }
+  j["speed"] = json(f.speed());
+  j["acceleration"] = json(f.acceleration());
+  j["halt_distance"] = json(f.halt_distance());
+  j["turn_radius"] = json(f.turn_radius());
+  j["unused"] = json(f.unused());
+  j["movement_control"] = json(f.movement_control());
+
 }
 
 void to_json(json &j, Unit u)
@@ -986,29 +1002,40 @@ void to_json(json &j, Unit u)
   j["id_string"] = json(u.getIDString());
   j["name_tbl"] = json(u.name_tbl());
   j["graphics"] = json(u.graphics());
-  j["graphics_obj"] = json(u.graphics_obj());
-  j["subunit1"] = json(u.subunit1());
-
-  try
+  if(u.get_generate_objects())
   {
-    j["subunit1_obj"] = json(u.subunit1_obj());
+    j["graphics_obj"] = json(u.graphics_obj());
   }
-  catch (PropertyNotAvailableException &ex)
-  { /*it's fine, do nothing */ }
+  j["subunit1"] = json(u.subunit1());
+  if(u.get_generate_objects())
+  {
+    try
+    {
+      j["subunit1_obj"] = json(u.subunit1_obj());
+    }
+    catch (PropertyNotAvailableException &ex)
+    { /*it's fine, do nothing */ }
+  }
 
   j["subunit2"] = json(u.subunit2());
 
-  try
+  if(u.get_generate_objects())
   {
-    j["subunit2_obj"] = json(u.subunit2_obj());
+    try
+    {
+      j["subunit2_obj"] = json(u.subunit2_obj());
+    }
+    catch (PropertyNotAvailableException &ex)
+    { /*it's fine, do nothing */ }
   }
-  catch (PropertyNotAvailableException &ex)
-  { /*it's fine, do nothing */ }
 
   try
   {
     j["infestation"] = json(u.infestation());
-    j["infestation_obj"] = json(u.infestation_obj());
+    if(u.get_generate_objects())
+    {
+      j["infestation_obj"] = json(u.infestation_obj());
+    }
   }
   catch (PropertyNotAvailableException &ex)
   { /*it's fine, do nothing */ }
@@ -1016,7 +1043,10 @@ void to_json(json &j, Unit u)
   try
   {
     j["construction_animation"] = json(u.construction_animation());
-    j["construction_animation_obj"] = json(u.construction_animation_obj());
+    if(u.get_generate_objects())
+    {
+      j["construction_animation_obj"] = json(u.construction_animation_obj());
+    }
   }
   catch (PropertyNotAvailableException &ex)
   { /*it's fine, do nothing */ }
@@ -1029,20 +1059,38 @@ void to_json(json &j, Unit u)
   j["unknown"] = json(u.unknown());
   j["rank"] = json(u.rank());
   j["ai_computer_idle"] = json(u.ai_computer_idle());
-  j["ai_computer_idle_obj"] = json(u.ai_computer_idle_obj());
+  if(u.get_generate_objects())
+  {
+    j["ai_computer_idle_obj"] = json(u.ai_computer_idle_obj());
+  }
   j["ai_human_idle"] = json(u.ai_human_idle());
-  j["ai_human_idle_obj"] = json(u.ai_human_idle_obj());
+  if(u.get_generate_objects())
+  {
+    j["ai_human_idle_obj"] = json(u.ai_human_idle_obj());
+  }
   j["ai_return_to_idle"] = json(u.ai_return_to_idle());
-  j["ai_return_to_idle_obj"] = json(u.ai_return_to_idle_obj());
+  if(u.get_generate_objects())
+  {
+    j["ai_return_to_idle_obj"] = json(u.ai_return_to_idle_obj());
+  }
   j["ai_attack_unit"] = json(u.ai_attack_unit());
-  j["ai_attack_unit_obj"] = json(u.ai_attack_unit_obj());
+  if(u.get_generate_objects())
+  {
+    j["ai_attack_unit_obj"] = json(u.ai_attack_unit_obj());
+  }
   j["ai_attack_move"] = json(u.ai_attack_move());
-  j["ai_attack_move_obj"] = json(u.ai_attack_move_obj());
+  if(u.get_generate_objects())
+  {
+    j["ai_attack_move_obj"] = json(u.ai_attack_move_obj());
+  }
 
   try
   {
     j["ground_weapon"] = json(u.ground_weapon());
-    j["ground_weapon_obj"] = json(u.ground_weapon_obj());
+    if(u.get_generate_objects())
+    {
+      j["ground_weapon_obj"] = json(u.ground_weapon_obj());
+    }
   }
   catch (PropertyNotAvailableException &ex)
   { /*it's fine, do nothing */ }
@@ -1055,7 +1103,10 @@ void to_json(json &j, Unit u)
   try
   {
     j["air_weapon"] = json(u.air_weapon());
-    j["air_weapon_obj"] = json(u.air_weapon_obj());
+    if(u.get_generate_objects())
+    {
+      j["air_weapon_obj"] = json(u.air_weapon_obj());
+    }
   }
   catch (PropertyNotAvailableException &ex)
   { /*it's fine, do nothing */ }
@@ -1077,7 +1128,10 @@ void to_json(json &j, Unit u)
   try
   {
     j["ready_sound"] = json(u.ready_sound());
-    j["ready_sound_obj"] = json(u.ready_sound_obj());
+    if(u.get_generate_objects())
+    {
+      j["ready_sound_obj"] = json(u.ready_sound_obj());
+    }
   }
   catch (PropertyNotAvailableException &ex)
   { /*it's fine, do nothing */ }
@@ -1086,7 +1140,10 @@ void to_json(json &j, Unit u)
   {
     j["what_sound_start"] = json(u.what_sound_start());
     j["what_sound_end"] = json(u.what_sound_end());
-    j["what_sound_obj"] = json(u.what_sound_obj());
+    if(u.get_generate_objects())
+    {
+      j["what_sound_obj"] = json(u.what_sound_obj());
+    }
   }
   catch (PropertyNotAvailableException &ex)
   { /*it's fine, do nothing */ }
@@ -1095,7 +1152,10 @@ void to_json(json &j, Unit u)
   {
     j["piss_sound_start"] = json(u.piss_sound_start());
     j["piss_sound_end"] = json(u.piss_sound_end());
-    j["piss_sound_obj"] = json(u.piss_sound_obj());
+    if(u.get_generate_objects())
+    {
+      j["piss_sound_obj"] = json(u.piss_sound_obj());
+    }
   }
   catch (PropertyNotAvailableException &ex)
   { /*it's fine, do nothing */ }
@@ -1104,7 +1164,10 @@ void to_json(json &j, Unit u)
   {
     j["what_sound_start"] = json(u.what_sound_start());
     j["what_sound_end"] = json(u.what_sound_end());
-    j["what_sound_obj"] = json(u.what_sound_obj());
+    if(u.get_generate_objects())
+    {
+      j["what_sound_obj"] = json(u.what_sound_obj());
+    }
   }
   catch (PropertyNotAvailableException &ex)
   { /*it's fine, do nothing */ }
@@ -1113,7 +1176,10 @@ void to_json(json &j, Unit u)
   {
     j["yes_sound_start"] = json(u.yes_sound_start());
     j["yes_sound_end"] = json(u.yes_sound_end());
-    j["yes_sound_obj"] = json(u.yes_sound_obj());
+    if(u.get_generate_objects())
+    {
+      j["yes_sound_obj"] = json(u.yes_sound_obj());
+    }
   }
   catch (PropertyNotAvailableException &ex)
   { /*it's fine, do nothing */ }
@@ -1128,11 +1194,15 @@ void to_json(json &j, Unit u)
   { /*it's fine, do nothing */ }
 
   j["unit_dimension"] = json(u.unit_dimension());
-  j["portrait"] = json(u.portrait());
+
 
   try
   {
-    j["portrait_obj"] = json(u.portrait_obj());
+    j["portrait"] = json(u.portrait());
+    if(u.get_generate_objects())
+    {
+      j["portrait_obj"] = json(u.portrait_obj());
+    }
   }
   catch (PropertyNotAvailableException &ex)
   { /*it's fine, do nothing */ }

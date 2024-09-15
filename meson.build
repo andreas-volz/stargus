@@ -72,7 +72,7 @@ subdir('tools')
 subdir('tools/sauwetter')
 subdir('tools/scdat2json')
 subdir('tools/grptool')
-#subdir('tools/iscript2json')
+#subdir('tools/image2satf')
 #subdir('tools/scpalette')
 subdir('test/lua')
 
