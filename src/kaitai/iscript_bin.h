@@ -217,13 +217,13 @@ public:
         ~playsounds_type_t();
 
     private:
-        uint8_t m_number_sounds;
+        uint8_t m_num_sounds;
         std::vector<uint16_t>* m_sound;
         iscript_bin_t* m__root;
         kaitai::kstruct* m__parent;
 
     public:
-        uint8_t number_sounds() const { return m_number_sounds; }
+        uint8_t num_sounds() const { return m_num_sounds; }
         std::vector<uint16_t>* sound() const { return m_sound; }
         iscript_bin_t* _root() const { return m__root; }
         kaitai::kstruct* _parent() const { return m__parent; }

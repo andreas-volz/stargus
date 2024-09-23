@@ -229,12 +229,12 @@ types:
         
   playsounds_type:
     seq:
-      - id: number_sounds
+      - id: num_sound
         type: u1
       - id: sound
         type: u2
         repeat: expr
-        repeat-expr: number_sounds
+        repeat-expr: num_sound
   
   randcondjmp_type:
     seq:
@@ -313,7 +313,7 @@ enums:
     0x31: attkshiftproj      # <distance>: # creates the weapon flingy at a particular distance in front of the unit.
     0x32: tmprmgraphicstart  # no parameters: # sets the current image overlay state to hidden.
     0x33: tmprmgraphicend    # no parameters: # sets the current image overlay state to visible.
-    0x34: setfldirect        # <direction>: # sets the current direction of the flingy.
+    0x34: setfldirect        # <direction>: # sets the current direction of the flingy (e.g. used for death animation).
     0x35: call               # <labelname>: # calls a code block.
     0x36: return             # no parameters: # returns from call.
     0x37: setflspeed         # <speed>: # sets the flingy.dat speed of the current flingy.

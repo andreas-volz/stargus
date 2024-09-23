@@ -18,6 +18,7 @@
 // System
 #include <string.h>
 #include <memory>
+#include <nlohmann/json.hpp>
 
 /**
  *
@@ -57,6 +58,9 @@ protected: // TODO: maybe back to private after Widget redesign
   //std::string mArcfile;
   bool mRGBA;
   //int mTransparent;
+
+private:
+  void saveJson(nlohmann::json &j, const std::string &file, bool pretty);
 };
 
 #endif /* GRP_H */

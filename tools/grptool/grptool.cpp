@@ -262,10 +262,8 @@ int main(int argc, const char **argv)
       myGRPImage.SaveSinglePNG(pngStorage("output_frame%d.png"), 0, myGRPImage.getNumberOfFrames(), rgba);
     }
 
-    //myGRPImage.SaveConvertedImage("output_frame_magic.png", 0, myGRPImage.getNumberOfFrames(), single_stiched, image_per_row);
-
-    //myGRPImage.LoadImage(grp_file, remove_duplicates);
-    //myGRPImage.SaveConvertedImage("output_big_file.png", 0, myGRPImage.getNumberOfFrames(), false, 17);
+    cout << "Image tilesize width: " << myGRPImage.getMaxImageWidth() << endl;
+    cout << "Image tilesize height: " << myGRPImage.getMaxImageHeight() << endl;
   }
   else
   {

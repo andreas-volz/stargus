@@ -20,6 +20,7 @@
 #include <fstream>
 #include <string>
 
+
 using namespace std;
 using namespace dat;
 
@@ -210,7 +211,9 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<AbstractPale
         grp_storage_file_base += "_" + remapping;
       }
 
-      Storage png_file = graphics(grp_storage_file_base + ".png");
+      Storage png_file;
+      png_file = graphics(grp_storage_file_base + ".png");
+
 
       result = grp.save(png_file);
 
@@ -270,4 +273,5 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<AbstractPale
 
   return result;
 }
+
 

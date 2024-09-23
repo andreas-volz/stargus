@@ -155,9 +155,9 @@ iscript_bin_t::playsounds_type_t::playsounds_type_t(kaitai::kstream* p__io, kait
 }
 
 void iscript_bin_t::playsounds_type_t::_read() {
-    m_number_sounds = m__io->read_u1();
+    m_num_sounds = m__io->read_u1();
     m_sound = new std::vector<uint16_t>();
-    const int l_sound = number_sounds();
+    const int l_sound = num_sounds();
     for (int i = 0; i < l_sound; i++) {
         m_sound->push_back(m__io->read_u2le());
     }

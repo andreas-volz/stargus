@@ -29,6 +29,13 @@ Storage::Storage(const std::string &filename) :
 
 }
 
+Storage::Storage(const Storage& storage)
+{
+  mDataPath = storage.mDataPath;
+  mDataType = storage.mDataType;
+  mFilename = storage.mFilename;
+}
+
 Storage::~Storage()
 {
 
@@ -108,9 +115,13 @@ Storage Storage::operator()(std::string filename)
   return storage;
 }
 
-std::string Storage::operator=(const Storage& storage)
+Storage& Storage::operator=(const Storage& storage)
 {
-  return getFullPath();
+  mDataPath = storage.mDataPath;
+  mDataType = storage.mDataType;
+  mFilename = storage.mFilename;
+
+  return *this;
 }
 
 Storage::operator std::string() const

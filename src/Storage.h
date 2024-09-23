@@ -18,6 +18,9 @@ public:
 
   Storage(const std::string &filename);
 
+  /* copy constructor */
+  Storage(const Storage& storage);
+
   virtual ~Storage();
 
   const std::string& getDataPath() const;
@@ -38,7 +41,8 @@ public:
 
   Storage operator()(std::string filename);
 
-  std::string operator=(const Storage& storage);
+  /* assignment operator */
+  Storage& operator=(const Storage& storage);
 
   operator std::string() const;
 

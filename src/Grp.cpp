@@ -11,6 +11,7 @@
 #include "FileUtil.h"
 #include "Storm.h"
 #include "Logger.h"
+#include "StringUtil.h"
 
 // System
 #include <cstdio>
@@ -20,6 +21,7 @@
 #include <fstream>
 
 using namespace std;
+using namespace nlohmann;
 
 static Logger logger = Logger("startool.Grp");
 
@@ -97,6 +99,10 @@ bool Grp::save(Storage filename)
 
   mGRPImage.SaveStitchedPNG(filename.getFullPath(), 0, end_frame, IPR, mRGBA);
 
+  // save json file beside each png file with tilesize information in it. The engine needs this information.
+  json j_grp_info = json::object({ {"width", mGRPImage.getMaxImageWidth()}, {"height", mGRPImage.getMaxImageHeight()} });
+  saveJson(j_grp_info, filename(cutFileEnding(filename.getFilename(), ".png") + ".json"), true);
+
   return result;
 }
 
@@ -104,4 +110,18 @@ Size Grp::getTileSize()
 {
   Size size (mGRPImage.getMaxImageWidth(), mGRPImage.getMaxImageHeight());
   return size;
+}
+
+void Grp::saveJson(json &j, const std::string &file, bool pretty)
+{
+  std::ofstream filestream(file);
+
+  if(pretty)
+  {
+    filestream << std::setw(4) << j;
+  }
+  else
+  {
+    filestream << j;
+  }
 }
