@@ -72,6 +72,9 @@ public:
   DataHub(std::shared_ptr<Hurricane> hurricane);
   virtual ~DataHub();
 
+  /**
+   * @return the IScript ID for a specific image ID. (before a map was created in init_iscript_bin())
+   */
   uint16_t getIScriptImage(uint16_t index);
 
   // Kaitai parsed objects

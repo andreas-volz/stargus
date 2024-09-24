@@ -155,9 +155,9 @@ iscript_bin_t::playsounds_type_t::playsounds_type_t(kaitai::kstream* p__io, kait
 }
 
 void iscript_bin_t::playsounds_type_t::_read() {
-    m_num_sounds = m__io->read_u1();
+    m_num_sound = m__io->read_u1();
     m_sound = new std::vector<uint16_t>();
-    const int l_sound = num_sounds();
+    const int l_sound = num_sound();
     for (int i = 0; i < l_sound; i++) {
         m_sound->push_back(m__io->read_u2le());
     }
@@ -683,7 +683,7 @@ iscript_bin_t::scpe_header_type_t* iscript_bin_t::scpe_type_t::scpe_header() {
 int8_t iscript_bin_t::scpe_type_t::num_scpe_content() {
     if (f_num_scpe_content)
         return m_num_scpe_content;
-    m_num_scpe_content = ((scpe_header()->scpe_content_type() == 0) ? (2) : (((scpe_header()->scpe_content_type() == 1) ? (2) : (((scpe_header()->scpe_content_type() == 2) ? (4) : (((scpe_header()->scpe_content_type() == 12) ? (14) : (((scpe_header()->scpe_content_type() == 13) ? (14) : (((scpe_header()->scpe_content_type() == 14) ? (15) : (((scpe_header()->scpe_content_type() == 15) ? (15) : (((scpe_header()->scpe_content_type() == 20) ? (21) : (((scpe_header()->scpe_content_type() == 21) ? (21) : (((scpe_header()->scpe_content_type() == 23) ? (23) : (((scpe_header()->scpe_content_type() == 24) ? (25) : (((scpe_header()->scpe_content_type() == 26) ? (27) : (((scpe_header()->scpe_content_type() == 27) ? (27) : (((scpe_header()->scpe_content_type() == 28) ? (27) : (((scpe_header()->scpe_content_type() == 29) ? (27) : (0))))))))))))))))))))))))))))));
+    m_num_scpe_content = ((scpe_header()->scpe_content_type() == 0) ? (2) : (((scpe_header()->scpe_content_type() == 1) ? (2) : (((scpe_header()->scpe_content_type() == 2) ? (4) : (((scpe_header()->scpe_content_type() == 12) ? (14) : (((scpe_header()->scpe_content_type() == 13) ? (14) : (((scpe_header()->scpe_content_type() == 14) ? (16) : (((scpe_header()->scpe_content_type() == 15) ? (16) : (((scpe_header()->scpe_content_type() == 20) ? (22) : (((scpe_header()->scpe_content_type() == 21) ? (22) : (((scpe_header()->scpe_content_type() == 23) ? (24) : (((scpe_header()->scpe_content_type() == 24) ? (26) : (((scpe_header()->scpe_content_type() == 26) ? (28) : (((scpe_header()->scpe_content_type() == 27) ? (28) : (((scpe_header()->scpe_content_type() == 28) ? (28) : (((scpe_header()->scpe_content_type() == 29) ? (28) : (0))))))))))))))))))))))))))))));
     f_num_scpe_content = true;
     return m_num_scpe_content;
 }

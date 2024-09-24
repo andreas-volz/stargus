@@ -55,16 +55,16 @@ types:
           (scpe_header.scpe_content_type == 2) ? 4 : 
           (scpe_header.scpe_content_type == 12) ? 14 : 
           (scpe_header.scpe_content_type == 13) ? 14 : 
-          (scpe_header.scpe_content_type == 14) ? 15 : 
-          (scpe_header.scpe_content_type == 15) ? 15 : 
-          (scpe_header.scpe_content_type == 20) ? 21 : 
-          (scpe_header.scpe_content_type == 21) ? 21 : 
-          (scpe_header.scpe_content_type == 23) ? 23 : 
-          (scpe_header.scpe_content_type == 24) ? 25 : 
-          (scpe_header.scpe_content_type == 26) ? 27 : 
-          (scpe_header.scpe_content_type == 27) ? 27 : 
-          (scpe_header.scpe_content_type == 28) ? 27 : 
-          (scpe_header.scpe_content_type == 29) ? 27 : 
+          (scpe_header.scpe_content_type == 14) ? 16 : 
+          (scpe_header.scpe_content_type == 15) ? 16 : 
+          (scpe_header.scpe_content_type == 20) ? 22 : 
+          (scpe_header.scpe_content_type == 21) ? 22 : 
+          (scpe_header.scpe_content_type == 23) ? 24 : 
+          (scpe_header.scpe_content_type == 24) ? 26 : 
+          (scpe_header.scpe_content_type == 26) ? 28 : 
+          (scpe_header.scpe_content_type == 27) ? 28 : 
+          (scpe_header.scpe_content_type == 28) ? 28 : 
+          (scpe_header.scpe_content_type == 29) ? 28 : 
           0
       scpe_content:
         pos: _parent.entree_offsets[i].offset + 8
