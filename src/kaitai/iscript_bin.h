@@ -130,17 +130,17 @@ public:
         ~scpe_content_type_t();
 
     private:
-        bool f_scpe_opcode_list;
-        opcode_list_type_t* m_scpe_opcode_list;
-        bool n_scpe_opcode_list;
+        bool f_iscript_function;
+        opcode_list_type_t* m_iscript_function;
+        bool n_iscript_function;
 
     public:
-        bool _is_null_scpe_opcode_list() { scpe_opcode_list(); return n_scpe_opcode_list; };
+        bool _is_null_iscript_function() { iscript_function(); return n_iscript_function; };
 
     private:
 
     public:
-        opcode_list_type_t* scpe_opcode_list();
+        opcode_list_type_t* iscript_function();
 
     private:
         uint16_t m_scpe_opcode_offset;
@@ -573,14 +573,14 @@ public:
 
     private:
         uint32_t m_scpe_magic;
-        uint8_t m_scpe_content_type;
+        uint8_t m_animation_type;
         std::string m_padding;
         iscript_bin_t* m__root;
         iscript_bin_t::scpe_type_t* m__parent;
 
     public:
         uint32_t scpe_magic() const { return m_scpe_magic; }
-        uint8_t scpe_content_type() const { return m_scpe_content_type; }
+        uint8_t animation_type() const { return m_animation_type; }
         std::string padding() const { return m_padding; }
         iscript_bin_t* _root() const { return m__root; }
         iscript_bin_t::scpe_type_t* _parent() const { return m__parent; }

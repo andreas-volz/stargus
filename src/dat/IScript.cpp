@@ -51,7 +51,7 @@ std::vector<iscript_bin_t::opcode_type_t*> IScript::getAnimationScript(unsigned 
   }
 
   iscript_bin_t::scpe_content_type_t* scpe_content = scpe_content_vec->at(animationType);
-  opcode_list_type_t* opcode_list_type = scpe_content->scpe_opcode_list();
+  opcode_list_type_t* opcode_list_type = scpe_content->iscript_function();
 
   // if kaitai animation script object is null give a empty vector back (TODO: maybe change design)
   if(!opcode_list_type)

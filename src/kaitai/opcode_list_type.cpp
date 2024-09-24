@@ -78,6 +78,11 @@ void opcode_list_type_t::_read()
     {
       end_criteria = true;
     }
+    // for now stop when GOTO opcode is found
+    if(opcode->code() == iscript_bin_t::opcode_t::OPCODE_END)
+    {
+      end_criteria = true;
+    }
   }
   while(!end_criteria);
 }
