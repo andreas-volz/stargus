@@ -6,6 +6,7 @@
 
 #include "opcode_list_type.h"
 #include "iscript_bin.h"
+#include "StringUtil.h"
 
 #include <iostream>
 
@@ -61,18 +62,53 @@ void opcode_list_type_t::_read()
   bool end_criteria = false;
   do
   {
+    auto io_size = m__io->size();
+    cout << endl << "before read::code: " << hex << io_size << endl;
+
     iscript_bin_t::opcode_type_t *opcode = new iscript_bin_t::opcode_type_t(m__io, m__parent, m__root);
-    //cout << "_read::code: " << hex << opcode->code() << endl;
+    cout << "_read::code: " << hex << opcode->code() << endl;
     m_opcode_list->push_back(opcode);
+
+    /*if(opcode->code()==iscript_bin_t::OPCODE_PLAYFRAM)
+    {
+      cout << "playframe: ";
+      iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
+      cout << casted_args->value() << endl;
+      cout << endl;
+      if(casted_args->value() == 0xa0)
+      {
+        cout << "hit breakboint" << endl;
+      }
+    }*/
 
     // set next offset position
     scpe_opcode_offset = m__io->pos();
 
-    if(m_scpe_offset_table.find(scpe_opcode_offset) != m_scpe_offset_table.end())
+    /*
+     * calculate the stream end position and substract the size of 0xFF 0xFF 0x00 0x00 from it
+     * this allows below to stop paring before the file ends
+     */
+    int end_position = io_size - scpe_opcode_offset - 2;
+    cout << "end_position: " << end_position << endl;
+
+    cout << "scpe_opcode_offset: " << scpe_opcode_offset << endl;
+    cout << "m_scpe_offset_table.size(): " << m_scpe_offset_table.size() << endl;
+
+    cout << "offset: ";
+    for(auto offset : m_scpe_offset_table)
     {
-      end_criteria = true;
+      cout << offset << " ";
     }
 
+    if(m_scpe_offset_table.find(scpe_opcode_offset) != m_scpe_offset_table.end() || end_position == 0)
+    {
+      end_criteria = true;
+      cout << endl << "end_criteria=true" << endl;
+    }
+
+    /*
+     * TODO: hmmm, is there a better way than stopping at these codes?
+     */
     // for now stop when GOTO opcode is found
     if(opcode->code() == iscript_bin_t::opcode_t::OPCODE_GOTO)
     {
@@ -83,11 +119,13 @@ void opcode_list_type_t::_read()
     {
       end_criteria = true;
     }
+
   }
   while(!end_criteria);
 }
 
 void opcode_list_type_t::_clean_up()
 {
+  // crash at end -> memory bug?
   delete m_opcode_list;
 }

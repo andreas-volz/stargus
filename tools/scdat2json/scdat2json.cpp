@@ -359,13 +359,14 @@ int main(int argc, const char **argv)
   CheckPath(iscript_directory);
   jsonStorage.setDataPath(iscript_directory);
 
-  for(auto iscript : iscript_set)
+  /*for(auto iscript : iscript_set)
   {
+    cout << "parse iscript: " << iscript << endl;
     IScript iscript_obj(datahub, iscript);
     json j_iscript(iscript_obj);
     string num_string = to_string(iscript);
     saveJson(j_iscript, jsonStorage("iscript_" + num_string + ".json"), pretty);
-  }
+  }*/
 
 
 
@@ -424,10 +425,13 @@ int main(int argc, const char **argv)
   saveJson(j_mapdata_tbl, jsonStorage("mapdata_tbl.json"), pretty);
 
   /// save all the the stat_txt.tbl parts...
-
-
   json stat_txt_tbl = scjsonexporter.export_file_tbl(datahub.stat_txt_tbl_vec);
   saveJson(stat_txt_tbl, jsonStorage("stat_txt_tbl.json"), pretty);
+
+  // iscript.bin
+  json j_iscript_bin = scjsonexporter.export_iscript_bin();
+  saveJson(j_iscript_bin, jsonStorage("iscript_bin.json"), pretty);
+
 
   /*json stat_txt_units_tbl = scjsonexporter.export_file_tbl(datahub.stat_txt_units_tbl_vec);
   saveJson(stat_txt_units_tbl, jsonStorage("stat_txt_units_tbl.json"), pretty);

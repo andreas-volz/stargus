@@ -635,7 +635,7 @@ private:
 public:
 
     /**
-     * read entree offsets until the magic stop sign '0xFFFF 0x0000' is found
+     * read entree offsets until the magic stop sign '0xFFFF' is found
      */
     std::vector<entree_offset_type_t*>* entree_offsets();
 
@@ -646,7 +646,7 @@ private:
 public:
 
     /**
-     * tbd
+     * read one less than entree_offsets as this contains the magic stop sign
      */
     std::vector<scpe_type_t*>* scpe();
 

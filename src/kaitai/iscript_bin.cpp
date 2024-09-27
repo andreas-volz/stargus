@@ -883,7 +883,7 @@ std::vector<iscript_bin_t::entree_offset_type_t*>* iscript_bin_t::entree_offsets
             _ = new entree_offset_type_t(m__io, this, m__root);
             m_entree_offsets->push_back(_);
             i++;
-        } while (!(((_->iscript_id() == 65535) ? (_->offset() == 0) : (false))));
+        } while (!(_->iscript_id() == 65535));
     }
     m__io->seek(_pos);
     f_entree_offsets = true;
@@ -894,7 +894,7 @@ std::vector<iscript_bin_t::scpe_type_t*>* iscript_bin_t::scpe() {
     if (f_scpe)
         return m_scpe;
     m_scpe = new std::vector<scpe_type_t*>();
-    const int l_scpe = _root()->entree_offsets()->size();
+    const int l_scpe = (_root()->entree_offsets()->size() - 1);
     for (int i = 0; i < l_scpe; i++) {
         m_scpe->push_back(new scpe_type_t(i, m__io, this, m__root));
     }

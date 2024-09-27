@@ -879,6 +879,7 @@ void to_json(json &j, IScript is)
   {
     IScript::AnimationType anim_t = static_cast<IScript::AnimationType>(i);
     string anim_name = json(anim_t);
+    //cout << "anim_name: " << anim_name << " -> anim_t: " << to_string(anim_t) << endl;
 
     std::vector<iscript_bin_t::opcode_type_t *> opcode_vec = is.getAnimationScript(i);
 

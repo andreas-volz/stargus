@@ -43,11 +43,16 @@ std::vector<iscript_bin_t::opcode_type_t*> IScript::getAnimationScript(unsigned 
 
   std::vector<iscript_bin_t::scpe_content_type_t*>* scpe_content_vec = scpe->scpe_content();
 
-  // calculate the offset hash list per iscript (TODO: maybe cache this?)
   unordered_set<uint16_t> scpe_offset_table;
-  for(auto scpe_content : *scpe_content_vec)
+  for(auto scpe_type : *mDatahub.iscript->scpe())
   {
-    scpe_offset_table.insert(scpe_content->scpe_opcode_offset());
+    std::vector<iscript_bin_t::scpe_content_type_t*> *scpe_content_vec = scpe_type->scpe_content();
+
+    for(auto scpe_content : *scpe_content_vec)
+    {
+      //cout << scpe_content->scpe_opcode_offset() << " ";
+      scpe_offset_table.insert(scpe_content->scpe_opcode_offset());
+    }
   }
 
   iscript_bin_t::scpe_content_type_t* scpe_content = scpe_content_vec->at(animationType);

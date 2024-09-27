@@ -7,6 +7,7 @@
 // project
 #include "SCJsonExporter.h"
 #include "to_json.h"
+#include "StringUtil.h"
 
 // system
 #include <iostream>
@@ -465,3 +466,93 @@ json SCJsonExporter::export_file_tbl(std::vector<TblEntry> &tblentry_vec)
   return j;
 }
 
+json SCJsonExporter::export_iscript_bin()
+{
+  json j;
+
+  std::shared_ptr<iscript_bin_t> iscript = mDatahub.iscript;
+
+  std::vector<iscript_bin_t::entree_offset_type_t*> *entree_offets = iscript->entree_offsets();
+
+  cout << "size of entree_offets: " << entree_offets->size() << endl;
+
+  for(auto e_offset : *entree_offets)
+  {
+    uint16_t iscript_id = e_offset->iscript_id();
+    uint16_t offset = e_offset->offset();
+
+    cout << "iscript_id: " << iscript_id << endl;
+    cout << "offset: " << offset << endl;
+  }
+
+  std::vector<iscript_bin_t::scpe_type_t*> *scpe = iscript->scpe();
+
+  unordered_set<uint16_t> scpe_offset_table;
+  for(auto scpe_type : *scpe)
+  {
+    std::vector<iscript_bin_t::scpe_content_type_t*> *scpe_content_vec = scpe_type->scpe_content();
+
+    for(auto scpe_content : *scpe_content_vec)
+    {
+      //cout << scpe_content->scpe_opcode_offset() << " ";
+      scpe_offset_table.insert(scpe_content->scpe_opcode_offset());
+    }
+  }
+
+  /*
+   * if I insert this as start of final 0xFF 0xFF 0x00 0x00 than it works.
+   * Idea: continue Json parser and check if the result works and fix this hack later.
+   */
+  //scpe_offset_table.insert(0x883c);
+
+
+  cout << "size of scpe: " << scpe->size() << endl;
+  unsigned int scpe_type_i = 0;
+  for(auto scpe_type : *scpe)
+  {
+    uint16_t iscript_id = entree_offets->at(scpe_type_i)->iscript_id();
+    cout << "read scpe for iscript: " << to_string(iscript_id) << endl;
+    json j_iscript;
+
+
+    iscript_bin_t::scpe_header_type_t *scpe_header = scpe_type->scpe_header();
+    std::vector<iscript_bin_t::scpe_content_type_t*> *scpe_content_vec = scpe_type->scpe_content();
+
+    uint8_t animation_type = scpe_header->animation_type();
+    cout << "animation type: " << to_string(animation_type) << endl;
+
+    cout << "scpe_content size: " << to_string(scpe_content_vec->size()) << endl;
+
+
+    unsigned int scpe_content_i = 0;
+    for(auto scpe_content : *scpe_content_vec)
+    {
+      opcode_list_type_t *opcode_list_type = scpe_content->iscript_function();
+      if(opcode_list_type)
+      {
+        cout << "iscript read_list(): " << to_string(scpe_content_i) << endl;
+        std::vector<kaitai::kstruct*>* opcode_vec_ks = opcode_list_type->read_list(scpe_offset_table);
+
+        std::vector<iscript_bin_t::opcode_type_t*> opcode_vec(opcode_vec_ks->size());
+
+        std::transform(opcode_vec_ks->begin(), opcode_vec_ks->end(), opcode_vec.begin(),
+                       [](auto ptr) {return static_cast<iscript_bin_t::opcode_type_t*>(ptr); });
+
+        /**
+         * hack: just push somethign into JSON. This needs to be correct transformed
+         */
+        j_iscript[to_string(scpe_content_i)] = opcode_vec;
+      }
+      scpe_content_i++;
+    }
+
+    j[to_string(iscript_id)] = j_iscript;
+
+    scpe_type_i++;
+  }
+
+
+
+
+  return j;
+}

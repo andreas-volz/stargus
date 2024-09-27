@@ -21,16 +21,16 @@ instances:
     type: entree_offset_type
     pos: entree_table_pos
     repeat: until
-    repeat-until: '(_.iscript_id == 0xFFFF) ? ( _.offset == 0x0) : false'
+    repeat-until: '(_.iscript_id == 0xFFFF)'
     doc: |
-      read entree offsets until the magic stop sign '0xFFFF 0x0000' is found
+      read entree offsets until the magic stop sign '0xFFFF' is found
       
   scpe:
     type: scpe_type(_index)
     repeat: expr
-    repeat-expr: _root.entree_offsets.size
+    repeat-expr: _root.entree_offsets.size - 1
     doc: |
-      tbd
+      read one less than entree_offsets as this contains the magic stop sign
 
 types:
   entree_offset_type:
