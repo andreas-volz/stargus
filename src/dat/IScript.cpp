@@ -20,7 +20,7 @@ namespace dat
 {
 
 IScript::IScript(DataHub &datahub, unsigned int id) :
-  ObjectAccess(datahub, datahub.getIScriptImage(id))
+  ObjectAccess(datahub, datahub.getIScriptIndexFromID(id))
 {
 }
 
@@ -54,6 +54,8 @@ std::vector<iscript_bin_t::opcode_type_t*> IScript::getAnimationScript(unsigned 
       scpe_offset_table.insert(scpe_content->scpe_opcode_offset());
     }
   }
+
+  map<uint16_t, uint16_t> offset_iscript_id_mapping; // TBD: fill it...
 
   iscript_bin_t::scpe_content_type_t* scpe_content = scpe_content_vec->at(animationType);
   opcode_list_type_t* opcode_list_type = scpe_content->iscript_function();

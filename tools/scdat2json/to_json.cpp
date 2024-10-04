@@ -174,54 +174,54 @@ NLOHMANN_JSON_SERIALIZE_ENUM(iscript_bin_t::opcode_t,
 
 void to_json(json &j, iscript_bin_t::u2_type_t *u2)
 {
-  j = json(to_string(u2->value()));
+  j = json(u2->value());
 }
 
 void to_json(json &j, iscript_bin_t::u1_type_t *u1)
 {
-  j = json(to_string(u1->value()));
+  j = json(u1->value());
 }
 
 void to_json(json &j, iscript_bin_t::pos_type_t *pos)
 {
-  j["x"] = json(to_string(pos->x()));
-  j["y"] = json(to_string(pos->y()));
+  j["x"] = json(pos->x());
+  j["y"] = json(pos->y());
 }
 
 void to_json(json &j, iscript_bin_t::playsndbtwn_type_t *snd)
 {
-  j["firstsound"] = json(to_string(snd->firstsound()));
-  j["lastsound"] = json(to_string(snd->lastsound()));
+  j["firstsound"] = json(snd->firstsound());
+  j["lastsound"] = json(snd->lastsound());
 }
 
 void to_json(json &j, iscript_bin_t::trgcondjmp_type_t *trgcondjmp)
 {
-  j["angle1"] = json(to_string(trgcondjmp->angle1()));
-  j["angle2"] = json(to_string(trgcondjmp->angle2()));
+  j["angle1"] = json(trgcondjmp->angle1());
+  j["angle2"] = json(trgcondjmp->angle2());
   j["labelname"] = json(to_string(trgcondjmp->labelname()));
 }
 
 void to_json(json &j, iscript_bin_t::imgl_type_t *imgl)
 {
-  j["image"] = json(to_string(imgl->image()));
+  j["image"] = json(imgl->image());
   j["pos"] = json(imgl->pos());
 }
 
 void to_json(json &j, iscript_bin_t::sprl_type_t *sprl)
 {
-  j["sprite"] = json(to_string(sprl->sprite()));
+  j["sprite"] = json(sprl->sprite());
   j["pos"] = json(sprl->pos());
 }
 
 void to_json(json &j, iscript_bin_t::trgtrangecondjmp_type_t *ttcj)
 {
-  j["distance"] = json(to_string(ttcj->distance()));
+  j["distance"] = json(ttcj->distance());
   j["labelname"] = json(ttcj->labelname());
 }
 
 void to_json(json &j, iscript_bin_t::randcondjmp_type_t *rcj)
 {
-  j["randchance"] = json(to_string(rcj->randchance()));
+  j["randchance"] = json(rcj->randchance());
   j["labelname"] = json(rcj->labelname());
 }
 

@@ -73,9 +73,9 @@ public:
   virtual ~DataHub();
 
   /**
-   * @return the IScript ID for a specific image ID. (before a map was created in init_iscript_bin())
+   * @return the IScript index for a specific iscript ID. (before a map was created in init_iscript_bin())
    */
-  uint16_t getIScriptImage(uint16_t index);
+  uint16_t getIScriptIndexFromID(uint16_t index);
 
   // Kaitai parsed objects
   std::shared_ptr<units_dat_t> units;

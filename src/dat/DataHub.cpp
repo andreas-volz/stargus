@@ -275,7 +275,7 @@ void DataHub::init_iscript_bin()
 
   iscript = make_shared<iscript_bin_t>(m_iscript_ks.get());
 
-  /* This code creates a map to access the iscripts by image ID */
+  /* This code creates a map to access the iscripts by id */
   for(unsigned int i = 0; i < iscript->entree_offsets()->size(); i++)
   {
     auto entree_offset = iscript->entree_offsets()->at(i);
@@ -286,7 +286,7 @@ void DataHub::init_iscript_bin()
   }
 }
 
-uint16_t DataHub::getIScriptImage(uint16_t index)
+uint16_t DataHub::getIScriptIndexFromID(uint16_t index)
 {
   return m_iscriptImageEntreeMap.at(index);
 }

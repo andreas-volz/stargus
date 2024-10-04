@@ -63,11 +63,11 @@ void opcode_list_type_t::_read()
   do
   {
     auto io_size = m__io->size();
-    cout << endl << "before read::code: " << hex << io_size << endl;
+    //cout << endl << "before read::code: " << hex << io_size << endl;
 
     iscript_bin_t::opcode_type_t *opcode = new iscript_bin_t::opcode_type_t(m__io, m__parent, m__root);
-    cout << "_read::code: " << hex << opcode->code() << endl;
-    m_opcode_list->push_back(opcode);
+    //cout << "_read::code: " << hex << opcode->code() << endl;
+
 
     /*if(opcode->code()==iscript_bin_t::OPCODE_PLAYFRAM)
     {
@@ -86,10 +86,10 @@ void opcode_list_type_t::_read()
 
     /*
      * calculate the stream end position and substract the size of 0xFF 0xFF 0x00 0x00 from it
-     * this allows below to stop paring before the file ends
+     * this allows below to stop parsing before the file ends
      */
     int end_position = io_size - scpe_opcode_offset - 2;
-    cout << "end_position: " << end_position << endl;
+    /*cout << "end_position: " << end_position << endl;
 
     cout << "scpe_opcode_offset: " << scpe_opcode_offset << endl;
     cout << "m_scpe_offset_table.size(): " << m_scpe_offset_table.size() << endl;
@@ -98,28 +98,33 @@ void opcode_list_type_t::_read()
     for(auto offset : m_scpe_offset_table)
     {
       cout << offset << " ";
-    }
+    }*/
 
-    if(m_scpe_offset_table.find(scpe_opcode_offset) != m_scpe_offset_table.end() || end_position == 0)
+    auto iscript_id_found = m_scpe_offset_table.find(scpe_opcode_offset);
+    if(iscript_id_found != m_scpe_offset_table.end() || end_position == 0)
     {
       end_criteria = true;
-      cout << endl << "end_criteria=true" << endl;
+      //cout << endl << "end_criteria=true" << endl;
     }
 
     /*
      * TODO: hmmm, is there a better way than stopping at these codes?
      */
-    // for now stop when GOTO opcode is found
+    // for now stop when special opcode is found
     if(opcode->code() == iscript_bin_t::opcode_t::OPCODE_GOTO)
     {
       end_criteria = true;
     }
-    // for now stop when GOTO opcode is found
     if(opcode->code() == iscript_bin_t::opcode_t::OPCODE_END)
     {
       end_criteria = true;
     }
+    if(opcode->code() == iscript_bin_t::opcode_t::OPCODE_RETURN)
+    {
+      end_criteria = true;
+    }
 
+    m_opcode_list->push_back(opcode);
   }
   while(!end_criteria);
 }

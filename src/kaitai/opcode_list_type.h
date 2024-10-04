@@ -12,6 +12,7 @@
 // system
 #include <unordered_set>
 #include <vector>
+#include <map>
 
   // forward declarations
 class iscript_bin_t;
