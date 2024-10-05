@@ -83,6 +83,7 @@ void opcode_list_type_t::_read()
 
     // set next offset position
     scpe_opcode_offset = m__io->pos();
+    //cout << scpe_opcode_offset << " ";
 
     /*
      * calculate the stream end position and substract the size of 0xFF 0xFF 0x00 0x00 from it
@@ -92,13 +93,16 @@ void opcode_list_type_t::_read()
     /*cout << "end_position: " << end_position << endl;
 
     cout << "scpe_opcode_offset: " << scpe_opcode_offset << endl;
-    cout << "m_scpe_offset_table.size(): " << m_scpe_offset_table.size() << endl;
+    cout << "m_scpe_offset_table.size(): " << m_scpe_offset_table.size() << endl;*/
 
-    cout << "offset: ";
+    /*cout << "offset: ";
     for(auto offset : m_scpe_offset_table)
     {
       cout << offset << " ";
-    }*/
+    }
+    cout << endl;*/
+
+    //cout << scpe_opcode_offset << " ";
 
     auto iscript_id_found = m_scpe_offset_table.find(scpe_opcode_offset);
     if(iscript_id_found != m_scpe_offset_table.end() || end_position == 0)

@@ -477,116 +477,92 @@ json SCJsonExporter::export_iscript_bin()
 
   cout << "size of entree_offets: " << entree_offsets->size() << endl;
 
-  json j_headers = json::array();
+  /*
+   * create a list of all used iscript_id in the entree_offsets
+   */
   set<uint16_t> iscript_table;
-
-  for(unsigned int i = 0; i < entree_offsets->size(); i++)
+  for(auto e_offset : *entree_offsets)
   {
-    iscript_bin_t::entree_offset_type_t *e_offset =  iscript->entree_offsets()->at(i);
     uint16_t iscript_id = e_offset->iscript_id();
-    uint16_t offset = e_offset->offset();
-
     if(iscript_id != 0xFFFF) // TBD: improve this in the parser?
     {
-      iscript_bin_t::scpe_type_t* scpe_type = iscript->scpe()->at(i);
-      iscript_bin_t::scpe_header_type_t *scpe_header = scpe_type->scpe_header();
-      uint8_t animation_type = scpe_header->animation_type();
-
-      json j_header_list = json::array();
-      std::vector<iscript_bin_t::scpe_content_type_t*> *scpe_content_vec = scpe_type->scpe_content();
-      for(auto scpe_content : *scpe_content_vec)
-      {
-        j_header_list.push_back(scpe_content->scpe_opcode_offset());
-      }
-
-      json j_header;
-      j_header["iscript_id"] = iscript_id;
-      //j_header["offset"] = offset;
-      j_header["type"] = animation_type;
-      j_header["list"] = j_header_list;
-
-      j_headers.push_back(j_header);
-
-
       iscript_table.insert(iscript_id);
     }
   }
 
+  std::vector<iscript_bin_t::scpe_type_t*> *scpe = iscript->scpe();
 
-  /*
-   * map<offset, iscript_id>
-   */
-  map<uint16_t, uint16_t> offset_iscript_id_mapping;
-  for(auto iscript_id : iscript_table)
-  {
-
-
-    uint16_t entree_index = mDatahub.getIScriptIndexFromID(iscript_id);
-    iscript_bin_t::entree_offset_type_t *e_offset =  iscript->entree_offsets()->at(entree_index);
-    iscript_bin_t::scpe_type_t* scpe_type = iscript->scpe()->at(entree_index);
-
-
-    iscript_bin_t::scpe_header_type_t *scpe_header = scpe_type->scpe_header();
-    uint8_t animation_type = scpe_header->animation_type();
-
-    std::vector<iscript_bin_t::scpe_content_type_t*> *scpe_content_vec = scpe_type->scpe_content();
-
-
-    /*for(auto scpe_content : *scpe_content_vec)
-    {
-      j_header.push_back(scpe_content->scpe_opcode_offset());
-    }*/
-
-    uint16_t iscript_id_value = e_offset->iscript_id();
-    uint16_t offset = e_offset->offset();
-
-    offset_iscript_id_mapping.insert({offset, iscript_id_value});
-
-    //cout << "iscript_id: " <<  _iscript_id << endl;
-
-  }
-
-
-
-  /*
-   * ==> old
-   */
-
-  /*for(auto iscript_id : iscript_table)
-  {
-    cout << "iscript: " << iscript_id << endl;
-    uint16_t scpe_index = mDatahub.getIScriptIndexFromID(iscript_id);
-    iscript_bin_t::scpe_type_t* scpe_type = mDatahub.iscript->scpe()->at(scpe_index);
-
-    iscript_bin_t::scpe_header_type_t *scpe_header = scpe_type->scpe_header();
-    uint8_t animation_type = scpe_header->animation_type();
-    cout << "animation_type: " << to_string(animation_type) << endl;
-
-    std::vector<iscript_bin_t::scpe_content_type_t*> *scpe_content_vec = scpe_type->scpe_content();
-    cout << "scpe_content_vec size: " << scpe_content_vec->size() << endl;
-  }*/
-
-
-  std::vector<iscript_bin_t::scpe_type_t*> *scpe_vec = iscript->scpe();
-
+  // this contains all scpe script start offsets from the headers
   unordered_set<uint16_t> scpe_offset_table;
-  for(auto scpe_type : *scpe_vec)
+  for(auto scpe_type : *scpe)
   {
     std::vector<iscript_bin_t::scpe_content_type_t*> *scpe_content_vec = scpe_type->scpe_content();
 
     for(auto scpe_content : *scpe_content_vec)
     {
-      //cout << scpe_content->scpe_opcode_offset() << " ";
+      // remember all referenced offsets for later calculation
       scpe_offset_table.insert(scpe_content->scpe_opcode_offset());
+
+      // TODO: maybe integrate the creation of this set to the loop below...
     }
   }
+
+
+  /*cout << "scpe_offset_table: ";
+  for(auto offset : scpe_offset_table)
+  {
+    cout << offset << " ";
+  }
+  cout << endl;*/
+
+  /*
+   * create all the iscript headers optimized to be accessed by iscript_id (from images.dat)
+   */
+  json j_headers = json::object();
+  for(auto iscript_id : iscript_table)
+  {
+    uint16_t i = mDatahub.getIScriptIndexFromID(iscript_id);
+
+    iscript_bin_t::entree_offset_type_t *e_offset =  iscript->entree_offsets()->at(i);
+    uint16_t _iscript_id = e_offset->iscript_id();
+    uint16_t offset = e_offset->offset();
+
+    iscript_bin_t::scpe_type_t* scpe_type = iscript->scpe()->at(i);
+    iscript_bin_t::scpe_header_type_t *scpe_header = scpe_type->scpe_header();
+    uint8_t animation_type = scpe_header->animation_type();
+
+    json j_header_list = json::array();
+    std::vector<iscript_bin_t::scpe_content_type_t*> *scpe_content_vec = scpe_type->scpe_content();
+    for(auto scpe_content : *scpe_content_vec)
+    {
+      j_header_list.push_back(scpe_content->scpe_opcode_offset());
+
+      // remember all referenced offsets for later calculation
+      //scpe_offset_table.insert(scpe_content->scpe_opcode_offset());
+    }
+
+    json j_header;
+    j_header["iscript_id"] = iscript_id;
+    //j_header["offset"] = offset;
+    j_header["type"] = animation_type;
+    j_header["list"] = j_header_list;
+
+    j_headers[to_string(iscript_id)] = j_header;
+  }
+
+  j["headers"] = j_headers;
+
+
+  cout << "uint16_t: " << sizeof(uint16_t) << endl;
+
+  json j_scripts = json::object();
+
+  std::vector<iscript_bin_t::scpe_type_t*> *scpe_vec = iscript->scpe();
 
   //cout << "size of scpe: " << scpe->size() << endl;
   unsigned int scpe_type_i = 0;
   for(auto scpe_type : *scpe_vec)
   {
-    uint16_t iscript_id = entree_offsets->at(scpe_type_i)->iscript_id();
-    //cout << "read scpe for iscript: " << to_string(iscript_id) << endl;
     json j_iscript;
 
 
@@ -598,11 +574,12 @@ json SCJsonExporter::export_iscript_bin()
 
     //cout << "scpe_content size: " << to_string(scpe_content_vec->size()) << endl;
 
-    j["headers"] = j_headers;
-
     unsigned int scpe_content_i = 0;
     for(auto scpe_content : *scpe_content_vec)
+    //auto scpe_content = scpe_content_vec->at(animation_type); // TODO: this is maybe the problem!!
     {
+      uint16_t scpe_content_offset = scpe_content->scpe_opcode_offset();
+
       opcode_list_type_t *opcode_list_type = scpe_content->iscript_function();
       if(opcode_list_type)
       {
@@ -617,7 +594,14 @@ json SCJsonExporter::export_iscript_bin()
         /**
          * hack: just push something into JSON. This needs to be correct transformed
          */
-        j_iscript[to_string(scpe_content_i)] = opcode_vec;
+        j_iscript.push_back(opcode_vec);
+
+        j_scripts[to_string(scpe_content_offset)] = j_iscript;
+      }
+      else
+      {
+        std::vector<iscript_bin_t::opcode_type_t*> opcode_vec(0);
+        j_iscript.push_back(opcode_vec);
       }
       scpe_content_i++;
     }
@@ -626,6 +610,8 @@ json SCJsonExporter::export_iscript_bin()
 
     scpe_type_i++;
   }
+
+  j["scripts"] = j_scripts;
 
   return j;
 }
