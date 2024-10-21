@@ -24,7 +24,6 @@
 #include "kaitai/orders_dat.h"
 #include "kaitai/techdata_dat.h"
 #include "kaitai/mapdata_dat.h"
-#include "kaitai/iscript_bin.h"
 
 // System
 #include <nlohmann/json.hpp>
@@ -72,11 +71,6 @@ public:
   DataHub(std::shared_ptr<Hurricane> hurricane);
   virtual ~DataHub();
 
-  /**
-   * @return the IScript index for a specific iscript ID. (before a map was created in init_iscript_bin())
-   */
-  uint16_t getIScriptIndexFromID(uint16_t index);
-
   // Kaitai parsed objects
   std::shared_ptr<units_dat_t> units;
   std::shared_ptr<orders_dat_t> orders;
@@ -89,7 +83,6 @@ public:
   std::shared_ptr<upgrades_dat_t> upgrades;
   std::shared_ptr<techdata_dat_t> techdata;
   std::shared_ptr<mapdata_dat_t> mapdata;
-  std::shared_ptr<iscript_bin_t> iscript;
 
   // kaitai parsed Tbl vectors
   std::vector<TblEntry> stat_txt_tbl_vec;
@@ -154,9 +147,6 @@ private:
   // mapdata.tbl
   void init_mapdata_tbl();
 
-  // iscript.bin
-  void init_iscript_bin();
-
   std::shared_ptr<std::istream> m_units_stream;
   std::shared_ptr<std::istream> m_orders_stream;
   std::shared_ptr<std::istream> m_weapons_stream;
@@ -183,7 +173,6 @@ private:
   std::shared_ptr<kaitai::kstream> m_mapdata_ks;
   std::shared_ptr<kaitai::kstream> m_iscript_ks;
 
-  std::map<uint16_t, uint16_t> m_iscriptImageEntreeMap;
 };
 
 } /* namespace dat */

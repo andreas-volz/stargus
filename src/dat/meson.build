@@ -12,7 +12,6 @@ startool_dat_sources = files(
 	'PropertyNotAvailableException.cpp',
 	'Order.cpp',
 	'Techdata.cpp',
-	'Upgrade.cpp',
-	'IScript.cpp'
+	'Upgrade.cpp'
 )
 

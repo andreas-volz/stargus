@@ -14,7 +14,6 @@
 #include "dat/DataHub.h"
 #include "Storage.h"
 #include "SCJsonExporter.h"
-#include "UnitsJsonExporter.h"
 #include "Logger.h"
 #include "pacman.h"
 #include "dat/Unit.h"
@@ -341,35 +340,6 @@ int main(int argc, const char **argv)
   CheckPath(image_directory);
   jsonStorage.setDataPath(image_directory);
 
-  set<uint32_t> iscript_set;
-  for (unsigned int image = 0; image < datahub.images->iscript()->size(); image++)
-  {
-    Image image_obj(datahub, image);
-    image_obj.set_generate_objects(nested_objects);
-
-    iscript_set.insert(image_obj.iscript());
-
-    json j_image(image_obj);
-    string num_string = to_string(image);
-    saveJson(j_image, jsonStorage("image_" + num_string + ".json"), pretty);
-  }
-
-  // export all iscript from all generated images. This should be enough to get all used script
-  string iscript_directory = destination_directory + "/iscript/";
-  CheckPath(iscript_directory);
-  jsonStorage.setDataPath(iscript_directory);
-
-  /*for(auto iscript : iscript_set)
-  {
-    cout << "parse iscript: " << iscript << endl;
-    IScript iscript_obj(datahub, iscript);
-    json j_iscript(iscript_obj);
-    string num_string = to_string(iscript);
-    saveJson(j_iscript, jsonStorage("iscript_" + num_string + ".json"), pretty);
-  }*/
-
-
-
   // generate raw dat files
 
   CheckPath(destination_directory);
@@ -427,11 +397,6 @@ int main(int argc, const char **argv)
   /// save all the the stat_txt.tbl parts...
   json stat_txt_tbl = scjsonexporter.export_file_tbl(datahub.stat_txt_tbl_vec);
   saveJson(stat_txt_tbl, jsonStorage("stat_txt_tbl.json"), pretty);
-
-  // iscript.bin
-  json j_iscript_bin = scjsonexporter.export_iscript_bin();
-  saveJson(j_iscript_bin, jsonStorage("iscript_bin.json"), pretty);
-
 
   /*json stat_txt_units_tbl = scjsonexporter.export_file_tbl(datahub.stat_txt_units_tbl_vec);
   saveJson(stat_txt_units_tbl, jsonStorage("stat_txt_units_tbl.json"), pretty);

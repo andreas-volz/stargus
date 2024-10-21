@@ -62,8 +62,6 @@ DataHub::DataHub(std::shared_ptr<Hurricane> hurricane) :
   init_portdata_tbl();
 
   init_mapdata_tbl();
-
-  init_iscript_bin();
 }
 
 DataHub::~DataHub()
@@ -264,31 +262,6 @@ void DataHub::init_mapdata_tbl()
 
   Tbl mapdata_tbl;
   mapdata_tbl_vec = mapdata_tbl.convertFromStream(mapdata_tbl_ks);
-}
-
-void DataHub::init_iscript_bin()
-{
-  string sc_iscript_bin = "scripts\\iscript.bin";
-
-  m_iscript_stream = mHurricane->extractStream(sc_iscript_bin);
-  m_iscript_ks = make_shared<kaitai::kstream>(&*m_iscript_stream);
-
-  iscript = make_shared<iscript_bin_t>(m_iscript_ks.get());
-
-  /* This code creates a map to access the iscripts by id */
-  for(unsigned int i = 0; i < iscript->entree_offsets()->size(); i++)
-  {
-    auto entree_offset = iscript->entree_offsets()->at(i);
-
-    uint16_t iscript_id = entree_offset->iscript_id();
-
-    m_iscriptImageEntreeMap[iscript_id] = i;
-  }
-}
-
-uint16_t DataHub::getIScriptIndexFromID(uint16_t index)
-{
-  return m_iscriptImageEntreeMap.at(index);
 }
 
 } /* namespace dat */

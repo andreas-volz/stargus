@@ -10,7 +10,6 @@
 // project
 #include "ObjectAccess.h"
 #include "PropertyNotAvailableException.h"
-#include "IScript.h"
 
 namespace dat
 {
@@ -43,7 +42,6 @@ public:
   images_dat_t::remapping_enum_t remapping();
 
   uint32_t iscript();
-  IScript iscript_obj();
 
   uint32_t shield_overlay();
   TblEntry shield_overlay_tbl();

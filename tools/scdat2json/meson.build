@@ -2,7 +2,6 @@
 scdat2json_sources = files(
 	'scdat2json.cpp',
 	'SCJsonExporter.cpp',
-	'UnitsJsonExporter.cpp',
 	'to_json.cpp'
 	)
 
