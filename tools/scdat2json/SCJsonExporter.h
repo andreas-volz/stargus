@@ -32,6 +32,7 @@ public:
 
 private:
   dat::DataHub &mDatahub;
+
 };
 
 #endif /* SCJSONEXPORTER_H */

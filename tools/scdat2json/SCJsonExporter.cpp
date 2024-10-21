@@ -493,17 +493,16 @@ json SCJsonExporter::export_iscript_bin()
   std::vector<iscript_bin_t::scpe_type_t*> *scpe = iscript->scpe();
 
   // this contains all scpe script start offsets from the headers
-  unordered_set<uint16_t> scpe_offset_table;
+  set<uint16_t> scpe_offset_table;
   for(auto scpe_type : *scpe)
   {
     std::vector<iscript_bin_t::scpe_content_type_t*> *scpe_content_vec = scpe_type->scpe_content();
 
     for(auto scpe_content : *scpe_content_vec)
     {
+      // TODO: maybe integrate the creation of this set to the loop below...
       // remember all referenced offsets for later calculation
       scpe_offset_table.insert(scpe_content->scpe_opcode_offset());
-
-      // TODO: maybe integrate the creation of this set to the loop below...
     }
   }
 
@@ -523,9 +522,9 @@ json SCJsonExporter::export_iscript_bin()
   {
     uint16_t i = mDatahub.getIScriptIndexFromID(iscript_id);
 
-    iscript_bin_t::entree_offset_type_t *e_offset =  iscript->entree_offsets()->at(i);
-    uint16_t _iscript_id = e_offset->iscript_id();
-    uint16_t offset = e_offset->offset();
+    //iscript_bin_t::entree_offset_type_t *e_offset =  iscript->entree_offsets()->at(i);
+    //uint16_t _iscript_id = e_offset->iscript_id();
+    //uint16_t offset = e_offset->offset();
 
     iscript_bin_t::scpe_type_t* scpe_type = iscript->scpe()->at(i);
     iscript_bin_t::scpe_header_type_t *scpe_header = scpe_type->scpe_header();
@@ -553,65 +552,64 @@ json SCJsonExporter::export_iscript_bin()
   j["headers"] = j_headers;
 
 
-  cout << "uint16_t: " << sizeof(uint16_t) << endl;
+  unsigned int max_opcode_offset = *scpe_offset_table.rbegin();
+  max_opcode_offset += 29; //+ max animation type as test
+  vector<iscript_bin_t::opcode_type_t*> opcode_overall_vec(max_opcode_offset);
 
   json j_scripts = json::object();
 
   std::vector<iscript_bin_t::scpe_type_t*> *scpe_vec = iscript->scpe();
 
-  //cout << "size of scpe: " << scpe->size() << endl;
   unsigned int scpe_type_i = 0;
   for(auto scpe_type : *scpe_vec)
   {
-    json j_iscript;
-
-
-    iscript_bin_t::scpe_header_type_t *scpe_header = scpe_type->scpe_header();
+    //iscript_bin_t::scpe_header_type_t *scpe_header = scpe_type->scpe_header();
     std::vector<iscript_bin_t::scpe_content_type_t*> *scpe_content_vec = scpe_type->scpe_content();
-
-    uint8_t animation_type = scpe_header->animation_type();
-    //cout << "animation type: " << to_string(animation_type) << endl;
-
-    //cout << "scpe_content size: " << to_string(scpe_content_vec->size()) << endl;
+    //uint8_t animation_type = scpe_header->animation_type();
 
     unsigned int scpe_content_i = 0;
     for(auto scpe_content : *scpe_content_vec)
-    //auto scpe_content = scpe_content_vec->at(animation_type); // TODO: this is maybe the problem!!
     {
       uint16_t scpe_content_offset = scpe_content->scpe_opcode_offset();
 
       opcode_list_type_t *opcode_list_type = scpe_content->iscript_function();
       if(opcode_list_type)
       {
-        //cout << "iscript read_list(): " << to_string(scpe_content_i) << endl;
         std::vector<kaitai::kstruct*>* opcode_vec_ks = opcode_list_type->read_list(scpe_offset_table);
+
+        std::vector<uint16_t> opcode_offsets = opcode_list_type->get_opcode_offsets();
 
         std::vector<iscript_bin_t::opcode_type_t*> opcode_vec(opcode_vec_ks->size());
 
         std::transform(opcode_vec_ks->begin(), opcode_vec_ks->end(), opcode_vec.begin(),
                        [](auto ptr) {return static_cast<iscript_bin_t::opcode_type_t*>(ptr); });
 
-        /**
-         * hack: just push something into JSON. This needs to be correct transformed
-         */
-        j_iscript.push_back(opcode_vec);
+        j_scripts[to_string(scpe_content_offset)] = opcode_vec;
 
-        j_scripts[to_string(scpe_content_offset)] = j_iscript;
+        j_scripts[to_string(scpe_content_offset)].push_back(opcode_offsets);
+
+        //cout << "opcode:";
+        unsigned int i = 0;
+        for(auto opcode : opcode_vec)
+        {
+          // TODO: calculate the vector position from offset + size of opcodes in the list
+          opcode_overall_vec[scpe_content_offset] = opcode;
+
+          //cout << opcode->code() << " ";
+
+          i++;
+        }
+        cout << endl;
       }
-      else
-      {
-        std::vector<iscript_bin_t::opcode_type_t*> opcode_vec(0);
-        j_iscript.push_back(opcode_vec);
-      }
+
       scpe_content_i++;
     }
-
-    //j[to_string(iscript_id)] = j_iscript;
 
     scpe_type_i++;
   }
 
   j["scripts"] = j_scripts;
+  //j["overall_opcodes"] = opcode_overall_vec;
 
   return j;
 }

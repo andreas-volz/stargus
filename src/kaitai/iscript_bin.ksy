@@ -120,7 +120,7 @@ types:
             'opcode::uflunstable'      : u2_type
             'opcode::spruluselo'       : sprl_type
             'opcode::sprul'            : sprl_type
-            'opcode::sproluselo'       : sprov_type
+           	'opcode::sproluselo'       : sprov_type
             'opcode::end'              : empty_type #INSTR_TERM
             'opcode::setflipstate'     : u1_type
             'opcode::playsnd'          : u2_type

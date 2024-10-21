@@ -27,7 +27,7 @@ opcode_list_type_t::~opcode_list_type_t()
   _clean_up();
 }
 
-std::vector<kaitai::kstruct*>* opcode_list_type_t::read_list(std::unordered_set<uint16_t> scpe_offset_table)
+std::vector<kaitai::kstruct*>* opcode_list_type_t::read_list(std::set<uint16_t> scpe_offset_table)
 {
   if (m_opcode_list)
   {
@@ -58,8 +58,11 @@ std::vector<kaitai::kstruct*>* opcode_list_type_t::read_list(std::unordered_set<
 
 void opcode_list_type_t::_read()
 {
-  int scpe_opcode_offset = 0;
+  uint16_t scpe_opcode_offset = 0;
   bool end_criteria = false;
+
+  m_opcode_offsets.clear();
+
   do
   {
     auto io_size = m__io->size();
@@ -67,19 +70,6 @@ void opcode_list_type_t::_read()
 
     iscript_bin_t::opcode_type_t *opcode = new iscript_bin_t::opcode_type_t(m__io, m__parent, m__root);
     //cout << "_read::code: " << hex << opcode->code() << endl;
-
-
-    /*if(opcode->code()==iscript_bin_t::OPCODE_PLAYFRAM)
-    {
-      cout << "playframe: ";
-      iscript_bin_t::u2_type_t *casted_args = static_cast<iscript_bin_t::u2_type_t *>(opcode->args());
-      cout << casted_args->value() << endl;
-      cout << endl;
-      if(casted_args->value() == 0xa0)
-      {
-        cout << "hit breakboint" << endl;
-      }
-    }*/
 
     // set next offset position
     scpe_opcode_offset = m__io->pos();
@@ -127,14 +117,21 @@ void opcode_list_type_t::_read()
     {
       end_criteria = true;
     }
+    // OPCODE_CALL and others needs to be rewritten to
 
+
+    m_opcode_offsets.push_back(scpe_opcode_offset);
     m_opcode_list->push_back(opcode);
   }
   while(!end_criteria);
 }
 
+std::vector<uint16_t> opcode_list_type_t::get_opcode_offsets()
+{
+  return m_opcode_offsets;
+}
+
 void opcode_list_type_t::_clean_up()
 {
-  // crash at end -> memory bug?
   delete m_opcode_list;
 }
