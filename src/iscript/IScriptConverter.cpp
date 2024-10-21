@@ -27,6 +27,8 @@ IScriptConverter::~IScriptConverter()
 
 }
 
+const std::string ENDL = "\n";
+
 const std::vector<std::string> OPCODE_COMMAND_MAPPING = {
   "playfram",
   "playframtile",
@@ -130,7 +132,7 @@ const std::vector<std::string> ISCRIPT_ANIMATIONTYPE_MAPPING = {
   "Enable"
 };
 
-void IScriptConverter::convertOpcodeVector(const std::vector<Opcode> &opcode_vector)
+const std::string IScriptConverter::convertOpcodeVector(const std::vector<Opcode> &opcode_vector)
 {
   string opcode_string;
 
@@ -149,7 +151,8 @@ void IScriptConverter::convertOpcodeVector(const std::vector<Opcode> &opcode_vec
 
      i++;
    }
-   cout << opcode_string;
+   //cout << opcode_string;
+   return opcode_string;
 }
 
 const std::string IScriptConverter::convertOpcode(const Opcode &opcode)
@@ -364,22 +367,27 @@ const std::string IScriptConverter::convertOpcode(const Opcode &opcode)
   return opcode_string;
 }
 
-void IScriptConverter::convertSCPEHeaderMap(const std::map<uint16_t, std::vector<uint16_t>> &iscript_scpe_header_map)
+const std::string IScriptConverter::convertSCPEHeaderMap(const std::map<uint16_t, std::vector<uint16_t>> &iscript_scpe_header_map)
 {
+  string header_string;
+
   for(auto iscript_scpe_header_it : iscript_scpe_header_map)
   {
     uint16_t iscript_id = iscript_scpe_header_it.first;
     std::vector<uint16_t> opcode_offsets = iscript_scpe_header_it.second;
 
-    convertSCPEHeader(iscript_id, opcode_offsets);
+    header_string += convertSCPEHeader(iscript_id, opcode_offsets);
   }
+  return header_string;
 }
 
-void IScriptConverter::convertSCPEHeader(uint16_t iscript_id, const std::vector<uint16_t> &iscript_scpe_header)
+const std::string IScriptConverter::convertSCPEHeader(uint16_t iscript_id, const std::vector<uint16_t> &iscript_scpe_header)
 {
-  cout << ".headerstart" << endl;
+  string header_string;
 
-  cout << "iscript: " << to_string(iscript_id) << endl;
+  header_string += ".headerstart" + ENDL;
+
+  header_string += "iscript: " + to_string(iscript_id) + ENDL;
 
   unsigned int i = 0;
 
@@ -389,24 +397,25 @@ void IScriptConverter::convertSCPEHeader(uint16_t iscript_id, const std::vector<
     {
       string animationtype_name = ISCRIPT_ANIMATIONTYPE_MAPPING[i];
 
-      cout << animationtype_name << " ";
-      cout << opcode_offset << endl;
+      header_string += animationtype_name + " ";
+      header_string += to_string(opcode_offset) + ENDL;
 
       i++;
     }
   }
   else
   {
-    cout << "animations:";
+    header_string += "animations:";
     for(auto opcode_offset : iscript_scpe_header)
     {
-      cout << " " << opcode_offset;
+      header_string += " " + to_string(opcode_offset);
     }
-    cout << endl;
+    header_string += ENDL;
   }
 
-  cout << ".headerend" << endl << endl;
+  header_string += ".headerend" + ENDL + ENDL;
 
+  return header_string;
 }
 
 void IScriptConverter::setHumanReadable(bool human_readable)
