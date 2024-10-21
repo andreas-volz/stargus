@@ -3,6 +3,7 @@ subdir('kaitai')
 subdir('dat')
 subdir('tileset')
 subdir('libgrp')
+subdir('iscript')
 
 startool_sources = files(
 	'startool.cpp'
@@ -74,6 +75,7 @@ libstarformat = static_library('starformat',
 	startool_dat_sources,
 	startool_tileset_sources,
 	libgrp_sources,
+	iscript_sources,
 	include_directories : config_incdir,
 	dependencies : [casc_dep, storm_dep, zlib_dep, png_dep, imagemagickpp_dep, log4cxx_dep, bzip2_dep, nlohmann_json_dep, iconv_lib],
 	install : true)
