@@ -136,8 +136,9 @@ const std::string IScriptConverter::convertOpcodeVector(const std::vector<Opcode
 {
   string opcode_string;
 
-   unsigned int i = 0;
+   opcode_string += ".opcodestart" + ENDL;
 
+   unsigned int i = 0;
    for(Opcode opcode : opcode_vector)
    {
      if(m_human_readable)
@@ -147,11 +148,13 @@ const std::string IScriptConverter::convertOpcodeVector(const std::vector<Opcode
      }
 
      opcode_string += convertOpcode(opcode);
-     opcode_string += string("\n");
+     opcode_string += ENDL;
 
      i++;
    }
-   //cout << opcode_string;
+
+   opcode_string += ".opcodeend" + ENDL;
+
    return opcode_string;
 }
 
@@ -427,3 +430,22 @@ bool IScriptConverter::getHumanReadable()
 {
   return m_human_readable;
 }
+
+void IScriptConverter::saveConverted(const std::string &outfile, const std::map<uint16_t, std::vector<uint16_t>> &iscript_scpe_header_map, const std::vector<Opcode> &opcode_vector)
+{
+  try
+  {
+    std::ofstream file(outfile);
+
+    string output_string = convertSCPEHeaderMap(iscript_scpe_header_map);
+    output_string += convertOpcodeVector(opcode_vector);
+
+    file << output_string;
+  }
+  catch (std::ofstream::failure &e)
+  {
+    std::cerr << e.what() << std::endl;
+  }
+}
+
+

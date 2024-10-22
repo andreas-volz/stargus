@@ -27,6 +27,8 @@ public:
   const std::string convertOpcodeVector(const std::vector<Opcode> &opcode_vector);
   const std::string convertOpcode(const Opcode &opcode);
 
+  void saveConverted(const std::string &outfile, const std::map<uint16_t, std::vector<uint16_t>> &iscript_scpe_header_map, const std::vector<Opcode> &opcode_vector);
+
   /**
    * @param clear_names sets the flag if the generated out should have resolved clear names (helpful for debugging or human reading).
    *        The default case for machine usage should be to not have clear names. You've to set this before using the converter functions.

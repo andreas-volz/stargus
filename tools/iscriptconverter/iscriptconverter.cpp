@@ -185,11 +185,7 @@ int main(int argc, const char **argv)
 
   IScriptConverter iscript_converter;
   iscript_converter.setHumanReadable(human_readable);
-  string header_string = iscript_converter.convertSCPEHeaderMap(iscript_scpe_header_map);
-  string opcode_string = iscript_converter.convertOpcodeVector(opcode_vector);
-
-  cout << header_string;
-  cout << opcode_string;
+  iscript_converter.saveConverted(iscript_txt, iscript_scpe_header_map, opcode_vector);
 
   return 0;
 }
