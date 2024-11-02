@@ -71,6 +71,38 @@ void chk_t::locations_t::_clean_up() {
     }
 }
 
+chk_t::trigger_execution_t::trigger_execution_t(kaitai::kstream* p__io, chk_t::triggers_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+    m__parent = p__parent;
+    m__root = p__root;
+    m_list = 0;
+
+    try {
+        _read();
+    } catch(...) {
+        _clean_up();
+        throw;
+    }
+}
+
+void chk_t::trigger_execution_t::_read() {
+    m_flags = m__io->read_u4le();
+    m_list = new std::vector<uint8_t>();
+    const int l_list = 28;
+    for (int i = 0; i < l_list; i++) {
+        m_list->push_back(m__io->read_u1());
+    }
+}
+
+chk_t::trigger_execution_t::~trigger_execution_t() {
+    _clean_up();
+}
+
+void chk_t::trigger_execution_t::_clean_up() {
+    if (m_list) {
+        delete m_list; m_list = 0;
+    }
+}
+
 chk_t::player_owner_array_t::player_owner_array_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
@@ -367,6 +399,37 @@ std::string chk_t::string_address_t::string() {
     return m_string;
 }
 
+chk_t::trigger_condition_t::trigger_condition_t(kaitai::kstream* p__io, chk_t::triggers_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+    m__parent = p__parent;
+    m__root = p__root;
+
+    try {
+        _read();
+    } catch(...) {
+        _clean_up();
+        throw;
+    }
+}
+
+void chk_t::trigger_condition_t::_read() {
+    m_location = m__io->read_u4le();
+    m_group = m__io->read_u4le();
+    m_amount = m__io->read_u4le();
+    m_unit_id = m__io->read_u2le();
+    m_rule = m__io->read_u1();
+    m_condition = m__io->read_u1();
+    m_type = m__io->read_u1();
+    m_flags = m__io->read_u1();
+    m_internal_used = m__io->read_u2le();
+}
+
+chk_t::trigger_condition_t::~trigger_condition_t() {
+    _clean_up();
+}
+
+void chk_t::trigger_condition_t::_clean_up() {
+}
+
 chk_t::locations_array_t::locations_array_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
@@ -401,6 +464,37 @@ void chk_t::locations_array_t::_clean_up() {
             delete *it;
         }
         delete m_values; m_values = 0;
+    }
+}
+
+chk_t::wav_string_indexes_t::wav_string_indexes_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+    m__parent = p__parent;
+    m__root = p__root;
+    m_wav_index = 0;
+
+    try {
+        _read();
+    } catch(...) {
+        _clean_up();
+        throw;
+    }
+}
+
+void chk_t::wav_string_indexes_t::_read() {
+    m_wav_index = new std::vector<uint32_t>();
+    const int l_wav_index = 512;
+    for (int i = 0; i < l_wav_index; i++) {
+        m_wav_index->push_back(m__io->read_u4le());
+    }
+}
+
+chk_t::wav_string_indexes_t::~wav_string_indexes_t() {
+    _clean_up();
+}
+
+void chk_t::wav_string_indexes_t::_clean_up() {
+    if (m_wav_index) {
+        delete m_wav_index; m_wav_index = 0;
     }
 }
 
@@ -613,6 +707,43 @@ chk_t::fog_of_war_layer_t::~fog_of_war_layer_t() {
 void chk_t::fog_of_war_layer_t::_clean_up() {
 }
 
+chk_t::triggers_array_t::triggers_array_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+    m__parent = p__parent;
+    m__root = p__root;
+    m_values = 0;
+
+    try {
+        _read();
+    } catch(...) {
+        _clean_up();
+        throw;
+    }
+}
+
+void chk_t::triggers_array_t::_read() {
+    m_values = new std::vector<triggers_t*>();
+    {
+        int i = 0;
+        while (!m__io->is_eof()) {
+            m_values->push_back(new triggers_t(m__io, this, m__root));
+            i++;
+        }
+    }
+}
+
+chk_t::triggers_array_t::~triggers_array_t() {
+    _clean_up();
+}
+
+void chk_t::triggers_array_t::_clean_up() {
+    if (m_values) {
+        for (std::vector<triggers_t*>::iterator it = m_values->begin(); it != m_values->end(); ++it) {
+            delete *it;
+        }
+        delete m_values; m_values = 0;
+    }
+}
+
 chk_t::player_unit_restrictions_t::player_unit_restrictions_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
@@ -697,6 +828,57 @@ void chk_t::player_unit_restrictions_t::_clean_up() {
             delete *it;
         }
         delete m_overwrite_defaults; m_overwrite_defaults = 0;
+    }
+}
+
+chk_t::triggers_t::triggers_t(kaitai::kstream* p__io, chk_t::triggers_array_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+    m__parent = p__parent;
+    m__root = p__root;
+    m_conditions = 0;
+    m_actions = 0;
+    m_execution = 0;
+
+    try {
+        _read();
+    } catch(...) {
+        _clean_up();
+        throw;
+    }
+}
+
+void chk_t::triggers_t::_read() {
+    m_conditions = new std::vector<trigger_condition_t*>();
+    const int l_conditions = 16;
+    for (int i = 0; i < l_conditions; i++) {
+        m_conditions->push_back(new trigger_condition_t(m__io, this, m__root));
+    }
+    m_actions = new std::vector<trigger_actions_t*>();
+    const int l_actions = 64;
+    for (int i = 0; i < l_actions; i++) {
+        m_actions->push_back(new trigger_actions_t(m__io, this, m__root));
+    }
+    m_execution = new trigger_execution_t(m__io, this, m__root);
+}
+
+chk_t::triggers_t::~triggers_t() {
+    _clean_up();
+}
+
+void chk_t::triggers_t::_clean_up() {
+    if (m_conditions) {
+        for (std::vector<trigger_condition_t*>::iterator it = m_conditions->begin(); it != m_conditions->end(); ++it) {
+            delete *it;
+        }
+        delete m_conditions; m_conditions = 0;
+    }
+    if (m_actions) {
+        for (std::vector<trigger_actions_t*>::iterator it = m_actions->begin(); it != m_actions->end(); ++it) {
+            delete *it;
+        }
+        delete m_actions; m_actions = 0;
+    }
+    if (m_execution) {
+        delete m_execution; m_execution = 0;
     }
 }
 
@@ -806,7 +988,7 @@ void chk_t::data_type_t::_read() {
             m_content = new string_data_t(m__io, this, m__root);
         }
         else if (on == std::string("TRIG")) {
-            m_content = new u1_array_t(m__io, this, m__root);
+            m_content = new triggers_array_t(m__io, this, m__root);
         }
         else if (on == std::string("UPGS")) {
             m_content = new u1_array_t(m__io, this, m__root);
@@ -824,7 +1006,7 @@ void chk_t::data_type_t::_read() {
             m_content = new player_owner_array_t(m__io, this, m__root);
         }
         else if (on == std::string("WAV ")) {
-            m_content = new u1_array_t(m__io, this, m__root);
+            m_content = new wav_string_indexes_t(m__io, this, m__root);
         }
         else if (on == std::string("THG2")) {
             m_content = new starcraft_sprites_array_t(m__io, this, m__root);
@@ -860,7 +1042,7 @@ void chk_t::data_type_t::_read() {
             m_content = new u2_array_t(m__io, this, m__root);
         }
         else if (on == std::string("FORC")) {
-            m_content = new u1_array_t(m__io, this, m__root);
+            m_content = new force_settings_t(m__io, this, m__root);
         }
         else if (on == std::string("TILE")) {
             m_content = new u2_array_t(m__io, this, m__root);
@@ -869,7 +1051,7 @@ void chk_t::data_type_t::_read() {
             m_content = new u1_array_t(m__io, this, m__root);
         }
         else if (on == std::string("SPRP")) {
-            m_content = new u2_array_t(m__io, this, m__root);
+            m_content = new scenario_properties_t(m__io, this, m__root);
         }
         else if (on == std::string("IVER")) {
             m_content = new u2_array_t(m__io, this, m__root);
@@ -927,6 +1109,30 @@ void chk_t::data_type_t::_clean_up() {
     if (m_content) {
         delete m_content; m_content = 0;
     }
+}
+
+chk_t::scenario_properties_t::scenario_properties_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+    m__parent = p__parent;
+    m__root = p__root;
+
+    try {
+        _read();
+    } catch(...) {
+        _clean_up();
+        throw;
+    }
+}
+
+void chk_t::scenario_properties_t::_read() {
+    m_name = m__io->read_u2le();
+    m_decription = m__io->read_u2le();
+}
+
+chk_t::scenario_properties_t::~scenario_properties_t() {
+    _clean_up();
+}
+
+void chk_t::scenario_properties_t::_clean_up() {
 }
 
 chk_t::starcraft_sprites_t::starcraft_sprites_t(kaitai::kstream* p__io, chk_t::starcraft_sprites_array_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
@@ -1020,6 +1226,58 @@ chk_t::player_races_t::~player_races_t() {
 void chk_t::player_races_t::_clean_up() {
     if (m_value) {
         delete m_value; m_value = 0;
+    }
+}
+
+chk_t::force_settings_t::force_settings_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+    m__parent = p__parent;
+    m__root = p__root;
+    m_player_force = 0;
+    m_force_string = 0;
+    m_flags = 0;
+
+    try {
+        _read();
+    } catch(...) {
+        _clean_up();
+        throw;
+    }
+}
+
+void chk_t::force_settings_t::_read() {
+    m_player_force = new std::vector<uint8_t>();
+    const int l_player_force = 8;
+    for (int i = 0; i < l_player_force; i++) {
+        m_player_force->push_back(m__io->read_u1());
+    }
+    m_force_string = new std::vector<uint16_t>();
+    const int l_force_string = 4;
+    for (int i = 0; i < l_force_string; i++) {
+        m_force_string->push_back(m__io->read_u2le());
+    }
+    m_flags = new std::vector<force_settings_flags_t*>();
+    const int l_flags = 4;
+    for (int i = 0; i < l_flags; i++) {
+        m_flags->push_back(new force_settings_flags_t(m__io, this, m__root));
+    }
+}
+
+chk_t::force_settings_t::~force_settings_t() {
+    _clean_up();
+}
+
+void chk_t::force_settings_t::_clean_up() {
+    if (m_player_force) {
+        delete m_player_force; m_player_force = 0;
+    }
+    if (m_force_string) {
+        delete m_force_string; m_force_string = 0;
+    }
+    if (m_flags) {
+        for (std::vector<force_settings_flags_t*>::iterator it = m_flags->begin(); it != m_flags->end(); ++it) {
+            delete *it;
+        }
+        delete m_flags; m_flags = 0;
     }
 }
 
@@ -1221,6 +1479,33 @@ void chk_t::starcraft_sprites_array_t::_clean_up() {
     }
 }
 
+chk_t::force_settings_flags_t::force_settings_flags_t(kaitai::kstream* p__io, chk_t::force_settings_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+    m__parent = p__parent;
+    m__root = p__root;
+
+    try {
+        _read();
+    } catch(...) {
+        _clean_up();
+        throw;
+    }
+}
+
+void chk_t::force_settings_flags_t::_read() {
+    m_random_start_location = m__io->read_bits_int_le(1);
+    m_allies = m__io->read_bits_int_le(1);
+    m_allied_victory = m__io->read_bits_int_le(1);
+    m_shared_vision = m__io->read_bits_int_le(1);
+    m_unused = m__io->read_bits_int_le(4);
+}
+
+chk_t::force_settings_flags_t::~force_settings_flags_t() {
+    _clean_up();
+}
+
+void chk_t::force_settings_flags_t::_clean_up() {
+}
+
 chk_t::fog_of_war_layer_array_t::fog_of_war_layer_array_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
@@ -1256,6 +1541,39 @@ void chk_t::fog_of_war_layer_array_t::_clean_up() {
         }
         delete m_values; m_values = 0;
     }
+}
+
+chk_t::trigger_actions_t::trigger_actions_t(kaitai::kstream* p__io, chk_t::triggers_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+    m__parent = p__parent;
+    m__root = p__root;
+
+    try {
+        _read();
+    } catch(...) {
+        _clean_up();
+        throw;
+    }
+}
+
+void chk_t::trigger_actions_t::_read() {
+    m_source = m__io->read_u4le();
+    m_string_number = m__io->read_u4le();
+    m_wav_string = m__io->read_u4le();
+    m_time = m__io->read_u4le();
+    m_first_affected = m__io->read_u4le();
+    m_second_affected = m__io->read_u4le();
+    m_type = m__io->read_u2le();
+    m_action = m__io->read_u1();
+    m_unit_number = m__io->read_u1();
+    m_flags = m__io->read_u1();
+    m_internal_used = m__io->read_bytes(3);
+}
+
+chk_t::trigger_actions_t::~trigger_actions_t() {
+    _clean_up();
+}
+
+void chk_t::trigger_actions_t::_clean_up() {
 }
 
 chk_t::staredit_sprites_t::staredit_sprites_t(kaitai::kstream* p__io, chk_t::staredit_sprites_array_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {

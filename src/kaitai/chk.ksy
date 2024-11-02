@@ -54,11 +54,11 @@ types:
             '"UPRP"': cuwp_slots_array # CUWP Slots
             '"UPUS"': u1_array # CUWP Slots Used
             '"MRGN"': locations_array # Locations
-            '"TRIG"': u1_array # Triggers ## TODO: later
-            '"MBRF"': u1_array
-            '"SPRP"': u2_array
-            '"FORC"': u1_array
-            '"WAV "': u1_array
+            '"TRIG"': triggers_array # Triggers
+            '"MBRF"': u1_array # Mission Briefings ## TODO later
+            '"SPRP"': scenario_properties # Scenario Properties
+            '"FORC"': force_settings # Force Settings
+            '"WAV "': wav_string_indexes # WAV String Indexes
             '"UNIS"': u1_array
             '"UPGS"': u1_array
             '"TECS"': u1_array
@@ -575,7 +575,149 @@ types:
       - id: unused
         type: b10
         
-  
+  triggers_array:
+    seq:
+      - id: values
+        type: triggers
+        repeat: eos
+        
+  triggers:
+    seq:
+      - id: conditions
+        type: trigger_condition
+        repeat: expr
+        repeat-expr: 16
+        
+      - id: actions
+        type: trigger_actions
+        repeat: expr
+        repeat-expr: 64
+        
+      - id: execution
+        type: trigger_execution
+        
+  trigger_condition:
+    seq:
+      - id: location
+        type: u4
+        
+      - id: group
+        type: u4
+      
+      - id: amount
+        type: u4
+        
+      - id: unit_id
+        type: u2
+
+      - id: rule
+        type: u1
+
+      - id: condition
+        type: u1
+        
+      - id: type
+        type: u1
+        
+      - id: flags
+        type: u1
+        
+      - id: internal_used
+        type: u2
+        
+  trigger_actions:
+    seq:
+      - id: source
+        type: u4
+        
+      - id: string_number
+        type: u4
+        
+      - id: wav_string
+        type: u4
+        
+      - id: time
+        type: u4
+        
+      - id: first_affected
+        type: u4
+        
+      - id: second_affected
+        type: u4
+        
+      - id: type
+        type: u2
+        
+      - id: action
+        type: u1
+        
+      - id: unit_number
+        type: u1
+        
+      - id: flags
+        type: u1
+        
+      - id: internal_used
+        size: 3
+      
+  trigger_execution:
+    seq:
+      - id: flags
+        type: u4
+        
+      - id: list
+        type: u1
+        repeat: expr
+        repeat-expr: 28
+
+  scenario_properties:
+    seq:
+      - id: name
+        type: u2
+        
+      - id: decription
+        type: u2
+
+  force_settings:
+    seq:
+      - id: player_force
+        type: u1
+        repeat: expr
+        repeat-expr: 8
+
+      - id: force_string
+        type: u2
+        repeat: expr
+        repeat-expr: 4
+
+      - id: flags
+        type: force_settings_flags
+        repeat: expr
+        repeat-expr: 4
+
+  force_settings_flags:
+    seq:
+      - id: random_start_location
+        type: b1
+        
+      - id: allies
+        type: b1
+        
+      - id: allied_victory
+        type: b1
+        
+      - id: shared_vision
+        type: b1
+        
+      - id: unused
+        type: b4
+
+  wav_string_indexes:
+    seq:
+      - id: wav_index
+        type: u4
+        repeat: expr
+        repeat-expr: 512
 
 enums:
   player_owner_enum:

@@ -15,13 +15,16 @@ class chk_t : public kaitai::kstruct {
 
 public:
     class locations_t;
+    class trigger_execution_t;
     class player_owner_array_t;
     class upgrade_restrictions_t;
     class placed_units_mapmaker_properties_flags_t;
     class string_data_t;
     class staredit_sprites_array_t;
     class string_address_t;
+    class trigger_condition_t;
     class locations_array_t;
+    class wav_string_indexes_t;
     class locations_elevation_flags_t;
     class placed_units_special_properties_flags_t;
     class cuwp_slots_t;
@@ -29,20 +32,26 @@ public:
     class cuwp_slots_validity_flags_t;
     class starcraft_sprites_use_flasgs_t;
     class fog_of_war_layer_t;
+    class triggers_array_t;
     class player_unit_restrictions_t;
+    class triggers_t;
     class u2_array_t;
     class placed_units_t;
     class data_type_t;
+    class scenario_properties_t;
     class starcraft_sprites_t;
     class placed_units_state_flags_t;
     class player_races_t;
+    class force_settings_t;
     class placed_units_array_t;
     class u1_array_t;
     class cuwp_slots_special_properties_flags_t;
     class cuwp_slots_array_t;
     class cuwp_slots_unit_flags_t;
     class starcraft_sprites_array_t;
+    class force_settings_flags_t;
     class fog_of_war_layer_array_t;
+    class trigger_actions_t;
     class staredit_sprites_t;
     class dimension_t;
     class chunk_type_t;
@@ -123,6 +132,32 @@ public:
         locations_elevation_flags_t* elevation() const { return m_elevation; }
         chk_t* _root() const { return m__root; }
         chk_t::locations_array_t* _parent() const { return m__parent; }
+    };
+
+    class trigger_execution_t : public kaitai::kstruct {
+
+    public:
+
+        trigger_execution_t(kaitai::kstream* p__io, chk_t::triggers_t* p__parent = 0, chk_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~trigger_execution_t();
+
+    private:
+        uint32_t m_flags;
+        std::vector<uint8_t>* m_list;
+        chk_t* m__root;
+        chk_t::triggers_t* m__parent;
+
+    public:
+        uint32_t flags() const { return m_flags; }
+        std::vector<uint8_t>* list() const { return m_list; }
+        chk_t* _root() const { return m__root; }
+        chk_t::triggers_t* _parent() const { return m__parent; }
     };
 
     class player_owner_array_t : public kaitai::kstruct {
@@ -310,6 +345,46 @@ public:
         chk_t::string_data_t* _parent() const { return m__parent; }
     };
 
+    class trigger_condition_t : public kaitai::kstruct {
+
+    public:
+
+        trigger_condition_t(kaitai::kstream* p__io, chk_t::triggers_t* p__parent = 0, chk_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~trigger_condition_t();
+
+    private:
+        uint32_t m_location;
+        uint32_t m_group;
+        uint32_t m_amount;
+        uint16_t m_unit_id;
+        uint8_t m_rule;
+        uint8_t m_condition;
+        uint8_t m_type;
+        uint8_t m_flags;
+        uint16_t m_internal_used;
+        chk_t* m__root;
+        chk_t::triggers_t* m__parent;
+
+    public:
+        uint32_t location() const { return m_location; }
+        uint32_t group() const { return m_group; }
+        uint32_t amount() const { return m_amount; }
+        uint16_t unit_id() const { return m_unit_id; }
+        uint8_t rule() const { return m_rule; }
+        uint8_t condition() const { return m_condition; }
+        uint8_t type() const { return m_type; }
+        uint8_t flags() const { return m_flags; }
+        uint16_t internal_used() const { return m_internal_used; }
+        chk_t* _root() const { return m__root; }
+        chk_t::triggers_t* _parent() const { return m__parent; }
+    };
+
     class locations_array_t : public kaitai::kstruct {
 
     public:
@@ -330,6 +405,30 @@ public:
 
     public:
         std::vector<locations_t*>* values() const { return m_values; }
+        chk_t* _root() const { return m__root; }
+        chk_t::data_type_t* _parent() const { return m__parent; }
+    };
+
+    class wav_string_indexes_t : public kaitai::kstruct {
+
+    public:
+
+        wav_string_indexes_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent = 0, chk_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~wav_string_indexes_t();
+
+    private:
+        std::vector<uint32_t>* m_wav_index;
+        chk_t* m__root;
+        chk_t::data_type_t* m__parent;
+
+    public:
+        std::vector<uint32_t>* wav_index() const { return m_wav_index; }
         chk_t* _root() const { return m__root; }
         chk_t::data_type_t* _parent() const { return m__parent; }
     };
@@ -574,6 +673,30 @@ public:
         chk_t::fog_of_war_layer_array_t* _parent() const { return m__parent; }
     };
 
+    class triggers_array_t : public kaitai::kstruct {
+
+    public:
+
+        triggers_array_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent = 0, chk_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~triggers_array_t();
+
+    private:
+        std::vector<triggers_t*>* m_values;
+        chk_t* m__root;
+        chk_t::data_type_t* m__parent;
+
+    public:
+        std::vector<triggers_t*>* values() const { return m_values; }
+        chk_t* _root() const { return m__root; }
+        chk_t::data_type_t* _parent() const { return m__parent; }
+    };
+
     class player_unit_restrictions_t : public kaitai::kstruct {
 
     public:
@@ -608,6 +731,34 @@ public:
         std::vector<kaitai::kstream*>* _io__raw_availability_overwrite() const { return m__io__raw_availability_overwrite; }
         std::vector<std::string>* _raw_overwrite_defaults() const { return m__raw_overwrite_defaults; }
         std::vector<kaitai::kstream*>* _io__raw_overwrite_defaults() const { return m__io__raw_overwrite_defaults; }
+    };
+
+    class triggers_t : public kaitai::kstruct {
+
+    public:
+
+        triggers_t(kaitai::kstream* p__io, chk_t::triggers_array_t* p__parent = 0, chk_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~triggers_t();
+
+    private:
+        std::vector<trigger_condition_t*>* m_conditions;
+        std::vector<trigger_actions_t*>* m_actions;
+        trigger_execution_t* m_execution;
+        chk_t* m__root;
+        chk_t::triggers_array_t* m__parent;
+
+    public:
+        std::vector<trigger_condition_t*>* conditions() const { return m_conditions; }
+        std::vector<trigger_actions_t*>* actions() const { return m_actions; }
+        trigger_execution_t* execution() const { return m_execution; }
+        chk_t* _root() const { return m__root; }
+        chk_t::triggers_array_t* _parent() const { return m__parent; }
     };
 
     class u2_array_t : public kaitai::kstruct {
@@ -712,6 +863,32 @@ public:
         chk_t::chunk_type_t* _parent() const { return m__parent; }
     };
 
+    class scenario_properties_t : public kaitai::kstruct {
+
+    public:
+
+        scenario_properties_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent = 0, chk_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~scenario_properties_t();
+
+    private:
+        uint16_t m_name;
+        uint16_t m_decription;
+        chk_t* m__root;
+        chk_t::data_type_t* m__parent;
+
+    public:
+        uint16_t name() const { return m_name; }
+        uint16_t decription() const { return m_decription; }
+        chk_t* _root() const { return m__root; }
+        chk_t::data_type_t* _parent() const { return m__parent; }
+    };
+
     class starcraft_sprites_t : public kaitai::kstruct {
 
     public:
@@ -800,6 +977,34 @@ public:
 
     public:
         std::vector<player_races_enum_t>* value() const { return m_value; }
+        chk_t* _root() const { return m__root; }
+        chk_t::data_type_t* _parent() const { return m__parent; }
+    };
+
+    class force_settings_t : public kaitai::kstruct {
+
+    public:
+
+        force_settings_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent = 0, chk_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~force_settings_t();
+
+    private:
+        std::vector<uint8_t>* m_player_force;
+        std::vector<uint16_t>* m_force_string;
+        std::vector<force_settings_flags_t*>* m_flags;
+        chk_t* m__root;
+        chk_t::data_type_t* m__parent;
+
+    public:
+        std::vector<uint8_t>* player_force() const { return m_player_force; }
+        std::vector<uint16_t>* force_string() const { return m_force_string; }
+        std::vector<force_settings_flags_t*>* flags() const { return m_flags; }
         chk_t* _root() const { return m__root; }
         chk_t::data_type_t* _parent() const { return m__parent; }
     };
@@ -968,6 +1173,38 @@ public:
         chk_t::data_type_t* _parent() const { return m__parent; }
     };
 
+    class force_settings_flags_t : public kaitai::kstruct {
+
+    public:
+
+        force_settings_flags_t(kaitai::kstream* p__io, chk_t::force_settings_t* p__parent = 0, chk_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~force_settings_flags_t();
+
+    private:
+        bool m_random_start_location;
+        bool m_allies;
+        bool m_allied_victory;
+        bool m_shared_vision;
+        uint64_t m_unused;
+        chk_t* m__root;
+        chk_t::force_settings_t* m__parent;
+
+    public:
+        bool random_start_location() const { return m_random_start_location; }
+        bool allies() const { return m_allies; }
+        bool allied_victory() const { return m_allied_victory; }
+        bool shared_vision() const { return m_shared_vision; }
+        uint64_t unused() const { return m_unused; }
+        chk_t* _root() const { return m__root; }
+        chk_t::force_settings_t* _parent() const { return m__parent; }
+    };
+
     class fog_of_war_layer_array_t : public kaitai::kstruct {
 
     public:
@@ -990,6 +1227,50 @@ public:
         std::vector<fog_of_war_layer_t*>* values() const { return m_values; }
         chk_t* _root() const { return m__root; }
         chk_t::data_type_t* _parent() const { return m__parent; }
+    };
+
+    class trigger_actions_t : public kaitai::kstruct {
+
+    public:
+
+        trigger_actions_t(kaitai::kstream* p__io, chk_t::triggers_t* p__parent = 0, chk_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~trigger_actions_t();
+
+    private:
+        uint32_t m_source;
+        uint32_t m_string_number;
+        uint32_t m_wav_string;
+        uint32_t m_time;
+        uint32_t m_first_affected;
+        uint32_t m_second_affected;
+        uint16_t m_type;
+        uint8_t m_action;
+        uint8_t m_unit_number;
+        uint8_t m_flags;
+        std::string m_internal_used;
+        chk_t* m__root;
+        chk_t::triggers_t* m__parent;
+
+    public:
+        uint32_t source() const { return m_source; }
+        uint32_t string_number() const { return m_string_number; }
+        uint32_t wav_string() const { return m_wav_string; }
+        uint32_t time() const { return m_time; }
+        uint32_t first_affected() const { return m_first_affected; }
+        uint32_t second_affected() const { return m_second_affected; }
+        uint16_t type() const { return m_type; }
+        uint8_t action() const { return m_action; }
+        uint8_t unit_number() const { return m_unit_number; }
+        uint8_t flags() const { return m_flags; }
+        std::string internal_used() const { return m_internal_used; }
+        chk_t* _root() const { return m__root; }
+        chk_t::triggers_t* _parent() const { return m__parent; }
     };
 
     class staredit_sprites_t : public kaitai::kstruct {
