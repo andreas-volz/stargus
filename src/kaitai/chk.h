@@ -24,15 +24,17 @@ public:
     class string_address_t;
     class trigger_condition_t;
     class locations_array_t;
-    class wav_string_indexes_t;
     class locations_elevation_flags_t;
     class placed_units_special_properties_flags_t;
     class cuwp_slots_t;
     class tileset_t;
+    class player_colors_t;
     class cuwp_slots_validity_flags_t;
     class starcraft_sprites_use_flasgs_t;
+    class tech_settings_t;
     class fog_of_war_layer_t;
     class triggers_array_t;
+    class unit_settings_t;
     class player_unit_restrictions_t;
     class triggers_t;
     class u2_array_t;
@@ -44,6 +46,7 @@ public:
     class player_races_t;
     class force_settings_t;
     class placed_units_array_t;
+    class u4_array_t;
     class u1_array_t;
     class cuwp_slots_special_properties_flags_t;
     class cuwp_slots_array_t;
@@ -51,6 +54,7 @@ public:
     class starcraft_sprites_array_t;
     class force_settings_flags_t;
     class fog_of_war_layer_array_t;
+    class upgrade_settings_t;
     class trigger_actions_t;
     class staredit_sprites_t;
     class dimension_t;
@@ -89,6 +93,21 @@ public:
         PLAYER_RACES_ENUM_USER_SELECTABLE = 5,
         PLAYER_RACES_ENUM_RANDOM = 6,
         PLAYER_RACES_ENUM_INACTIVE = 7
+    };
+
+    enum player_colors_enum_t {
+        PLAYER_COLORS_ENUM_RED = 0,
+        PLAYER_COLORS_ENUM_BLUE = 1,
+        PLAYER_COLORS_ENUM_TEAL = 2,
+        PLAYER_COLORS_ENUM_PURPLE = 3,
+        PLAYER_COLORS_ENUM_ORANGE = 4,
+        PLAYER_COLORS_ENUM_BROWN = 5,
+        PLAYER_COLORS_ENUM_WHITE = 6,
+        PLAYER_COLORS_ENUM_YELLOW = 7,
+        PLAYER_COLORS_ENUM_GREEN = 8,
+        PLAYER_COLORS_ENUM_PALE_YELLOW = 9,
+        PLAYER_COLORS_ENUM_TAN = 10,
+        PLAYER_COLORS_ENUM_AZURE = 11
     };
 
     chk_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, chk_t* p__root = 0);
@@ -409,30 +428,6 @@ public:
         chk_t::data_type_t* _parent() const { return m__parent; }
     };
 
-    class wav_string_indexes_t : public kaitai::kstruct {
-
-    public:
-
-        wav_string_indexes_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent = 0, chk_t* p__root = 0);
-
-    private:
-        void _read();
-        void _clean_up();
-
-    public:
-        ~wav_string_indexes_t();
-
-    private:
-        std::vector<uint32_t>* m_wav_index;
-        chk_t* m__root;
-        chk_t::data_type_t* m__parent;
-
-    public:
-        std::vector<uint32_t>* wav_index() const { return m_wav_index; }
-        chk_t* _root() const { return m__root; }
-        chk_t::data_type_t* _parent() const { return m__parent; }
-    };
-
     class locations_elevation_flags_t : public kaitai::kstruct {
 
     public:
@@ -569,6 +564,30 @@ public:
         chk_t::data_type_t* _parent() const { return m__parent; }
     };
 
+    class player_colors_t : public kaitai::kstruct {
+
+    public:
+
+        player_colors_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent = 0, chk_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~player_colors_t();
+
+    private:
+        std::vector<player_colors_enum_t>* m_color;
+        chk_t* m__root;
+        chk_t::data_type_t* m__parent;
+
+    public:
+        std::vector<player_colors_enum_t>* color() const { return m_color; }
+        chk_t* _root() const { return m__root; }
+        chk_t::data_type_t* _parent() const { return m__parent; }
+    };
+
     class cuwp_slots_validity_flags_t : public kaitai::kstruct {
 
     public:
@@ -635,6 +654,38 @@ public:
         chk_t::starcraft_sprites_t* _parent() const { return m__parent; }
     };
 
+    class tech_settings_t : public kaitai::kstruct {
+
+    public:
+
+        tech_settings_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent = 0, chk_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~tech_settings_t();
+
+    private:
+        std::vector<uint8_t>* m_default_settings;
+        std::vector<uint16_t>* m_mineral_cost;
+        std::vector<uint16_t>* m_gas_cost;
+        std::vector<uint16_t>* m_time_required;
+        std::vector<uint16_t>* m_energy_cost;
+        chk_t* m__root;
+        chk_t::data_type_t* m__parent;
+
+    public:
+        std::vector<uint8_t>* default_settings() const { return m_default_settings; }
+        std::vector<uint16_t>* mineral_cost() const { return m_mineral_cost; }
+        std::vector<uint16_t>* gas_cost() const { return m_gas_cost; }
+        std::vector<uint16_t>* time_required() const { return m_time_required; }
+        std::vector<uint16_t>* energy_cost() const { return m_energy_cost; }
+        chk_t* _root() const { return m__root; }
+        chk_t::data_type_t* _parent() const { return m__parent; }
+    };
+
     class fog_of_war_layer_t : public kaitai::kstruct {
 
     public:
@@ -693,6 +744,48 @@ public:
 
     public:
         std::vector<triggers_t*>* values() const { return m_values; }
+        chk_t* _root() const { return m__root; }
+        chk_t::data_type_t* _parent() const { return m__parent; }
+    };
+
+    class unit_settings_t : public kaitai::kstruct {
+
+    public:
+
+        unit_settings_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent = 0, chk_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~unit_settings_t();
+
+    private:
+        std::vector<uint8_t>* m_use_defaults;
+        std::vector<uint32_t>* m_hit_points;
+        std::vector<uint16_t>* m_shield_points;
+        std::vector<uint8_t>* m_armor_points;
+        std::vector<uint16_t>* m_build_time;
+        std::vector<uint16_t>* m_mineral_costs;
+        std::vector<uint16_t>* m_gas_costs;
+        std::vector<uint16_t>* m_string_num;
+        std::vector<uint16_t>* m_base_weapon_damage;
+        std::vector<uint16_t>* m_upgrade_bonus_weapon_damage;
+        chk_t* m__root;
+        chk_t::data_type_t* m__parent;
+
+    public:
+        std::vector<uint8_t>* use_defaults() const { return m_use_defaults; }
+        std::vector<uint32_t>* hit_points() const { return m_hit_points; }
+        std::vector<uint16_t>* shield_points() const { return m_shield_points; }
+        std::vector<uint8_t>* armor_points() const { return m_armor_points; }
+        std::vector<uint16_t>* build_time() const { return m_build_time; }
+        std::vector<uint16_t>* mineral_costs() const { return m_mineral_costs; }
+        std::vector<uint16_t>* gas_costs() const { return m_gas_costs; }
+        std::vector<uint16_t>* string_num() const { return m_string_num; }
+        std::vector<uint16_t>* base_weapon_damage() const { return m_base_weapon_damage; }
+        std::vector<uint16_t>* upgrade_bonus_weapon_damage() const { return m_upgrade_bonus_weapon_damage; }
         chk_t* _root() const { return m__root; }
         chk_t::data_type_t* _parent() const { return m__parent; }
     };
@@ -1033,6 +1126,30 @@ public:
         chk_t::data_type_t* _parent() const { return m__parent; }
     };
 
+    class u4_array_t : public kaitai::kstruct {
+
+    public:
+
+        u4_array_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent = 0, chk_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~u4_array_t();
+
+    private:
+        std::vector<uint32_t>* m_values;
+        chk_t* m__root;
+        chk_t::data_type_t* m__parent;
+
+    public:
+        std::vector<uint32_t>* values() const { return m_values; }
+        chk_t* _root() const { return m__root; }
+        chk_t::data_type_t* _parent() const { return m__parent; }
+    };
+
     class u1_array_t : public kaitai::kstruct {
 
     public:
@@ -1225,6 +1342,42 @@ public:
 
     public:
         std::vector<fog_of_war_layer_t*>* values() const { return m_values; }
+        chk_t* _root() const { return m__root; }
+        chk_t::data_type_t* _parent() const { return m__parent; }
+    };
+
+    class upgrade_settings_t : public kaitai::kstruct {
+
+    public:
+
+        upgrade_settings_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent = 0, chk_t* p__root = 0);
+
+    private:
+        void _read();
+        void _clean_up();
+
+    public:
+        ~upgrade_settings_t();
+
+    private:
+        std::vector<uint8_t>* m_default_settings;
+        std::vector<uint16_t>* m_base_mineral_cost;
+        std::vector<uint16_t>* m_mineral_cost_factor;
+        std::vector<uint16_t>* m_base_gas_cost;
+        std::vector<uint16_t>* m_gas_cost_factor;
+        std::vector<uint16_t>* m_base_time;
+        std::vector<uint16_t>* m_time_factor;
+        chk_t* m__root;
+        chk_t::data_type_t* m__parent;
+
+    public:
+        std::vector<uint8_t>* default_settings() const { return m_default_settings; }
+        std::vector<uint16_t>* base_mineral_cost() const { return m_base_mineral_cost; }
+        std::vector<uint16_t>* mineral_cost_factor() const { return m_mineral_cost_factor; }
+        std::vector<uint16_t>* base_gas_cost() const { return m_base_gas_cost; }
+        std::vector<uint16_t>* gas_cost_factor() const { return m_gas_cost_factor; }
+        std::vector<uint16_t>* base_time() const { return m_base_time; }
+        std::vector<uint16_t>* time_factor() const { return m_time_factor; }
         chk_t* _root() const { return m__root; }
         chk_t::data_type_t* _parent() const { return m__parent; }
     };

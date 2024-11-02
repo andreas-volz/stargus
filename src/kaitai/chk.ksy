@@ -58,17 +58,18 @@ types:
             '"MBRF"': u1_array # Mission Briefings ## TODO later
             '"SPRP"': scenario_properties # Scenario Properties
             '"FORC"': force_settings # Force Settings
-            '"WAV "': wav_string_indexes # WAV String Indexes
-            '"UNIS"': u1_array
-            '"UPGS"': u1_array
-            '"TECS"': u1_array
-            '"SWNM"': u1_array
-            '"COLR"': u1_array
-            '"PUPx"': u1_array
-            '"PTEx"': u1_array
-            '"UNIx"': u1_array
-            '"UPGx"': u1_array
-            '"TECx"': u1_array
+            '"WAV "': u4_array # WAV String Indexes
+            '"UNIS"': unit_settings # Unit Settings
+            '"UPGS"': upgrade_settings # Upgrade Settings
+            '"TECS"': tech_settings # Tech Settings
+            '"SWNM"': u4_array # Switch Names
+            '"COLR"': player_colors # Player Colors
+            '"CRGB"': u1_array # Remastered Player Colors ## TODO later
+            '"PUPx"': u1_array ## TODO later
+            '"PTEx"': u1_array ## TODO later
+            '"UNIx"': u1_array ## TODO later
+            '"UPGx"': u1_array ## TODO later
+            '"TECx"': u1_array ## TODO later
             _: u1_array
 
   u1_array:
@@ -82,6 +83,12 @@ types:
     seq:
       - id: values
         type: u2
+        repeat: eos
+        
+  u4_array:
+    seq:
+      - id: values
+        type: u4
         repeat: eos
   
   player_owner_array:
@@ -712,13 +719,130 @@ types:
       - id: unused
         type: b4
 
-  wav_string_indexes:
+  unit_settings:
     seq:
-      - id: wav_index
+      - id: use_defaults
+        type: u1
+        repeat: expr
+        repeat-expr: 228
+        
+      - id: hit_points
         type: u4
         repeat: expr
-        repeat-expr: 512
-
+        repeat-expr: 228
+        
+      - id: shield_points
+        type: u2
+        repeat: expr
+        repeat-expr: 228
+        
+      - id: armor_points
+        type: u1
+        repeat: expr
+        repeat-expr: 228
+        
+      - id: build_time
+        type: u2
+        repeat: expr
+        repeat-expr: 228
+        
+      - id: mineral_costs
+        type: u2
+        repeat: expr
+        repeat-expr: 228
+        
+      - id: gas_costs
+        type: u2
+        repeat: expr
+        repeat-expr: 228
+        
+      - id: string_num
+        type: u2
+        repeat: expr
+        repeat-expr: 228
+        
+      - id: base_weapon_damage
+        type: u2
+        repeat: expr
+        repeat-expr: 100
+        
+      - id: upgrade_bonus_weapon_damage
+        type: u2
+        repeat: expr
+        repeat-expr: 100
+        
+  upgrade_settings:
+    seq:
+      - id: default_settings
+        type: u1
+        repeat: expr
+        repeat-expr: 46
+      
+      - id: base_mineral_cost
+        type: u2
+        repeat: expr
+        repeat-expr: 46
+      
+      - id: mineral_cost_factor
+        type: u2
+        repeat: expr
+        repeat-expr: 46
+        
+      - id: base_gas_cost
+        type: u2
+        repeat: expr
+        repeat-expr: 46
+        
+      - id: gas_cost_factor
+        type: u2
+        repeat: expr
+        repeat-expr: 46
+        
+      - id: base_time
+        type: u2
+        repeat: expr
+        repeat-expr: 46
+        
+      - id: time_factor
+        type: u2
+        repeat: expr
+        repeat-expr: 46
+        
+  tech_settings:
+    seq:
+      - id: default_settings
+        type: u1
+        repeat: expr
+        repeat-expr: 24
+        
+      - id: mineral_cost
+        type: u2
+        repeat: expr
+        repeat-expr: 24
+        
+      - id: gas_cost
+        type: u2
+        repeat: expr
+        repeat-expr: 24
+        
+      - id: time_required
+        type: u2
+        repeat: expr
+        repeat-expr: 24
+        
+      - id: energy_cost
+        type: u2
+        repeat: expr
+        repeat-expr: 24
+        
+  player_colors:
+    seq:
+      - id: color
+        type: u1
+        enum: player_colors_enum
+        repeat: expr
+        repeat-expr: 8
+        
 enums:
   player_owner_enum:
     0: inactive
@@ -750,3 +874,19 @@ enums:
     5: user_selectable
     6: random # forced; acts as a selected race
     7: inactive
+    
+  player_colors_enum:
+    0: red # (#F40404)
+    1: blue # (#0C48CC)
+    2: teal # (#2CB494)
+    3: purple # (#88409C)
+    4: orange # (#F88C14)
+    5: brown # (#703014)
+    6: white # (#CCE0D0)
+    7: yellow # (#FCFC38)
+    8: green # (#088008)
+    9: pale_yellow # (#FCFC7C)
+    10: tan # (#ECC4B0)
+    11: azure # (Neutral color, #4068D4)
+    
+    

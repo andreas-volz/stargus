@@ -467,37 +467,6 @@ void chk_t::locations_array_t::_clean_up() {
     }
 }
 
-chk_t::wav_string_indexes_t::wav_string_indexes_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
-    m__parent = p__parent;
-    m__root = p__root;
-    m_wav_index = 0;
-
-    try {
-        _read();
-    } catch(...) {
-        _clean_up();
-        throw;
-    }
-}
-
-void chk_t::wav_string_indexes_t::_read() {
-    m_wav_index = new std::vector<uint32_t>();
-    const int l_wav_index = 512;
-    for (int i = 0; i < l_wav_index; i++) {
-        m_wav_index->push_back(m__io->read_u4le());
-    }
-}
-
-chk_t::wav_string_indexes_t::~wav_string_indexes_t() {
-    _clean_up();
-}
-
-void chk_t::wav_string_indexes_t::_clean_up() {
-    if (m_wav_index) {
-        delete m_wav_index; m_wav_index = 0;
-    }
-}
-
 chk_t::locations_elevation_flags_t::locations_elevation_flags_t(kaitai::kstream* p__io, chk_t::locations_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
@@ -622,6 +591,37 @@ chk_t::tileset_t::~tileset_t() {
 void chk_t::tileset_t::_clean_up() {
 }
 
+chk_t::player_colors_t::player_colors_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+    m__parent = p__parent;
+    m__root = p__root;
+    m_color = 0;
+
+    try {
+        _read();
+    } catch(...) {
+        _clean_up();
+        throw;
+    }
+}
+
+void chk_t::player_colors_t::_read() {
+    m_color = new std::vector<player_colors_enum_t>();
+    const int l_color = 8;
+    for (int i = 0; i < l_color; i++) {
+        m_color->push_back(static_cast<chk_t::player_colors_enum_t>(m__io->read_u1()));
+    }
+}
+
+chk_t::player_colors_t::~player_colors_t() {
+    _clean_up();
+}
+
+void chk_t::player_colors_t::_clean_up() {
+    if (m_color) {
+        delete m_color; m_color = 0;
+    }
+}
+
 chk_t::cuwp_slots_validity_flags_t::cuwp_slots_validity_flags_t(kaitai::kstream* p__io, chk_t::cuwp_slots_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
@@ -675,6 +675,73 @@ chk_t::starcraft_sprites_use_flasgs_t::~starcraft_sprites_use_flasgs_t() {
 }
 
 void chk_t::starcraft_sprites_use_flasgs_t::_clean_up() {
+}
+
+chk_t::tech_settings_t::tech_settings_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+    m__parent = p__parent;
+    m__root = p__root;
+    m_default_settings = 0;
+    m_mineral_cost = 0;
+    m_gas_cost = 0;
+    m_time_required = 0;
+    m_energy_cost = 0;
+
+    try {
+        _read();
+    } catch(...) {
+        _clean_up();
+        throw;
+    }
+}
+
+void chk_t::tech_settings_t::_read() {
+    m_default_settings = new std::vector<uint8_t>();
+    const int l_default_settings = 24;
+    for (int i = 0; i < l_default_settings; i++) {
+        m_default_settings->push_back(m__io->read_u1());
+    }
+    m_mineral_cost = new std::vector<uint16_t>();
+    const int l_mineral_cost = 24;
+    for (int i = 0; i < l_mineral_cost; i++) {
+        m_mineral_cost->push_back(m__io->read_u2le());
+    }
+    m_gas_cost = new std::vector<uint16_t>();
+    const int l_gas_cost = 24;
+    for (int i = 0; i < l_gas_cost; i++) {
+        m_gas_cost->push_back(m__io->read_u2le());
+    }
+    m_time_required = new std::vector<uint16_t>();
+    const int l_time_required = 24;
+    for (int i = 0; i < l_time_required; i++) {
+        m_time_required->push_back(m__io->read_u2le());
+    }
+    m_energy_cost = new std::vector<uint16_t>();
+    const int l_energy_cost = 24;
+    for (int i = 0; i < l_energy_cost; i++) {
+        m_energy_cost->push_back(m__io->read_u2le());
+    }
+}
+
+chk_t::tech_settings_t::~tech_settings_t() {
+    _clean_up();
+}
+
+void chk_t::tech_settings_t::_clean_up() {
+    if (m_default_settings) {
+        delete m_default_settings; m_default_settings = 0;
+    }
+    if (m_mineral_cost) {
+        delete m_mineral_cost; m_mineral_cost = 0;
+    }
+    if (m_gas_cost) {
+        delete m_gas_cost; m_gas_cost = 0;
+    }
+    if (m_time_required) {
+        delete m_time_required; m_time_required = 0;
+    }
+    if (m_energy_cost) {
+        delete m_energy_cost; m_energy_cost = 0;
+    }
 }
 
 chk_t::fog_of_war_layer_t::fog_of_war_layer_t(kaitai::kstream* p__io, chk_t::fog_of_war_layer_array_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
@@ -741,6 +808,118 @@ void chk_t::triggers_array_t::_clean_up() {
             delete *it;
         }
         delete m_values; m_values = 0;
+    }
+}
+
+chk_t::unit_settings_t::unit_settings_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+    m__parent = p__parent;
+    m__root = p__root;
+    m_use_defaults = 0;
+    m_hit_points = 0;
+    m_shield_points = 0;
+    m_armor_points = 0;
+    m_build_time = 0;
+    m_mineral_costs = 0;
+    m_gas_costs = 0;
+    m_string_num = 0;
+    m_base_weapon_damage = 0;
+    m_upgrade_bonus_weapon_damage = 0;
+
+    try {
+        _read();
+    } catch(...) {
+        _clean_up();
+        throw;
+    }
+}
+
+void chk_t::unit_settings_t::_read() {
+    m_use_defaults = new std::vector<uint8_t>();
+    const int l_use_defaults = 228;
+    for (int i = 0; i < l_use_defaults; i++) {
+        m_use_defaults->push_back(m__io->read_u1());
+    }
+    m_hit_points = new std::vector<uint32_t>();
+    const int l_hit_points = 228;
+    for (int i = 0; i < l_hit_points; i++) {
+        m_hit_points->push_back(m__io->read_u4le());
+    }
+    m_shield_points = new std::vector<uint16_t>();
+    const int l_shield_points = 228;
+    for (int i = 0; i < l_shield_points; i++) {
+        m_shield_points->push_back(m__io->read_u2le());
+    }
+    m_armor_points = new std::vector<uint8_t>();
+    const int l_armor_points = 228;
+    for (int i = 0; i < l_armor_points; i++) {
+        m_armor_points->push_back(m__io->read_u1());
+    }
+    m_build_time = new std::vector<uint16_t>();
+    const int l_build_time = 228;
+    for (int i = 0; i < l_build_time; i++) {
+        m_build_time->push_back(m__io->read_u2le());
+    }
+    m_mineral_costs = new std::vector<uint16_t>();
+    const int l_mineral_costs = 228;
+    for (int i = 0; i < l_mineral_costs; i++) {
+        m_mineral_costs->push_back(m__io->read_u2le());
+    }
+    m_gas_costs = new std::vector<uint16_t>();
+    const int l_gas_costs = 228;
+    for (int i = 0; i < l_gas_costs; i++) {
+        m_gas_costs->push_back(m__io->read_u2le());
+    }
+    m_string_num = new std::vector<uint16_t>();
+    const int l_string_num = 228;
+    for (int i = 0; i < l_string_num; i++) {
+        m_string_num->push_back(m__io->read_u2le());
+    }
+    m_base_weapon_damage = new std::vector<uint16_t>();
+    const int l_base_weapon_damage = 100;
+    for (int i = 0; i < l_base_weapon_damage; i++) {
+        m_base_weapon_damage->push_back(m__io->read_u2le());
+    }
+    m_upgrade_bonus_weapon_damage = new std::vector<uint16_t>();
+    const int l_upgrade_bonus_weapon_damage = 100;
+    for (int i = 0; i < l_upgrade_bonus_weapon_damage; i++) {
+        m_upgrade_bonus_weapon_damage->push_back(m__io->read_u2le());
+    }
+}
+
+chk_t::unit_settings_t::~unit_settings_t() {
+    _clean_up();
+}
+
+void chk_t::unit_settings_t::_clean_up() {
+    if (m_use_defaults) {
+        delete m_use_defaults; m_use_defaults = 0;
+    }
+    if (m_hit_points) {
+        delete m_hit_points; m_hit_points = 0;
+    }
+    if (m_shield_points) {
+        delete m_shield_points; m_shield_points = 0;
+    }
+    if (m_armor_points) {
+        delete m_armor_points; m_armor_points = 0;
+    }
+    if (m_build_time) {
+        delete m_build_time; m_build_time = 0;
+    }
+    if (m_mineral_costs) {
+        delete m_mineral_costs; m_mineral_costs = 0;
+    }
+    if (m_gas_costs) {
+        delete m_gas_costs; m_gas_costs = 0;
+    }
+    if (m_string_num) {
+        delete m_string_num; m_string_num = 0;
+    }
+    if (m_base_weapon_damage) {
+        delete m_base_weapon_damage; m_base_weapon_damage = 0;
+    }
+    if (m_upgrade_bonus_weapon_damage) {
+        delete m_upgrade_bonus_weapon_damage; m_upgrade_bonus_weapon_damage = 0;
     }
 }
 
@@ -982,7 +1161,7 @@ void chk_t::data_type_t::_read() {
     {
         std::string on = _parent()->tag();
         if (on == std::string("TECS")) {
-            m_content = new u1_array_t(m__io, this, m__root);
+            m_content = new tech_settings_t(m__io, this, m__root);
         }
         else if (on == std::string("STR ")) {
             m_content = new string_data_t(m__io, this, m__root);
@@ -991,13 +1170,13 @@ void chk_t::data_type_t::_read() {
             m_content = new triggers_array_t(m__io, this, m__root);
         }
         else if (on == std::string("UPGS")) {
-            m_content = new u1_array_t(m__io, this, m__root);
+            m_content = new upgrade_settings_t(m__io, this, m__root);
         }
         else if (on == std::string("SWNM")) {
-            m_content = new u1_array_t(m__io, this, m__root);
+            m_content = new u4_array_t(m__io, this, m__root);
         }
         else if (on == std::string("UNIS")) {
-            m_content = new u1_array_t(m__io, this, m__root);
+            m_content = new unit_settings_t(m__io, this, m__root);
         }
         else if (on == std::string("TECx")) {
             m_content = new u1_array_t(m__io, this, m__root);
@@ -1006,7 +1185,7 @@ void chk_t::data_type_t::_read() {
             m_content = new player_owner_array_t(m__io, this, m__root);
         }
         else if (on == std::string("WAV ")) {
-            m_content = new wav_string_indexes_t(m__io, this, m__root);
+            m_content = new u4_array_t(m__io, this, m__root);
         }
         else if (on == std::string("THG2")) {
             m_content = new starcraft_sprites_array_t(m__io, this, m__root);
@@ -1075,13 +1254,16 @@ void chk_t::data_type_t::_read() {
             m_content = new staredit_sprites_array_t(m__io, this, m__root);
         }
         else if (on == std::string("COLR")) {
-            m_content = new u1_array_t(m__io, this, m__root);
+            m_content = new player_colors_t(m__io, this, m__root);
         }
         else if (on == std::string("DIM ")) {
             m_content = new dimension_t(m__io, this, m__root);
         }
         else if (on == std::string("IVE2")) {
             m_content = new u2_array_t(m__io, this, m__root);
+        }
+        else if (on == std::string("CRGB")) {
+            m_content = new u1_array_t(m__io, this, m__root);
         }
         else if (on == std::string("MTXM")) {
             m_content = new u2_array_t(m__io, this, m__root);
@@ -1318,6 +1500,40 @@ void chk_t::placed_units_array_t::_clean_up() {
     }
 }
 
+chk_t::u4_array_t::u4_array_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+    m__parent = p__parent;
+    m__root = p__root;
+    m_values = 0;
+
+    try {
+        _read();
+    } catch(...) {
+        _clean_up();
+        throw;
+    }
+}
+
+void chk_t::u4_array_t::_read() {
+    m_values = new std::vector<uint32_t>();
+    {
+        int i = 0;
+        while (!m__io->is_eof()) {
+            m_values->push_back(m__io->read_u4le());
+            i++;
+        }
+    }
+}
+
+chk_t::u4_array_t::~u4_array_t() {
+    _clean_up();
+}
+
+void chk_t::u4_array_t::_clean_up() {
+    if (m_values) {
+        delete m_values; m_values = 0;
+    }
+}
+
 chk_t::u1_array_t::u1_array_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
@@ -1540,6 +1756,91 @@ void chk_t::fog_of_war_layer_array_t::_clean_up() {
             delete *it;
         }
         delete m_values; m_values = 0;
+    }
+}
+
+chk_t::upgrade_settings_t::upgrade_settings_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+    m__parent = p__parent;
+    m__root = p__root;
+    m_default_settings = 0;
+    m_base_mineral_cost = 0;
+    m_mineral_cost_factor = 0;
+    m_base_gas_cost = 0;
+    m_gas_cost_factor = 0;
+    m_base_time = 0;
+    m_time_factor = 0;
+
+    try {
+        _read();
+    } catch(...) {
+        _clean_up();
+        throw;
+    }
+}
+
+void chk_t::upgrade_settings_t::_read() {
+    m_default_settings = new std::vector<uint8_t>();
+    const int l_default_settings = 46;
+    for (int i = 0; i < l_default_settings; i++) {
+        m_default_settings->push_back(m__io->read_u1());
+    }
+    m_base_mineral_cost = new std::vector<uint16_t>();
+    const int l_base_mineral_cost = 46;
+    for (int i = 0; i < l_base_mineral_cost; i++) {
+        m_base_mineral_cost->push_back(m__io->read_u2le());
+    }
+    m_mineral_cost_factor = new std::vector<uint16_t>();
+    const int l_mineral_cost_factor = 46;
+    for (int i = 0; i < l_mineral_cost_factor; i++) {
+        m_mineral_cost_factor->push_back(m__io->read_u2le());
+    }
+    m_base_gas_cost = new std::vector<uint16_t>();
+    const int l_base_gas_cost = 46;
+    for (int i = 0; i < l_base_gas_cost; i++) {
+        m_base_gas_cost->push_back(m__io->read_u2le());
+    }
+    m_gas_cost_factor = new std::vector<uint16_t>();
+    const int l_gas_cost_factor = 46;
+    for (int i = 0; i < l_gas_cost_factor; i++) {
+        m_gas_cost_factor->push_back(m__io->read_u2le());
+    }
+    m_base_time = new std::vector<uint16_t>();
+    const int l_base_time = 46;
+    for (int i = 0; i < l_base_time; i++) {
+        m_base_time->push_back(m__io->read_u2le());
+    }
+    m_time_factor = new std::vector<uint16_t>();
+    const int l_time_factor = 46;
+    for (int i = 0; i < l_time_factor; i++) {
+        m_time_factor->push_back(m__io->read_u2le());
+    }
+}
+
+chk_t::upgrade_settings_t::~upgrade_settings_t() {
+    _clean_up();
+}
+
+void chk_t::upgrade_settings_t::_clean_up() {
+    if (m_default_settings) {
+        delete m_default_settings; m_default_settings = 0;
+    }
+    if (m_base_mineral_cost) {
+        delete m_base_mineral_cost; m_base_mineral_cost = 0;
+    }
+    if (m_mineral_cost_factor) {
+        delete m_mineral_cost_factor; m_mineral_cost_factor = 0;
+    }
+    if (m_base_gas_cost) {
+        delete m_base_gas_cost; m_base_gas_cost = 0;
+    }
+    if (m_gas_cost_factor) {
+        delete m_gas_cost_factor; m_gas_cost_factor = 0;
+    }
+    if (m_base_time) {
+        delete m_base_time; m_base_time = 0;
+    }
+    if (m_time_factor) {
+        delete m_time_factor; m_time_factor = 0;
     }
 }
 
