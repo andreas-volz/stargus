@@ -24,7 +24,7 @@ class Hurricane;
 /**
  * Map Container
  *
- * The .scm is MPQ encoded and will be decoded to a .ckk and then further processed by Chk class
+ * The .scm is MPQ encoded and will be decoded to a .chk and then further processed by Chk class
  * At the end .scm is only useful with Storm
  */
 class Scm : public Converter

@@ -22,4 +22,8 @@ startool_kaitai_tileset_sources = files(
 	'tileset_dddata_bin.cpp'
 )
 
-startool_kaitai_sources = startool_kaitai_dat_sources + startool_kaitai_tileset_sources
+startool_kaitai_chk_sources = files(
+    'chk.cpp',
+)
+
+startool_kaitai_sources = startool_kaitai_dat_sources + startool_kaitai_tileset_sources + startool_kaitai_chk_sources

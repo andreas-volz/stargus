@@ -76,7 +76,7 @@ bool Scm::convert(const std::string &arcfile, const std::vector<std::string> &un
     result = chk.convert("staredit\\scenario.chk", storage.getFullPath());
 
     // delete the temporary .chk file -> below don't access 'breeze' any more!
-    platform::unlink(scm_path);
+    //platform::unlink(scm_path);
   }
 
   return result;
