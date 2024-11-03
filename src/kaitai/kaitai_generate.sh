@@ -31,6 +31,7 @@ elif [ "$1" = "doc" ]; then
 		echo "Generating source and documentation from: $KSY"
 		kaitai-struct-compiler $KSY -t graphviz
 		dot $DOT -Tsvg > ../../doc/kaitai/$SVG
+		mv $DOT ../../doc/kaitai/
 	done
 fi
 

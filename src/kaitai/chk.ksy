@@ -1,6 +1,5 @@
 meta:
   id: chk
-  file-extension: chk
   endian: le
   bit-endian: le
 
@@ -31,10 +30,10 @@ types:
         type:
           switch-on: _parent.tag
           cases:
-            '"TYPE"': u4 # Map Type
-            '"VER "': u2 # Format Version
-            '"IVER"': u2 # Map Version
-            '"IVE2"': u2 # Map Version
+            '"TYPE"': map_type # Map Type
+            '"VER "': version # Format Version
+            '"IVER"': version # Map Version
+            '"IVE2"': version # Map Version
             '"VCOD"': verification_code # Verification Code
             '"IOWN"': player_owner_array # StarEdit Player Types
             '"OWNR"': player_owner_array # StarCraft Player Types
@@ -91,6 +90,16 @@ types:
       - id: values
         type: u4
         repeat: eos
+        
+  version:
+    seq:
+      - id: version
+        type: u2
+        
+  map_type:
+    seq:
+      - id: map_type
+        type: u4
         
   verification_code:
     seq:
