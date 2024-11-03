@@ -31,19 +31,20 @@ types:
         type:
           switch-on: _parent.tag
           cases:
-            '"VER "': u2_array # Format Version
-            '"IVER"': u2_array # Map Version
-            '"IVE2"': u2_array # Map Version
-            '"VCOD"': u2_array # Verification Code ## TODO later
-            '"IOWN"': player_owner_array #StarEdit Player Types
+            '"TYPE"': u4 # Map Type
+            '"VER "': u2 # Format Version
+            '"IVER"': u2 # Map Version
+            '"IVE2"': u2 # Map Version
+            '"VCOD"': verification_code # Verification Code
+            '"IOWN"': player_owner_array # StarEdit Player Types
             '"OWNR"': player_owner_array # StarCraft Player Types
             '"ERA "': tileset # Tileset
             '"DIM "': dimension # Map Dimensions
             '"SIDE"': player_races # Player Races
             '"MTXM"': u2_array # StarCraft Terrain
             '"PUNI"': player_unit_restrictions # Player Unit Restrictions
-            '"UPGR"': upgrade_restrictions # Upgrade Restrictions
-            '"PTEC"': tech_restrictions # Tech Restrictions
+            '"UPGR"': upgrade_restrictions(46) # Upgrade Restrictions
+            '"PTEC"': tech_restrictions(24) # Tech Restrictions
             '"UNIT"': placed_units_array # Placed Units
             '"ISOM"': u2_array # Isometric Terrain
             '"TILE"': u2_array # StarEdit Terrain
@@ -55,22 +56,22 @@ types:
             '"UPUS"': u1_array # CUWP Slots Used
             '"MRGN"': locations_array # Locations
             '"TRIG"': triggers_array # Triggers
-            '"MBRF"': u1_array # Mission Briefings ## TODO later
+            '"MBRF"': triggers_array # Mission Briefings
             '"SPRP"': scenario_properties # Scenario Properties
             '"FORC"': force_settings # Force Settings
             '"WAV "': u4_array # WAV String Indexes
-            '"UNIS"': unit_settings # Unit Settings
-            '"UPGS"': upgrade_settings # Upgrade Settings
-            '"TECS"': tech_settings # Tech Settings
+            '"UNIS"': unit_settings(100) # Unit Settings
+            '"UPGS"': upgrade_settings(46) # Upgrade Settings
+            '"TECS"': tech_settings(24) # Tech Settings
             '"SWNM"': u4_array # Switch Names
             '"COLR"': player_colors # Player Colors
-            '"CRGB"': u1_array # Remastered Player Colors ## TODO later
-            '"PUPx"': u1_array ## TODO later
-            '"PTEx"': u1_array ## TODO later
-            '"UNIx"': u1_array ## TODO later
-            '"UPGx"': u1_array ## TODO later
-            '"TECx"': u1_array ## TODO later
-            _: u1_array
+            '"CRGB"': remastered_player_colors # Remastered Player Colors
+            '"PUPx"': upgrade_restrictions(61) # BW Upgrade Restrictions
+            '"PTEx"': tech_restrictions(44) ## BW Tech Restrictions
+            '"UNIx"': unit_settings(130) ## BW Unit Settings
+            '"UPGx"': upgrade_settings(61) ## BW Upgrade Settings
+            '"TECx"': tech_settings(44) ## BW Tech Settings
+            _: u1_array # Fallback for unknown or unsupported types
 
   u1_array:
     seq:
@@ -90,6 +91,18 @@ types:
       - id: values
         type: u4
         repeat: eos
+        
+  verification_code:
+    seq:
+      - id: seed_values
+        type: u4
+        repeat: expr
+        repeat-expr: 256
+        
+      - id: operation_codes
+        type: u1
+        repeat: expr
+        repeat-expr: 16
   
   player_owner_array:
     seq:
@@ -138,64 +151,72 @@ types:
         repeat-expr: 228
         
   upgrade_restrictions:
+    params:
+      - id: repeat_len
+        type: u1
+  
     seq:
       - id: maximum_level
         type: u1_array
         size: 12
         repeat: expr
-        repeat-expr: 46
+        repeat-expr: repeat_len
 
       - id: start_level
         type: u1_array
         size: 12
         repeat: expr
-        repeat-expr: 46
+        repeat-expr: repeat_len
         
       - id: default_maximum_level
         type: u1
         repeat: expr
-        repeat-expr: 46
+        repeat-expr: repeat_len
         
       - id: default_start_level
         type: u1
         repeat: expr
-        repeat-expr: 46
+        repeat-expr: repeat_len
         
       - id: upgrade_order
         type: u1_array
         size: 12
         repeat: expr
-        repeat-expr: 46
+        repeat-expr: repeat_len
         
   tech_restrictions:
+    params:
+      - id: repeat_len
+        type: u1
+  
     seq:
       - id: availability
         type: u1_array
         size: 12
         repeat: expr
-        repeat-expr: 24
+        repeat-expr: repeat_len
 
       - id: alreeady_researched
         type: u1_array
         size: 12
         repeat: expr
-        repeat-expr: 24
+        repeat-expr: repeat_len
         
       - id: default_availability
         type: u1
         repeat: expr
-        repeat-expr: 24
+        repeat-expr: repeat_len
         
       - id: default_already_research
         type: u1
         repeat: expr
-        repeat-expr: 24
+        repeat-expr: repeat_len
         
       - id: use_global_defaults
         type: u1_array
         size: 12
         repeat: expr
-        repeat-expr: 24
+        repeat-expr: repeat_len
   
   placed_units_array:
     seq:
@@ -221,10 +242,10 @@ types:
         type: u2
         
       - id: special_properties
-        type: placed_units_special_properties_flags
+        type: special_properties_flags
         
       - id: mapmaker_properties
-        type: placed_units_mapmaker_properties_flags
+        type: mapmaker_properties_flags
         
       - id: player_owner
         type: u1
@@ -245,35 +266,15 @@ types:
         type: u2
         
       - id: unit_state
-        type: placed_units_state_flags
+        type: special_properties_flags
         
       - id: unused
         type: u4
         
       - id: linked_unit
         type: u4
-        
-  placed_units_special_properties_flags:
-    seq:
-      - id: cloak_valid
-        type: b1
-        
-      - id: burrow_valid
-        type: b1
-        
-      - id: transit_valid
-        type: b1
-        
-      - id: hallucinated_valid
-        type: b1
-        
-      - id: invincible_valid
-        type: b1
-        
-      - id: unused
-        type: b11
-        
-  placed_units_mapmaker_properties_flags:
+
+  mapmaker_properties_flags:
     seq:
       - id: owner_valid
         type: b1
@@ -296,7 +297,7 @@ types:
       - id: unused
         type: b10
         
-  placed_units_state_flags:
+  special_properties_flags:
     seq:
       - id: cloacked
         type: b1
@@ -441,10 +442,10 @@ types:
   cuwp_slots:
     seq:
       - id: special_properties
-        type: cuwp_slots_special_properties_flags
+        type: special_properties_flags
         
-      - id: validity
-        type: cuwp_slots_validity_flags
+      - id: mapmaker_properties
+        type: mapmaker_properties_flags
         
       - id: unit_owner
         type: u1
@@ -465,74 +466,11 @@ types:
         type: u2
         
       - id: unit_flags
-        type: cuwp_slots_unit_flags
+        type: special_properties_flags
         
       - id: unused
         type: u4
         
-  cuwp_slots_special_properties_flags:
-    seq:
-      - id: cloak_valid
-        type: b1
-        
-      - id: burrowed_valid
-        type: b1
-        
-      - id: transit_valid
-        type: b1
-        
-      - id: hallucinated_valid
-        type: b1
-        
-      - id: invincible_valid
-        type: b1
-        
-      - id: unused
-        type: b11
-        
-  cuwp_slots_validity_flags:
-    seq:
-      - id: owner_valid
-        type: b1
-        
-      - id: hp_valid
-        type: b1
-        
-      - id: shields_valid
-        type: b1
-        
-      - id: energy_valid
-        type: b1
-        
-      - id: resource_amount_valid
-        type: b1
-        
-      - id: amount_in_hangar_valid
-        type: b1
-
-      - id: unknown
-        type: b10
-
-  cuwp_slots_unit_flags:
-    seq:
-      - id: cloaked
-        type: b1
-        
-      - id: burrowed
-        type: b1
-
-      - id: transit
-        type: b1
-        
-      - id: hallucinated
-        type: b1
-        
-      - id: invincible
-        type: b1
-
-      - id: unused
-        type: b11
-
   locations_array:
     seq:
       - id: values
@@ -720,6 +658,10 @@ types:
         type: b4
 
   unit_settings:
+    params:
+      - id: weapon_repeat_len
+        type: u1
+  
     seq:
       - id: use_defaults
         type: u1
@@ -764,82 +706,111 @@ types:
       - id: base_weapon_damage
         type: u2
         repeat: expr
-        repeat-expr: 100
+        repeat-expr: weapon_repeat_len
         
       - id: upgrade_bonus_weapon_damage
         type: u2
         repeat: expr
-        repeat-expr: 100
+        repeat-expr: weapon_repeat_len
         
   upgrade_settings:
+    params:
+      - id: repeat_len
+        type: u1
+        
     seq:
       - id: default_settings
         type: u1
         repeat: expr
-        repeat-expr: 46
+        repeat-expr: repeat_len
+        
+      - id: unused
+        type: u1
+        if: repeat_len == 61 # this unused padding byte is only needed for brooddwar
       
       - id: base_mineral_cost
         type: u2
         repeat: expr
-        repeat-expr: 46
+        repeat-expr: repeat_len
       
       - id: mineral_cost_factor
         type: u2
         repeat: expr
-        repeat-expr: 46
+        repeat-expr: repeat_len
         
       - id: base_gas_cost
         type: u2
         repeat: expr
-        repeat-expr: 46
+        repeat-expr: repeat_len
         
       - id: gas_cost_factor
         type: u2
         repeat: expr
-        repeat-expr: 46
+        repeat-expr: repeat_len
         
       - id: base_time
         type: u2
         repeat: expr
-        repeat-expr: 46
+        repeat-expr: repeat_len
         
       - id: time_factor
         type: u2
         repeat: expr
-        repeat-expr: 46
+        repeat-expr: repeat_len
         
   tech_settings:
+    params:
+      - id: repeat_len
+        type: u1
+        
     seq:
       - id: default_settings
         type: u1
         repeat: expr
-        repeat-expr: 24
+        repeat-expr: repeat_len
         
       - id: mineral_cost
         type: u2
         repeat: expr
-        repeat-expr: 24
+        repeat-expr: repeat_len
         
       - id: gas_cost
         type: u2
         repeat: expr
-        repeat-expr: 24
+        repeat-expr: repeat_len
         
       - id: time_required
         type: u2
         repeat: expr
-        repeat-expr: 24
+        repeat-expr: repeat_len
         
       - id: energy_cost
         type: u2
         repeat: expr
-        repeat-expr: 24
+        repeat-expr: repeat_len
         
   player_colors:
     seq:
       - id: color
         type: u1
         enum: player_colors_enum
+        repeat: expr
+        repeat-expr: 8
+      
+  remastered_player_colors:
+    seq:
+      - id: red
+        type: u1
+        
+      - id: green
+        type: u1
+        
+      - id: blue
+        type: u1
+        
+      - id: color_select
+        type: u1
+        enum: color_select_enum
         repeat: expr
         repeat-expr: 8
         
@@ -889,4 +860,9 @@ enums:
     10: tan # (#ECC4B0)
     11: azure # (Neutral color, #4068D4)
     
-    
+  color_select_enum:
+    0: random_predefined
+    1: player_choice
+    2: custom_rgb # Custom RGB Color (RGB value for the corresponding player defined above)
+    3: color_id # Use color ID in the "B" color channel ("R" and "G" values appear to contain junk data); leaderboard color is still defined by COLR section and can be set independently
+  
