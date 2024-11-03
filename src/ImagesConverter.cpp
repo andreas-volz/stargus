@@ -136,8 +136,11 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<AbstractPale
     }
     else if (image.draw_function() == images_dat_t::DRAW_FUNCTION_ENUM_SHADOW)
     {
-      // do not export shadows images as the stratagus engine has a better way to generate them
-      save_grp = false;
+      // Hmm, this generates a black shadow, but I would expect alpha transparent shadow...
+      save_grp = true;
+      pal = paletteMap.at("tfontgam");
+      grp.setPalette(pal);
+      grp.setRGBA(true);
     }
     else // all other drawing functions until I identify a special case
     {
@@ -194,7 +197,6 @@ bool ImagesConverter::convert(std::map<std::string, std::shared_ptr<AbstractPale
       */
       pal = paletteMap.at("badlands");
     }
-
     grp.setPalette(pal);
 
     if(save_grp)

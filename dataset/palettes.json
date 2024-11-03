@@ -64,8 +64,12 @@
 	        "name": "bexpl",
 	        "arcfile": "tileset\\<?>\\bexpl.pcx",
 	        "palette": "bexpl.pal2d"
+	    },
+	    {
+	        "name": "dark",
+	        "arcfile": "tileset\\<?>\\dark.pcx",
+	        "palette": "dark.pal2d"
 	    }
-
 	],
     "WPE":
 	[
