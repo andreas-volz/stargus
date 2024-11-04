@@ -35,11 +35,6 @@ TilesetHub::~TilesetHub()
 
 }
 
-/*m_iscript_stream = mHurricane->extractStream(sc_iscript_bin);
-m_iscript_ks = make_shared<kaitai::kstream>(&*m_iscript_stream);
-
-iscript = make_shared<iscript_bin_t>(m_iscript_ks.get());
-*/
 void TilesetHub::init(const std::string &arcfile)
 {
   m_cv5_stream = mHurricane->extractStream(arcfile + ".cv5");
@@ -130,7 +125,6 @@ void TilesetHub::generateLua(const std::string &name, const std::string &image, 
     for(auto elem : *vx4_vf4_ref)
     {
       //cout << to_string(elem);
-
 
       tileset_vf4_t::minitile_t* minitile = vf4->elements()->at(elem);
 

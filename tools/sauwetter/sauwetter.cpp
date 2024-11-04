@@ -28,6 +28,39 @@ bool CheckCASCDataFolder(const std::string &dir)
   return FileExists(dir + "/.build.info");
 }
 
+shared_ptr<Hurricane> selectChoosenBackend()
+{
+  shared_ptr<Hurricane> hurricane;
+
+  cerr << "Backend: " << backend << endl;
+  if(to_lower(backend) == "breeze")
+  {
+    hurricane = make_shared<Breeze>(archive);
+  }
+  else if(to_lower(backend) == "storm")
+  {
+    hurricane = make_shared<Storm>(archive);
+  }
+  else if(to_lower(backend) == "casc")
+  {
+#ifdef HAVE_CASC
+    if(CheckCASCDataFolder(archive))
+    {
+      hurricane = make_shared<Casc>(archive);
+    }
+    else
+    {
+      cerr << "Error: 'archive' is not a CASC archive!" << endl;
+    }
+#else
+    cerr << "Error: No CASC support compiled into sauwetter!" << endl;
+    exit(1);
+#endif
+  }
+
+  return hurricane;
+}
+
 enum optionIndex
 {
   UNKNOWN, HELP, BACKEND
@@ -35,17 +68,16 @@ enum optionIndex
 const option::Descriptor usage[] =
 {
   {
-    UNKNOWN, 0, "", "", option::Arg::None, "USAGE: sauwetter archive [options] archive-file destination-directory\n\n"
+    UNKNOWN, 0, "", "", option::Arg::None, "USAGE: sauwetter [options] archive archive-file destination-directory\n\n"
     "Options:"
   },
   { HELP, 0, "h", "help", option::Arg::None, "  --help, -h  \t\tPrint usage and exit" },
-  { BACKEND, 0, "b", "backend", Arg::Required, "  --backend BACKEND, -b BACKEND  \t\tChoose a backend (Storm=St*arcr*ft1/Br**dwar;Casc=Remastered;Breeze=Folder)" },
+  { BACKEND, 0, "b", "backend", Arg::Required, "  --backend BACKEND, -b BACKEND  \t\tChoose a backend (storm=St*arcr*ft1/Br**dwar;casc=Remastered;breeze=Folder)" },
   {
     UNKNOWN, 0, "", "", option::Arg::None,
     "\narchive \t\tDestination to the archive (mpq, casc or dummy folder) based on backend.\n"
     "\narchive-file \t\tThe file inside the archive (with relative path) that is to be extracted.\n"
     "\ndestination-directory \t\tWhere to save the extracted file with same relative path.\n"
-
   },
   { 0, 0, 0, 0, 0, 0 }
 };
@@ -139,34 +171,7 @@ int main(int argc, const char **argv)
     exit(1);
   }
 
-  shared_ptr<Hurricane> hurricane;
-
-  cerr << "Backend: " << backend << endl;
-  if(to_lower(backend) == "breeze")
-  {
-    hurricane = make_shared<Breeze>(archive);
-  }
-  else if(to_lower(backend) == "storm")
-  {
-    hurricane = make_shared<Storm>(archive);
-  }
-  else if(to_lower(backend) == "casc")
-  {
-#ifdef HAVE_CASC
-    if(CheckCASCDataFolder(archive))
-    {
-      hurricane = make_shared<Casc>(archive);
-    }
-    else
-    {
-      cerr << "Error: 'archive' is not a CASC archive!" << endl;
-    }
-#else
-    cerr << "Error: No CASC support compiled into sauwetter!" << endl;
-    exit(1);
-#endif
-  }
-
+  shared_ptr<Hurricane> hurricane = selectChoosenBackend();
 
   string archive_file_slash(archive_file);
   replaceString("\\", "/", archive_file_slash);

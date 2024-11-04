@@ -1,9 +1,13 @@
 /* project */
+#include "Breeze.h"
+#include "Storm.h"
+#include "Casc.h"
 #include "FileUtil.h"
 #include "iscript/IScript.h"
 #include "iscript/IScriptConverter.h"
 #include "optparser.h"
 #include "Logger.h"
+#include "StringUtil.h"
 
 /* system */
 #include <string>
@@ -13,27 +17,69 @@ using namespace std;
 
 static Logger logger("startool.iscriptconverter");
 
+// some global variables
 bool human_readable = false;
-string iscript_bin;
-string iscript_txt;
+string backend;
+string archive;
+string archive_file;
+string destination_directory;
+
+bool CheckCASCDataFolder(const std::string &dir)
+{
+  return FileExists(dir + "/.build.info");
+}
+
+shared_ptr<Hurricane> selectChoosenBackend()
+{
+  shared_ptr<Hurricane> hurricane;
+
+  cerr << "Backend: " << backend << endl;
+  if(to_lower(backend) == "breeze")
+  {
+    hurricane = make_shared<Breeze>(archive);
+  }
+  else if(to_lower(backend) == "storm")
+  {
+    hurricane = make_shared<Storm>(archive);
+  }
+  else if(to_lower(backend) == "casc")
+  {
+#ifdef HAVE_CASC
+    if(CheckCASCDataFolder(archive))
+    {
+      hurricane = make_shared<Casc>(archive);
+    }
+    else
+    {
+      cerr << "Error: 'archive' is not a CASC archive!" << endl;
+    }
+#else
+    cerr << "Error: No CASC support compiled into sauwetter!" << endl;
+    exit(1);
+#endif
+  }
+
+  return hurricane;
+}
 
 enum optionIndex
 {
-  UNKNOWN, HELP, HUMANREADABLE
+  UNKNOWN, HELP, HUMANREADABLE, BACKEND
 };
 const option::Descriptor usage[] =
 {
   {
-    UNKNOWN, 0, "", "", option::Arg::None, "USAGE: iscriptconverter [options] /path/to/iscript.bin /path/to/iscript.txt\n\n"
+    UNKNOWN, 0, "", "", option::Arg::None, "USAGE: iscriptconverter [options] archive destination-directory\n\n"
     "Options:"
   },
   { HELP, 0, "h", "help", option::Arg::None, "  --help, -h  \t\tPrint usage and exit" },
   { HUMANREADABLE, 0, "r", "human-readable", Arg::None, "  --human-readable, -r  \t\tGenerate output with human readable names (e.g. for debugging or analysis)" },
+  { BACKEND, 0, "b", "backend", Arg::Required, "  --backend, -b  \t\tChoose a backend (storm=St*arcr*ft1/Br**dwar;casc=Remastered;breeze=Folder)" },
   {
     UNKNOWN, 0, "", "", option::Arg::None,
-    "\niscript.bin \t\tThe binary input iscript.bin format with all animation Opcodes.\n"
-    "\niscript.txt \t\tThe converted output iscript.txt with easy to parse numbers or (for debugging) a human readable version.\n"
-
+    "\narchive \t\tDestination to the archive (mpq, casc or dummy folder) based on backend.\n"
+    "\ndestination-directory \t\tWhere to save the extracted file with same relative path.\n\n"
+    "(Hint: The exporter expects the input in \"scripts/iscript.bin\")"
   },
   { 0, 0, 0, 0, 0, 0 }
 };
@@ -60,6 +106,17 @@ int parseOptions(int argc, const char **argv)
     human_readable = true;
   }
 
+  if(options[BACKEND].count() > 0)
+  {
+    backend = options[BACKEND].arg;
+  }
+  else
+  {
+    cerr << "Error: 'backend' not given!" << endl << endl;
+    option::printUsage(std::cout, usage);
+    exit(1);
+  }
+
   // parse options
   for (option::Option *opt = options[UNKNOWN]; opt; opt = opt->next())
     std::cout << "Unknown option: " << opt->name << "\n";
@@ -69,26 +126,26 @@ int parseOptions(int argc, const char **argv)
     switch (i)
     {
     case 0:
-      iscript_bin = parse.nonOption(i);
+      archive = parse.nonOption(i);
       break;
     case 1:
-      iscript_txt = parse.nonOption(i);
+      destination_directory = parse.nonOption(i);
       break;
     default:
       break;
     }
   }
 
-  if (iscript_bin.empty())
+  if (archive.empty())
   {
-    cerr << "Error: 'iscript.bin' not given!" << endl << endl;
+    cerr << "Error: 'archive' not given!" << endl << endl;
     option::printUsage(std::cout, usage);
     exit(1);
   }
 
-  if (iscript_txt.empty())
+  if (destination_directory.empty())
   {
-    cerr << "Error: 'iscript.txt' not given!" << endl << endl;
+    cerr << "Error: 'destination_directory' not given!" << endl << endl;
     option::printUsage(std::cout, usage);
     exit(1);
   }
@@ -111,14 +168,10 @@ int main(int argc, const char **argv)
 
   parseOptions(argc, argv);
 
-  bool iscript_bin_exists = FileExists(iscript_bin);
-  if(!iscript_bin_exists)
-  {
-    cerr << "iscript.bin not existing - exit!" << endl;
-    exit(1);
-  }
+  shared_ptr<Hurricane> hurricane = selectChoosenBackend();
 
-  IScript iscript(iscript_bin);
+  string iscript_bin = "scripts\\iscript.bin";
+  IScript iscript(hurricane, iscript_bin);
   iscript.parseIScript();
 
   std::vector<Opcode> &opcode_vector = iscript.getOpcodeVector();
@@ -126,6 +179,7 @@ int main(int argc, const char **argv)
 
   IScriptConverter iscript_converter;
   iscript_converter.setHumanReadable(human_readable);
+  string iscript_txt = destination_directory + "/iscript.txt";
   iscript_converter.saveConverted(iscript_txt, iscript_scpe_header_map, opcode_vector);
 
   return 0;

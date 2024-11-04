@@ -9,16 +9,19 @@
 
 /* project */
 #include "opcode_types.h"
+#include "Converter.h"
 
 /* systen */
 #include <map>
 #include <set>
 
 
-class IScript
+class IScript : public Converter
 {
 public:
-  IScript(const std::string& filename);
+  //IScript(std::shared_ptr<Hurricane> hurricane);
+  IScript(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile);
+  //IScript(const std::string& filename);
   virtual ~IScript();
 
   /**
@@ -115,7 +118,8 @@ private:
   bool checkMagic(uint32_t magic, bool consume = false);*/
 
 
-  std::ifstream m_stream;
+  //std::ifstream m_stream;
+  std::shared_ptr<std::istream> m_stream;
   enum IScriptVersion m_version;
 
   std::vector<entree_offset_type> m_entree_offsets;

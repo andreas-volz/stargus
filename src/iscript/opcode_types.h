@@ -7,11 +7,13 @@
 #ifndef OPCODE_TYPES_H
 #define OPCODE_TYPES_H
 
+/* system */
 #include <cstdint>
 #include <variant>
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <memory>
 
 enum opcode_t
 {
@@ -94,9 +96,9 @@ uint32_t to_host_endian(uint32_t val);
 template <typename T> class generic_type
 {
 public:
-  void read(std::istream& stream)
+  void read(std::shared_ptr<std::istream> stream)
   {
-    stream.read(reinterpret_cast<char*>(&m_value), sizeof(m_value));
+    stream->read(reinterpret_cast<char*>(&m_value), sizeof(m_value));
     m_value = to_host_endian(m_value);
   }
 
@@ -214,22 +216,22 @@ struct Opcode {
 
 
 
-pos_type read_pos_type(std::istream& stream);
-u4_type read_u4_type(std::istream& stream);
-u2_type read_u2_type(std::istream& stream);
-u1_type read_u1_type(std::istream& stream);
+pos_type read_pos_type(std::shared_ptr<std::istream> stream);
+u4_type read_u4_type(std::shared_ptr<std::istream> stream);
+u2_type read_u2_type(std::shared_ptr<std::istream> stream);
+u1_type read_u1_type(std::shared_ptr<std::istream> stream);
 
-waitrand_type read_waitrand_type(std::istream& stream);
-imgl_type read_imgl_type(std::istream& stream);
-sprl_type read_sprl_type(std::istream& stream);
-sprov_type read_sprov_type(std::istream& stream);
-playsndbtwn_type read_playsndbtwn_type(std::istream& stream);
-playsounds_type read_playsounds_type(std::istream& stream);
-randcondjmp_type read_randcondjmp_type(std::istream& stream);
-trgtrangecondjmp_type read_trgtrangecondjmp_type(std::istream& stream);
-trgcondjmp_type read_trgcondjmp_type(std::istream& stream);
+waitrand_type read_waitrand_type(std::shared_ptr<std::istream> stream);
+imgl_type read_imgl_type(std::shared_ptr<std::istream> stream);
+sprl_type read_sprl_type(std::shared_ptr<std::istream> stream);
+sprov_type read_sprov_type(std::shared_ptr<std::istream> stream);
+playsndbtwn_type read_playsndbtwn_type(std::shared_ptr<std::istream> stream);
+playsounds_type read_playsounds_type(std::shared_ptr<std::istream> stream);
+randcondjmp_type read_randcondjmp_type(std::shared_ptr<std::istream> stream);
+trgtrangecondjmp_type read_trgtrangecondjmp_type(std::shared_ptr<std::istream> stream);
+trgcondjmp_type read_trgcondjmp_type(std::shared_ptr<std::istream> stream);
 
-entree_offset_type read_entree_offset_type(std::istream& stream);
-scpe_header_type read_scpe_header_type(std::istream& stream);
+entree_offset_type read_entree_offset_type(std::shared_ptr<std::istream> stream);
+scpe_header_type read_scpe_header_type(std::shared_ptr<std::istream> stream);
 
 #endif /* OPCODE_TYPES_H */

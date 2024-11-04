@@ -45,7 +45,7 @@ uint32_t to_host_endian(uint32_t val)
   return val; // Already little-endian, no need to convert
 }
 
-scpe_header_type read_scpe_header_type(std::istream& stream)
+scpe_header_type read_scpe_header_type(std::shared_ptr<std::istream> stream)
 {
   scpe_header_type scpe_header;
   scpe_header.magic = read_u4_type(stream);
@@ -56,7 +56,7 @@ scpe_header_type read_scpe_header_type(std::istream& stream)
   return scpe_header;
 }
 
-entree_offset_type read_entree_offset_type(std::istream& stream)
+entree_offset_type read_entree_offset_type(std::shared_ptr<std::istream> stream)
 {
   entree_offset_type entree_offset;
   entree_offset.iscript_id = read_u2_type(stream);
@@ -64,7 +64,7 @@ entree_offset_type read_entree_offset_type(std::istream& stream)
   return entree_offset;
 }
 
-pos_type read_pos_type(std::istream& stream)
+pos_type read_pos_type(std::shared_ptr<std::istream> stream)
 {
   pos_type pos;
   pos.x.read(stream);
@@ -72,28 +72,28 @@ pos_type read_pos_type(std::istream& stream)
   return pos;
 }
 
-u4_type read_u4_type(std::istream& stream)
+u4_type read_u4_type(std::shared_ptr<std::istream> stream)
 {
   u4_type u4;
   u4.read(stream);
   return u4;
 }
 
-u2_type read_u2_type(std::istream& stream)
+u2_type read_u2_type(std::shared_ptr<std::istream> stream)
 {
   u2_type u2;
   u2.read(stream);
   return u2;
 }
 
-u1_type read_u1_type(std::istream& stream)
+u1_type read_u1_type(std::shared_ptr<std::istream> stream)
 {
   u1_type u1;
   u1.read(stream);
   return u1;
 }
 
-waitrand_type read_waitrand_type(std::istream& stream)
+waitrand_type read_waitrand_type(std::shared_ptr<std::istream> stream)
 {
   waitrand_type waitrand;
   waitrand.ticks1 = read_u1_type(stream);
@@ -101,7 +101,7 @@ waitrand_type read_waitrand_type(std::istream& stream)
   return waitrand;
 }
 
-imgl_type read_imgl_type(std::istream& stream)
+imgl_type read_imgl_type(std::shared_ptr<std::istream> stream)
 {
   imgl_type imgl;
   imgl.image = read_u2_type(stream);
@@ -109,7 +109,7 @@ imgl_type read_imgl_type(std::istream& stream)
   return imgl;
 }
 
-sprl_type read_sprl_type(std::istream& stream)
+sprl_type read_sprl_type(std::shared_ptr<std::istream> stream)
 {
   sprl_type sprl;
   sprl.sprite = read_u2_type(stream);
@@ -117,7 +117,7 @@ sprl_type read_sprl_type(std::istream& stream)
   return sprl;
 }
 
-sprov_type read_sprov_type(std::istream& stream)
+sprov_type read_sprov_type(std::shared_ptr<std::istream> stream)
 {
   sprov_type sprov;
   sprov.sprite = read_u2_type(stream);
@@ -125,7 +125,7 @@ sprov_type read_sprov_type(std::istream& stream)
   return sprov;
 }
 
-playsndbtwn_type read_playsndbtwn_type(std::istream& stream)
+playsndbtwn_type read_playsndbtwn_type(std::shared_ptr<std::istream> stream)
 {
   playsndbtwn_type playsndbtwn;
   playsndbtwn.firstsound = read_u2_type(stream);
@@ -133,7 +133,7 @@ playsndbtwn_type read_playsndbtwn_type(std::istream& stream)
   return playsndbtwn;
 }
 
-playsounds_type read_playsounds_type(std::istream& stream)
+playsounds_type read_playsounds_type(std::shared_ptr<std::istream> stream)
 {
   playsounds_type playsounds;
   playsounds.num_sound = read_u1_type(stream);
@@ -145,7 +145,7 @@ playsounds_type read_playsounds_type(std::istream& stream)
   return playsounds;
 }
 
-randcondjmp_type read_randcondjmp_type(std::istream& stream)
+randcondjmp_type read_randcondjmp_type(std::shared_ptr<std::istream> stream)
 {
   randcondjmp_type randcondjmp;
   randcondjmp.randchance = read_u1_type(stream);
@@ -153,7 +153,7 @@ randcondjmp_type read_randcondjmp_type(std::istream& stream)
   return randcondjmp;
 }
 
-trgtrangecondjmp_type read_trgtrangecondjmp_type(std::istream& stream)
+trgtrangecondjmp_type read_trgtrangecondjmp_type(std::shared_ptr<std::istream> stream)
 {
   trgtrangecondjmp_type trgtrangecondjmp;
   trgtrangecondjmp.distance = read_u2_type(stream);
@@ -161,7 +161,7 @@ trgtrangecondjmp_type read_trgtrangecondjmp_type(std::istream& stream)
   return trgtrangecondjmp;
 }
 
-trgcondjmp_type read_trgcondjmp_type(std::istream& stream)
+trgcondjmp_type read_trgcondjmp_type(std::shared_ptr<std::istream> stream)
 {
   trgcondjmp_type trgcondjmp;
   trgcondjmp.angle1 = read_u2_type(stream);

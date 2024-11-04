@@ -6,21 +6,40 @@
 
 /* project */
 #include "IScript.h"
+#include "Hurricane.h"
 
 /* system */
 #include <algorithm>
 
 using namespace std;
 
-IScript::IScript(const std::string& filename) :
-            m_stream(filename, std::ios::binary),
-            m_version(IScriptVersion::STARCRAFT)
+
+
+/*IScript::IScript(std::shared_ptr<Hurricane> hurricane) :
+  Converter(hurricane),
+  //m_stream(filename, std::ios::binary),
+  m_version(IScriptVersion::STARCRAFT)
+{
+}*/
+
+IScript::IScript(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile) :
+  Converter(hurricane),
+  m_stream(hurricane->extractStream(arcfile)),
+  m_version(IScriptVersion::STARCRAFT)
+{
+  //m_stream = mHurricane->extractStream(arcfile);
+  //load(arcfile);
+}
+
+/*IScript::IScript(const std::string& filename) :
+  m_stream(filename, std::ios::binary),
+  m_version(IScriptVersion::STARCRAFT)
 {
   if (!m_stream)
   {
     throw std::runtime_error("Could not open the file!");
   }
-}
+}*/
 
 IScript::~IScript()
 {
@@ -56,7 +75,7 @@ const std::map<unsigned int, unsigned int> ANIMATION_TYPE_MAPPING = {
 
 void IScript::parseOpcodeBlock(uint16_t start_offset)
 {
-  m_stream.seekg(start_offset);
+  m_stream->seekg(start_offset);
 
   bool processing = true;
   while (processing)
@@ -67,7 +86,7 @@ void IScript::parseOpcodeBlock(uint16_t start_offset)
     /*
      * add the current file offset to a index list to later reference the jump offsets to this point.
      */
-    uint16_t offset = m_stream.tellg();
+    uint16_t offset = m_stream->tellg();
     offset -= sizeof(uint8_t); // subtract sizeof(uint8_t) as opcode is yet read.
 
     // Based on the opcode, read the corresponding args
@@ -274,7 +293,7 @@ void IScript::parseSCPEHeader()
 {
   std::vector<uint16_t> scpe_opcode_offset_list;
 
-  uint16_t address = m_stream.tellg();
+  uint16_t address = m_stream->tellg();
   uint16_t iscript_id = m_offset_iscript_mapping[address];
 
   scpe_header_type scpe_header = read_scpe_header_type(m_stream);
@@ -323,8 +342,8 @@ void IScript::detectDataVersion()
   if(m_version == IScriptVersion::STARCRAFT)
   {
     // seek to the end to get the file length
-    m_stream.seekg(0, ios_base::end);
-    auto length = m_stream.tellg();
+    m_stream->seekg(0, ios_base::end);
+    auto length = m_stream->tellg();
 
     entree_table_start = length - std::streamoff(ORIG_STARCRAFT_HEADER_TABLE_SIZE);
   }
@@ -336,7 +355,7 @@ void IScript::detectDataVersion()
   /*
    * from here start the parsing of the entree table at the end of iscript.bin
    */
-  m_stream.seekg(entree_table_start);
+  m_stream->seekg(entree_table_start);
 }
 
 void IScript::parseEntreeOffsetList()
@@ -456,7 +475,7 @@ void IScript::parseIScript()
 
   for(auto entree_offset : m_entree_offsets)
   {
-    m_stream.seekg(entree_offset.offset.value());
+    m_stream->seekg(entree_offset.offset.value());
 
     parseSCPEHeader();
   }
@@ -525,8 +544,8 @@ std::map<uint16_t, std::vector<uint16_t>> &IScript::getIScriptSCPEHeaderMap()
   // seek back after read
   if(!consume)
   {
-    std::streampos currentPos = m_stream.tellg();
-    m_stream.seekg(currentPos - std::streamoff(sizeof(read_magic.value())));
+    std::streampos currentPos = m_stream->tellg();
+    m_stream->seekg(currentPos - std::streamoff(sizeof(read_magic.value())));
   }
 
   if (read_magic.value() == magic)
