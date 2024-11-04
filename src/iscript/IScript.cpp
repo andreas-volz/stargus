@@ -13,37 +13,16 @@
 
 using namespace std;
 
-
-
-/*IScript::IScript(std::shared_ptr<Hurricane> hurricane) :
-  Converter(hurricane),
-  //m_stream(filename, std::ios::binary),
-  m_version(IScriptVersion::STARCRAFT)
-{
-}*/
-
 IScript::IScript(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile) :
   Converter(hurricane),
   m_stream(hurricane->extractStream(arcfile)),
   m_version(IScriptVersion::STARCRAFT)
 {
-  //m_stream = mHurricane->extractStream(arcfile);
-  //load(arcfile);
 }
 
-/*IScript::IScript(const std::string& filename) :
-  m_stream(filename, std::ios::binary),
-  m_version(IScriptVersion::STARCRAFT)
-{
-  if (!m_stream)
-  {
-    throw std::runtime_error("Could not open the file!");
-  }
-}*/
 
 IScript::~IScript()
 {
-
 }
 
 /* the iscript.bin has its header table at the start of the iscript,

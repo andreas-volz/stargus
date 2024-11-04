@@ -19,9 +19,7 @@
 class IScript : public Converter
 {
 public:
-  //IScript(std::shared_ptr<Hurricane> hurricane);
   IScript(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile);
-  //IScript(const std::string& filename);
   virtual ~IScript();
 
   /**

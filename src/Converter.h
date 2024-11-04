@@ -24,4 +24,4 @@ protected:
   std::shared_ptr<Hurricane> mHurricane;
 };
 
-#endif /* ONVERTER_H_ */
+#endif /* CONVERTER_H_ */
