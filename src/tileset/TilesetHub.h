@@ -9,7 +9,6 @@
 
 // project
 #include "Palette.h"
-#include "KaitaiConverter.h"
 #include "kaitai/tileset_cv5.h"
 #include "kaitai/tileset_vx4.h"
 #include "kaitai/tileset_vf4.h"

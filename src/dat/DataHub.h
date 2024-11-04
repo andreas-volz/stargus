@@ -8,7 +8,6 @@
 #define DATAHUB_H
 
 // project
-#include "KaitaiConverter.h"
 #include "Palette.h"
 #include "Palette2D.h"
 #include "Tbl.h"
