@@ -25,7 +25,7 @@ namespace tileset
 {
 
 TilesetHub::TilesetHub(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile) :
-  KaitaiConverter(hurricane)
+  Converter(hurricane)
 {
   init(arcfile);
 }

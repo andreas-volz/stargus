@@ -29,7 +29,7 @@ namespace dat
 static Logger logger = Logger("startool.dat.DataHub");
 
 DataHub::DataHub(std::shared_ptr<Hurricane> hurricane) :
-  KaitaiConverter(hurricane)
+  Converter(hurricane)
 {
   init_units_dat();
 

@@ -65,7 +65,7 @@ namespace dat
  *
  *  "with great power comes great responsibility" - (Spiderman)
  */
-class DataHub : public KaitaiConverter
+class DataHub : public Converter
 {
 public:
   DataHub(std::shared_ptr<Hurricane> hurricane);

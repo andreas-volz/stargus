@@ -35,7 +35,7 @@ namespace tileset
  *
  *  "with great power comes great responsibility" - (Spiderman)
  */
-class TilesetHub : public KaitaiConverter
+class TilesetHub : public Converter
 {
 public:
   TilesetHub(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile);
