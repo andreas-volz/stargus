@@ -23,7 +23,7 @@ startool_kaitai_tileset_sources = files(
 )
 
 startool_kaitai_chk_sources = files(
-    'chk.cpp',
+    'chk_parser.cpp',
 )
 
 startool_kaitai_sources = startool_kaitai_dat_sources + startool_kaitai_tileset_sources + startool_kaitai_chk_sources

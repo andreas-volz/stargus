@@ -1,5 +1,5 @@
 meta:
-  id: chk
+  id: chk_parser
   endian: le
   bit-endian: le
 

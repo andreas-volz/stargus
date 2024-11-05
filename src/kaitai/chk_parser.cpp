@@ -1,8 +1,8 @@
 // This is a generated file! Please edit source .ksy file and use kaitai-struct-compiler to rebuild
 
-#include "chk.h"
+#include "chk_parser.h"
 
-chk_t::chk_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::chk_parser_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = this;
     m_chunk = 0;
@@ -15,7 +15,7 @@ chk_t::chk_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, chk_t* p__root)
     }
 }
 
-void chk_t::_read() {
+void chk_parser_t::_read() {
     m_chunk = new std::vector<chunk_type_t*>();
     {
         int i = 0;
@@ -26,11 +26,11 @@ void chk_t::_read() {
     }
 }
 
-chk_t::~chk_t() {
+chk_parser_t::~chk_parser_t() {
     _clean_up();
 }
 
-void chk_t::_clean_up() {
+void chk_parser_t::_clean_up() {
     if (m_chunk) {
         for (std::vector<chunk_type_t*>::iterator it = m_chunk->begin(); it != m_chunk->end(); ++it) {
             delete *it;
@@ -39,7 +39,7 @@ void chk_t::_clean_up() {
     }
 }
 
-chk_t::locations_t::locations_t(kaitai::kstream* p__io, chk_t::locations_array_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::locations_t::locations_t(kaitai::kstream* p__io, chk_parser_t::locations_array_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_elevation = 0;
@@ -52,7 +52,7 @@ chk_t::locations_t::locations_t(kaitai::kstream* p__io, chk_t::locations_array_t
     }
 }
 
-void chk_t::locations_t::_read() {
+void chk_parser_t::locations_t::_read() {
     m_coord_x1 = m__io->read_u4le();
     m_coord_y1 = m__io->read_u4le();
     m_coord_x2 = m__io->read_u4le();
@@ -61,17 +61,17 @@ void chk_t::locations_t::_read() {
     m_elevation = new locations_elevation_flags_t(m__io, this, m__root);
 }
 
-chk_t::locations_t::~locations_t() {
+chk_parser_t::locations_t::~locations_t() {
     _clean_up();
 }
 
-void chk_t::locations_t::_clean_up() {
+void chk_parser_t::locations_t::_clean_up() {
     if (m_elevation) {
         delete m_elevation; m_elevation = 0;
     }
 }
 
-chk_t::trigger_execution_t::trigger_execution_t(kaitai::kstream* p__io, chk_t::triggers_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::trigger_execution_t::trigger_execution_t(kaitai::kstream* p__io, chk_parser_t::triggers_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_list = 0;
@@ -84,7 +84,7 @@ chk_t::trigger_execution_t::trigger_execution_t(kaitai::kstream* p__io, chk_t::t
     }
 }
 
-void chk_t::trigger_execution_t::_read() {
+void chk_parser_t::trigger_execution_t::_read() {
     m_flags = m__io->read_u4le();
     m_list = new std::vector<uint8_t>();
     const int l_list = 28;
@@ -93,17 +93,17 @@ void chk_t::trigger_execution_t::_read() {
     }
 }
 
-chk_t::trigger_execution_t::~trigger_execution_t() {
+chk_parser_t::trigger_execution_t::~trigger_execution_t() {
     _clean_up();
 }
 
-void chk_t::trigger_execution_t::_clean_up() {
+void chk_parser_t::trigger_execution_t::_clean_up() {
     if (m_list) {
         delete m_list; m_list = 0;
     }
 }
 
-chk_t::player_owner_array_t::player_owner_array_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::player_owner_array_t::player_owner_array_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_values = 0;
@@ -116,28 +116,28 @@ chk_t::player_owner_array_t::player_owner_array_t(kaitai::kstream* p__io, chk_t:
     }
 }
 
-void chk_t::player_owner_array_t::_read() {
+void chk_parser_t::player_owner_array_t::_read() {
     m_values = new std::vector<player_owner_enum_t>();
     {
         int i = 0;
         while (!m__io->is_eof()) {
-            m_values->push_back(static_cast<chk_t::player_owner_enum_t>(m__io->read_u1()));
+            m_values->push_back(static_cast<chk_parser_t::player_owner_enum_t>(m__io->read_u1()));
             i++;
         }
     }
 }
 
-chk_t::player_owner_array_t::~player_owner_array_t() {
+chk_parser_t::player_owner_array_t::~player_owner_array_t() {
     _clean_up();
 }
 
-void chk_t::player_owner_array_t::_clean_up() {
+void chk_parser_t::player_owner_array_t::_clean_up() {
     if (m_values) {
         delete m_values; m_values = 0;
     }
 }
 
-chk_t::upgrade_restrictions_t::upgrade_restrictions_t(uint8_t p_repeat_len, kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::upgrade_restrictions_t::upgrade_restrictions_t(uint8_t p_repeat_len, kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_repeat_len = p_repeat_len;
@@ -161,7 +161,7 @@ chk_t::upgrade_restrictions_t::upgrade_restrictions_t(uint8_t p_repeat_len, kait
     }
 }
 
-void chk_t::upgrade_restrictions_t::_read() {
+void chk_parser_t::upgrade_restrictions_t::_read() {
     m__raw_maximum_level = new std::vector<std::string>();
     m__io__raw_maximum_level = new std::vector<kaitai::kstream*>();
     m_maximum_level = new std::vector<u1_array_t*>();
@@ -204,11 +204,11 @@ void chk_t::upgrade_restrictions_t::_read() {
     }
 }
 
-chk_t::upgrade_restrictions_t::~upgrade_restrictions_t() {
+chk_parser_t::upgrade_restrictions_t::~upgrade_restrictions_t() {
     _clean_up();
 }
 
-void chk_t::upgrade_restrictions_t::_clean_up() {
+void chk_parser_t::upgrade_restrictions_t::_clean_up() {
     if (m__raw_maximum_level) {
         delete m__raw_maximum_level; m__raw_maximum_level = 0;
     }
@@ -262,7 +262,7 @@ void chk_t::upgrade_restrictions_t::_clean_up() {
     }
 }
 
-chk_t::remastered_player_colors_t::remastered_player_colors_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::remastered_player_colors_t::remastered_player_colors_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_color_select = 0;
@@ -275,28 +275,28 @@ chk_t::remastered_player_colors_t::remastered_player_colors_t(kaitai::kstream* p
     }
 }
 
-void chk_t::remastered_player_colors_t::_read() {
+void chk_parser_t::remastered_player_colors_t::_read() {
     m_red = m__io->read_u1();
     m_green = m__io->read_u1();
     m_blue = m__io->read_u1();
     m_color_select = new std::vector<color_select_enum_t>();
     const int l_color_select = 8;
     for (int i = 0; i < l_color_select; i++) {
-        m_color_select->push_back(static_cast<chk_t::color_select_enum_t>(m__io->read_u1()));
+        m_color_select->push_back(static_cast<chk_parser_t::color_select_enum_t>(m__io->read_u1()));
     }
 }
 
-chk_t::remastered_player_colors_t::~remastered_player_colors_t() {
+chk_parser_t::remastered_player_colors_t::~remastered_player_colors_t() {
     _clean_up();
 }
 
-void chk_t::remastered_player_colors_t::_clean_up() {
+void chk_parser_t::remastered_player_colors_t::_clean_up() {
     if (m_color_select) {
         delete m_color_select; m_color_select = 0;
     }
 }
 
-chk_t::special_properties_flags_t::special_properties_flags_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::special_properties_flags_t::special_properties_flags_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -308,7 +308,7 @@ chk_t::special_properties_flags_t::special_properties_flags_t(kaitai::kstream* p
     }
 }
 
-void chk_t::special_properties_flags_t::_read() {
+void chk_parser_t::special_properties_flags_t::_read() {
     m_cloacked = m__io->read_bits_int_le(1);
     m_burrowed = m__io->read_bits_int_le(1);
     m_transit = m__io->read_bits_int_le(1);
@@ -317,14 +317,14 @@ void chk_t::special_properties_flags_t::_read() {
     m_unused = m__io->read_bits_int_le(11);
 }
 
-chk_t::special_properties_flags_t::~special_properties_flags_t() {
+chk_parser_t::special_properties_flags_t::~special_properties_flags_t() {
     _clean_up();
 }
 
-void chk_t::special_properties_flags_t::_clean_up() {
+void chk_parser_t::special_properties_flags_t::_clean_up() {
 }
 
-chk_t::string_data_t::string_data_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::string_data_t::string_data_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_strings = 0;
@@ -337,7 +337,7 @@ chk_t::string_data_t::string_data_t(kaitai::kstream* p__io, chk_t::data_type_t* 
     }
 }
 
-void chk_t::string_data_t::_read() {
+void chk_parser_t::string_data_t::_read() {
     m_strings_number = m__io->read_u2le();
     m_strings = new std::vector<string_address_t*>();
     const int l_strings = strings_number();
@@ -346,11 +346,11 @@ void chk_t::string_data_t::_read() {
     }
 }
 
-chk_t::string_data_t::~string_data_t() {
+chk_parser_t::string_data_t::~string_data_t() {
     _clean_up();
 }
 
-void chk_t::string_data_t::_clean_up() {
+void chk_parser_t::string_data_t::_clean_up() {
     if (m_strings) {
         for (std::vector<string_address_t*>::iterator it = m_strings->begin(); it != m_strings->end(); ++it) {
             delete *it;
@@ -359,7 +359,7 @@ void chk_t::string_data_t::_clean_up() {
     }
 }
 
-chk_t::staredit_sprites_array_t::staredit_sprites_array_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::staredit_sprites_array_t::staredit_sprites_array_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_values = 0;
@@ -372,7 +372,7 @@ chk_t::staredit_sprites_array_t::staredit_sprites_array_t(kaitai::kstream* p__io
     }
 }
 
-void chk_t::staredit_sprites_array_t::_read() {
+void chk_parser_t::staredit_sprites_array_t::_read() {
     m_values = new std::vector<staredit_sprites_t*>();
     {
         int i = 0;
@@ -383,11 +383,11 @@ void chk_t::staredit_sprites_array_t::_read() {
     }
 }
 
-chk_t::staredit_sprites_array_t::~staredit_sprites_array_t() {
+chk_parser_t::staredit_sprites_array_t::~staredit_sprites_array_t() {
     _clean_up();
 }
 
-void chk_t::staredit_sprites_array_t::_clean_up() {
+void chk_parser_t::staredit_sprites_array_t::_clean_up() {
     if (m_values) {
         for (std::vector<staredit_sprites_t*>::iterator it = m_values->begin(); it != m_values->end(); ++it) {
             delete *it;
@@ -396,7 +396,7 @@ void chk_t::staredit_sprites_array_t::_clean_up() {
     }
 }
 
-chk_t::string_address_t::string_address_t(kaitai::kstream* p__io, chk_t::string_data_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::string_address_t::string_address_t(kaitai::kstream* p__io, chk_parser_t::string_data_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     f_string = false;
@@ -409,20 +409,20 @@ chk_t::string_address_t::string_address_t(kaitai::kstream* p__io, chk_t::string_
     }
 }
 
-void chk_t::string_address_t::_read() {
+void chk_parser_t::string_address_t::_read() {
     m_address = m__io->read_u2le();
 }
 
-chk_t::string_address_t::~string_address_t() {
+chk_parser_t::string_address_t::~string_address_t() {
     _clean_up();
 }
 
-void chk_t::string_address_t::_clean_up() {
+void chk_parser_t::string_address_t::_clean_up() {
     if (f_string) {
     }
 }
 
-std::string chk_t::string_address_t::string() {
+std::string chk_parser_t::string_address_t::string() {
     if (f_string)
         return m_string;
     std::streampos _pos = m__io->pos();
@@ -433,7 +433,7 @@ std::string chk_t::string_address_t::string() {
     return m_string;
 }
 
-chk_t::trigger_condition_t::trigger_condition_t(kaitai::kstream* p__io, chk_t::triggers_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::trigger_condition_t::trigger_condition_t(kaitai::kstream* p__io, chk_parser_t::triggers_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -445,7 +445,7 @@ chk_t::trigger_condition_t::trigger_condition_t(kaitai::kstream* p__io, chk_t::t
     }
 }
 
-void chk_t::trigger_condition_t::_read() {
+void chk_parser_t::trigger_condition_t::_read() {
     m_location = m__io->read_u4le();
     m_group = m__io->read_u4le();
     m_amount = m__io->read_u4le();
@@ -457,14 +457,14 @@ void chk_t::trigger_condition_t::_read() {
     m_internal_used = m__io->read_u2le();
 }
 
-chk_t::trigger_condition_t::~trigger_condition_t() {
+chk_parser_t::trigger_condition_t::~trigger_condition_t() {
     _clean_up();
 }
 
-void chk_t::trigger_condition_t::_clean_up() {
+void chk_parser_t::trigger_condition_t::_clean_up() {
 }
 
-chk_t::locations_array_t::locations_array_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::locations_array_t::locations_array_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_values = 0;
@@ -477,7 +477,7 @@ chk_t::locations_array_t::locations_array_t(kaitai::kstream* p__io, chk_t::data_
     }
 }
 
-void chk_t::locations_array_t::_read() {
+void chk_parser_t::locations_array_t::_read() {
     m_values = new std::vector<locations_t*>();
     {
         int i = 0;
@@ -488,11 +488,11 @@ void chk_t::locations_array_t::_read() {
     }
 }
 
-chk_t::locations_array_t::~locations_array_t() {
+chk_parser_t::locations_array_t::~locations_array_t() {
     _clean_up();
 }
 
-void chk_t::locations_array_t::_clean_up() {
+void chk_parser_t::locations_array_t::_clean_up() {
     if (m_values) {
         for (std::vector<locations_t*>::iterator it = m_values->begin(); it != m_values->end(); ++it) {
             delete *it;
@@ -501,7 +501,7 @@ void chk_t::locations_array_t::_clean_up() {
     }
 }
 
-chk_t::locations_elevation_flags_t::locations_elevation_flags_t(kaitai::kstream* p__io, chk_t::locations_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::locations_elevation_flags_t::locations_elevation_flags_t(kaitai::kstream* p__io, chk_parser_t::locations_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -513,7 +513,7 @@ chk_t::locations_elevation_flags_t::locations_elevation_flags_t(kaitai::kstream*
     }
 }
 
-void chk_t::locations_elevation_flags_t::_read() {
+void chk_parser_t::locations_elevation_flags_t::_read() {
     m_low_ground = m__io->read_bits_int_le(1);
     m_medium_ground = m__io->read_bits_int_le(1);
     m_high_ground = m__io->read_bits_int_le(1);
@@ -523,14 +523,14 @@ void chk_t::locations_elevation_flags_t::_read() {
     m_unused = m__io->read_bits_int_le(10);
 }
 
-chk_t::locations_elevation_flags_t::~locations_elevation_flags_t() {
+chk_parser_t::locations_elevation_flags_t::~locations_elevation_flags_t() {
     _clean_up();
 }
 
-void chk_t::locations_elevation_flags_t::_clean_up() {
+void chk_parser_t::locations_elevation_flags_t::_clean_up() {
 }
 
-chk_t::cuwp_slots_t::cuwp_slots_t(kaitai::kstream* p__io, chk_t::cuwp_slots_array_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::cuwp_slots_t::cuwp_slots_t(kaitai::kstream* p__io, chk_parser_t::cuwp_slots_array_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_special_properties = 0;
@@ -545,7 +545,7 @@ chk_t::cuwp_slots_t::cuwp_slots_t(kaitai::kstream* p__io, chk_t::cuwp_slots_arra
     }
 }
 
-void chk_t::cuwp_slots_t::_read() {
+void chk_parser_t::cuwp_slots_t::_read() {
     m_special_properties = new special_properties_flags_t(m__io, this, m__root);
     m_mapmaker_properties = new mapmaker_properties_flags_t(m__io, this, m__root);
     m_unit_owner = m__io->read_u1();
@@ -558,11 +558,11 @@ void chk_t::cuwp_slots_t::_read() {
     m_unused = m__io->read_u4le();
 }
 
-chk_t::cuwp_slots_t::~cuwp_slots_t() {
+chk_parser_t::cuwp_slots_t::~cuwp_slots_t() {
     _clean_up();
 }
 
-void chk_t::cuwp_slots_t::_clean_up() {
+void chk_parser_t::cuwp_slots_t::_clean_up() {
     if (m_special_properties) {
         delete m_special_properties; m_special_properties = 0;
     }
@@ -574,7 +574,7 @@ void chk_t::cuwp_slots_t::_clean_up() {
     }
 }
 
-chk_t::tileset_t::tileset_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::tileset_t::tileset_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -586,18 +586,18 @@ chk_t::tileset_t::tileset_t(kaitai::kstream* p__io, chk_t::data_type_t* p__paren
     }
 }
 
-void chk_t::tileset_t::_read() {
-    m_value = static_cast<chk_t::tileset_enum_t>(m__io->read_u2le());
+void chk_parser_t::tileset_t::_read() {
+    m_value = static_cast<chk_parser_t::tileset_enum_t>(m__io->read_u2le());
 }
 
-chk_t::tileset_t::~tileset_t() {
+chk_parser_t::tileset_t::~tileset_t() {
     _clean_up();
 }
 
-void chk_t::tileset_t::_clean_up() {
+void chk_parser_t::tileset_t::_clean_up() {
 }
 
-chk_t::player_colors_t::player_colors_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::player_colors_t::player_colors_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_color = 0;
@@ -610,25 +610,25 @@ chk_t::player_colors_t::player_colors_t(kaitai::kstream* p__io, chk_t::data_type
     }
 }
 
-void chk_t::player_colors_t::_read() {
+void chk_parser_t::player_colors_t::_read() {
     m_color = new std::vector<player_colors_enum_t>();
     const int l_color = 8;
     for (int i = 0; i < l_color; i++) {
-        m_color->push_back(static_cast<chk_t::player_colors_enum_t>(m__io->read_u1()));
+        m_color->push_back(static_cast<chk_parser_t::player_colors_enum_t>(m__io->read_u1()));
     }
 }
 
-chk_t::player_colors_t::~player_colors_t() {
+chk_parser_t::player_colors_t::~player_colors_t() {
     _clean_up();
 }
 
-void chk_t::player_colors_t::_clean_up() {
+void chk_parser_t::player_colors_t::_clean_up() {
     if (m_color) {
         delete m_color; m_color = 0;
     }
 }
 
-chk_t::starcraft_sprites_use_flasgs_t::starcraft_sprites_use_flasgs_t(kaitai::kstream* p__io, chk_t::starcraft_sprites_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::starcraft_sprites_use_flasgs_t::starcraft_sprites_use_flasgs_t(kaitai::kstream* p__io, chk_parser_t::starcraft_sprites_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -640,21 +640,21 @@ chk_t::starcraft_sprites_use_flasgs_t::starcraft_sprites_use_flasgs_t(kaitai::ks
     }
 }
 
-void chk_t::starcraft_sprites_use_flasgs_t::_read() {
+void chk_parser_t::starcraft_sprites_use_flasgs_t::_read() {
     m_unused = m__io->read_bits_int_le(12);
     m_draw_as_sprite = m__io->read_bits_int_le(1);
     m_unused2 = m__io->read_bits_int_le(2);
     m_disabled = m__io->read_bits_int_le(1);
 }
 
-chk_t::starcraft_sprites_use_flasgs_t::~starcraft_sprites_use_flasgs_t() {
+chk_parser_t::starcraft_sprites_use_flasgs_t::~starcraft_sprites_use_flasgs_t() {
     _clean_up();
 }
 
-void chk_t::starcraft_sprites_use_flasgs_t::_clean_up() {
+void chk_parser_t::starcraft_sprites_use_flasgs_t::_clean_up() {
 }
 
-chk_t::mapmaker_properties_flags_t::mapmaker_properties_flags_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::mapmaker_properties_flags_t::mapmaker_properties_flags_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -666,7 +666,7 @@ chk_t::mapmaker_properties_flags_t::mapmaker_properties_flags_t(kaitai::kstream*
     }
 }
 
-void chk_t::mapmaker_properties_flags_t::_read() {
+void chk_parser_t::mapmaker_properties_flags_t::_read() {
     m_owner_valid = m__io->read_bits_int_le(1);
     m_hp_valid = m__io->read_bits_int_le(1);
     m_shields_valid = m__io->read_bits_int_le(1);
@@ -676,14 +676,14 @@ void chk_t::mapmaker_properties_flags_t::_read() {
     m_unused = m__io->read_bits_int_le(10);
 }
 
-chk_t::mapmaker_properties_flags_t::~mapmaker_properties_flags_t() {
+chk_parser_t::mapmaker_properties_flags_t::~mapmaker_properties_flags_t() {
     _clean_up();
 }
 
-void chk_t::mapmaker_properties_flags_t::_clean_up() {
+void chk_parser_t::mapmaker_properties_flags_t::_clean_up() {
 }
 
-chk_t::tech_settings_t::tech_settings_t(uint8_t p_repeat_len, kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::tech_settings_t::tech_settings_t(uint8_t p_repeat_len, kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_repeat_len = p_repeat_len;
@@ -701,7 +701,7 @@ chk_t::tech_settings_t::tech_settings_t(uint8_t p_repeat_len, kaitai::kstream* p
     }
 }
 
-void chk_t::tech_settings_t::_read() {
+void chk_parser_t::tech_settings_t::_read() {
     m_default_settings = new std::vector<uint8_t>();
     const int l_default_settings = repeat_len();
     for (int i = 0; i < l_default_settings; i++) {
@@ -729,11 +729,11 @@ void chk_t::tech_settings_t::_read() {
     }
 }
 
-chk_t::tech_settings_t::~tech_settings_t() {
+chk_parser_t::tech_settings_t::~tech_settings_t() {
     _clean_up();
 }
 
-void chk_t::tech_settings_t::_clean_up() {
+void chk_parser_t::tech_settings_t::_clean_up() {
     if (m_default_settings) {
         delete m_default_settings; m_default_settings = 0;
     }
@@ -751,7 +751,7 @@ void chk_t::tech_settings_t::_clean_up() {
     }
 }
 
-chk_t::fog_of_war_layer_t::fog_of_war_layer_t(kaitai::kstream* p__io, chk_t::fog_of_war_layer_array_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::fog_of_war_layer_t::fog_of_war_layer_t(kaitai::kstream* p__io, chk_parser_t::fog_of_war_layer_array_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -763,7 +763,7 @@ chk_t::fog_of_war_layer_t::fog_of_war_layer_t(kaitai::kstream* p__io, chk_t::fog
     }
 }
 
-void chk_t::fog_of_war_layer_t::_read() {
+void chk_parser_t::fog_of_war_layer_t::_read() {
     m_player1 = m__io->read_bits_int_le(1);
     m_player2 = m__io->read_bits_int_le(1);
     m_player3 = m__io->read_bits_int_le(1);
@@ -774,14 +774,14 @@ void chk_t::fog_of_war_layer_t::_read() {
     m_player8 = m__io->read_bits_int_le(1);
 }
 
-chk_t::fog_of_war_layer_t::~fog_of_war_layer_t() {
+chk_parser_t::fog_of_war_layer_t::~fog_of_war_layer_t() {
     _clean_up();
 }
 
-void chk_t::fog_of_war_layer_t::_clean_up() {
+void chk_parser_t::fog_of_war_layer_t::_clean_up() {
 }
 
-chk_t::triggers_array_t::triggers_array_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::triggers_array_t::triggers_array_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_values = 0;
@@ -794,7 +794,7 @@ chk_t::triggers_array_t::triggers_array_t(kaitai::kstream* p__io, chk_t::data_ty
     }
 }
 
-void chk_t::triggers_array_t::_read() {
+void chk_parser_t::triggers_array_t::_read() {
     m_values = new std::vector<triggers_t*>();
     {
         int i = 0;
@@ -805,11 +805,11 @@ void chk_t::triggers_array_t::_read() {
     }
 }
 
-chk_t::triggers_array_t::~triggers_array_t() {
+chk_parser_t::triggers_array_t::~triggers_array_t() {
     _clean_up();
 }
 
-void chk_t::triggers_array_t::_clean_up() {
+void chk_parser_t::triggers_array_t::_clean_up() {
     if (m_values) {
         for (std::vector<triggers_t*>::iterator it = m_values->begin(); it != m_values->end(); ++it) {
             delete *it;
@@ -818,7 +818,7 @@ void chk_t::triggers_array_t::_clean_up() {
     }
 }
 
-chk_t::unit_settings_t::unit_settings_t(uint8_t p_weapon_repeat_len, kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::unit_settings_t::unit_settings_t(uint8_t p_weapon_repeat_len, kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_weapon_repeat_len = p_weapon_repeat_len;
@@ -841,7 +841,7 @@ chk_t::unit_settings_t::unit_settings_t(uint8_t p_weapon_repeat_len, kaitai::kst
     }
 }
 
-void chk_t::unit_settings_t::_read() {
+void chk_parser_t::unit_settings_t::_read() {
     m_use_defaults = new std::vector<uint8_t>();
     const int l_use_defaults = 228;
     for (int i = 0; i < l_use_defaults; i++) {
@@ -894,11 +894,11 @@ void chk_t::unit_settings_t::_read() {
     }
 }
 
-chk_t::unit_settings_t::~unit_settings_t() {
+chk_parser_t::unit_settings_t::~unit_settings_t() {
     _clean_up();
 }
 
-void chk_t::unit_settings_t::_clean_up() {
+void chk_parser_t::unit_settings_t::_clean_up() {
     if (m_use_defaults) {
         delete m_use_defaults; m_use_defaults = 0;
     }
@@ -931,7 +931,7 @@ void chk_t::unit_settings_t::_clean_up() {
     }
 }
 
-chk_t::player_unit_restrictions_t::player_unit_restrictions_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::player_unit_restrictions_t::player_unit_restrictions_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_availability_overwrite = 0;
@@ -950,7 +950,7 @@ chk_t::player_unit_restrictions_t::player_unit_restrictions_t(kaitai::kstream* p
     }
 }
 
-void chk_t::player_unit_restrictions_t::_read() {
+void chk_parser_t::player_unit_restrictions_t::_read() {
     m__raw_availability_overwrite = new std::vector<std::string>();
     m__io__raw_availability_overwrite = new std::vector<kaitai::kstream*>();
     m_availability_overwrite = new std::vector<u1_array_t*>();
@@ -978,11 +978,11 @@ void chk_t::player_unit_restrictions_t::_read() {
     }
 }
 
-chk_t::player_unit_restrictions_t::~player_unit_restrictions_t() {
+chk_parser_t::player_unit_restrictions_t::~player_unit_restrictions_t() {
     _clean_up();
 }
 
-void chk_t::player_unit_restrictions_t::_clean_up() {
+void chk_parser_t::player_unit_restrictions_t::_clean_up() {
     if (m__raw_availability_overwrite) {
         delete m__raw_availability_overwrite; m__raw_availability_overwrite = 0;
     }
@@ -1018,7 +1018,7 @@ void chk_t::player_unit_restrictions_t::_clean_up() {
     }
 }
 
-chk_t::version_t::version_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::version_t::version_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1030,18 +1030,18 @@ chk_t::version_t::version_t(kaitai::kstream* p__io, chk_t::data_type_t* p__paren
     }
 }
 
-void chk_t::version_t::_read() {
+void chk_parser_t::version_t::_read() {
     m_version = m__io->read_u2le();
 }
 
-chk_t::version_t::~version_t() {
+chk_parser_t::version_t::~version_t() {
     _clean_up();
 }
 
-void chk_t::version_t::_clean_up() {
+void chk_parser_t::version_t::_clean_up() {
 }
 
-chk_t::triggers_t::triggers_t(kaitai::kstream* p__io, chk_t::triggers_array_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::triggers_t::triggers_t(kaitai::kstream* p__io, chk_parser_t::triggers_array_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_conditions = 0;
@@ -1056,7 +1056,7 @@ chk_t::triggers_t::triggers_t(kaitai::kstream* p__io, chk_t::triggers_array_t* p
     }
 }
 
-void chk_t::triggers_t::_read() {
+void chk_parser_t::triggers_t::_read() {
     m_conditions = new std::vector<trigger_condition_t*>();
     const int l_conditions = 16;
     for (int i = 0; i < l_conditions; i++) {
@@ -1070,11 +1070,11 @@ void chk_t::triggers_t::_read() {
     m_execution = new trigger_execution_t(m__io, this, m__root);
 }
 
-chk_t::triggers_t::~triggers_t() {
+chk_parser_t::triggers_t::~triggers_t() {
     _clean_up();
 }
 
-void chk_t::triggers_t::_clean_up() {
+void chk_parser_t::triggers_t::_clean_up() {
     if (m_conditions) {
         for (std::vector<trigger_condition_t*>::iterator it = m_conditions->begin(); it != m_conditions->end(); ++it) {
             delete *it;
@@ -1092,7 +1092,7 @@ void chk_t::triggers_t::_clean_up() {
     }
 }
 
-chk_t::u2_array_t::u2_array_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::u2_array_t::u2_array_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_values = 0;
@@ -1105,7 +1105,7 @@ chk_t::u2_array_t::u2_array_t(kaitai::kstream* p__io, chk_t::data_type_t* p__par
     }
 }
 
-void chk_t::u2_array_t::_read() {
+void chk_parser_t::u2_array_t::_read() {
     m_values = new std::vector<uint16_t>();
     {
         int i = 0;
@@ -1116,17 +1116,17 @@ void chk_t::u2_array_t::_read() {
     }
 }
 
-chk_t::u2_array_t::~u2_array_t() {
+chk_parser_t::u2_array_t::~u2_array_t() {
     _clean_up();
 }
 
-void chk_t::u2_array_t::_clean_up() {
+void chk_parser_t::u2_array_t::_clean_up() {
     if (m_values) {
         delete m_values; m_values = 0;
     }
 }
 
-chk_t::placed_units_t::placed_units_t(kaitai::kstream* p__io, chk_t::placed_units_array_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::placed_units_t::placed_units_t(kaitai::kstream* p__io, chk_parser_t::placed_units_array_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_special_properties = 0;
@@ -1141,7 +1141,7 @@ chk_t::placed_units_t::placed_units_t(kaitai::kstream* p__io, chk_t::placed_unit
     }
 }
 
-void chk_t::placed_units_t::_read() {
+void chk_parser_t::placed_units_t::_read() {
     m_instance_id = m__io->read_u4le();
     m_coord_x = m__io->read_u2le();
     m_coord_y = m__io->read_u2le();
@@ -1160,11 +1160,11 @@ void chk_t::placed_units_t::_read() {
     m_linked_unit = m__io->read_u4le();
 }
 
-chk_t::placed_units_t::~placed_units_t() {
+chk_parser_t::placed_units_t::~placed_units_t() {
     _clean_up();
 }
 
-void chk_t::placed_units_t::_clean_up() {
+void chk_parser_t::placed_units_t::_clean_up() {
     if (m_special_properties) {
         delete m_special_properties; m_special_properties = 0;
     }
@@ -1176,7 +1176,7 @@ void chk_t::placed_units_t::_clean_up() {
     }
 }
 
-chk_t::data_type_t::data_type_t(kaitai::kstream* p__io, chk_t::chunk_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::data_type_t::data_type_t(kaitai::kstream* p__io, chk_parser_t::chunk_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1188,7 +1188,7 @@ chk_t::data_type_t::data_type_t(kaitai::kstream* p__io, chk_t::chunk_type_t* p__
     }
 }
 
-void chk_t::data_type_t::_read() {
+void chk_parser_t::data_type_t::_read() {
     {
         std::string on = _parent()->tag();
         if (on == std::string("TECS")) {
@@ -1317,17 +1317,17 @@ void chk_t::data_type_t::_read() {
     }
 }
 
-chk_t::data_type_t::~data_type_t() {
+chk_parser_t::data_type_t::~data_type_t() {
     _clean_up();
 }
 
-void chk_t::data_type_t::_clean_up() {
+void chk_parser_t::data_type_t::_clean_up() {
     if (m_content) {
         delete m_content; m_content = 0;
     }
 }
 
-chk_t::scenario_properties_t::scenario_properties_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::scenario_properties_t::scenario_properties_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1339,19 +1339,19 @@ chk_t::scenario_properties_t::scenario_properties_t(kaitai::kstream* p__io, chk_
     }
 }
 
-void chk_t::scenario_properties_t::_read() {
+void chk_parser_t::scenario_properties_t::_read() {
     m_name = m__io->read_u2le();
     m_decription = m__io->read_u2le();
 }
 
-chk_t::scenario_properties_t::~scenario_properties_t() {
+chk_parser_t::scenario_properties_t::~scenario_properties_t() {
     _clean_up();
 }
 
-void chk_t::scenario_properties_t::_clean_up() {
+void chk_parser_t::scenario_properties_t::_clean_up() {
 }
 
-chk_t::starcraft_sprites_t::starcraft_sprites_t(kaitai::kstream* p__io, chk_t::starcraft_sprites_array_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::starcraft_sprites_t::starcraft_sprites_t(kaitai::kstream* p__io, chk_parser_t::starcraft_sprites_array_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_use_flags = 0;
@@ -1364,7 +1364,7 @@ chk_t::starcraft_sprites_t::starcraft_sprites_t(kaitai::kstream* p__io, chk_t::s
     }
 }
 
-void chk_t::starcraft_sprites_t::_read() {
+void chk_parser_t::starcraft_sprites_t::_read() {
     m_unit_or_sprite_number = m__io->read_u2le();
     m_coord_x = m__io->read_u2le();
     m_coord_y = m__io->read_u2le();
@@ -1373,17 +1373,17 @@ void chk_t::starcraft_sprites_t::_read() {
     m_use_flags = new starcraft_sprites_use_flasgs_t(m__io, this, m__root);
 }
 
-chk_t::starcraft_sprites_t::~starcraft_sprites_t() {
+chk_parser_t::starcraft_sprites_t::~starcraft_sprites_t() {
     _clean_up();
 }
 
-void chk_t::starcraft_sprites_t::_clean_up() {
+void chk_parser_t::starcraft_sprites_t::_clean_up() {
     if (m_use_flags) {
         delete m_use_flags; m_use_flags = 0;
     }
 }
 
-chk_t::player_races_t::player_races_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::player_races_t::player_races_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_value = 0;
@@ -1396,28 +1396,28 @@ chk_t::player_races_t::player_races_t(kaitai::kstream* p__io, chk_t::data_type_t
     }
 }
 
-void chk_t::player_races_t::_read() {
+void chk_parser_t::player_races_t::_read() {
     m_value = new std::vector<player_races_enum_t>();
     {
         int i = 0;
         while (!m__io->is_eof()) {
-            m_value->push_back(static_cast<chk_t::player_races_enum_t>(m__io->read_u1()));
+            m_value->push_back(static_cast<chk_parser_t::player_races_enum_t>(m__io->read_u1()));
             i++;
         }
     }
 }
 
-chk_t::player_races_t::~player_races_t() {
+chk_parser_t::player_races_t::~player_races_t() {
     _clean_up();
 }
 
-void chk_t::player_races_t::_clean_up() {
+void chk_parser_t::player_races_t::_clean_up() {
     if (m_value) {
         delete m_value; m_value = 0;
     }
 }
 
-chk_t::force_settings_t::force_settings_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::force_settings_t::force_settings_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_player_force = 0;
@@ -1432,7 +1432,7 @@ chk_t::force_settings_t::force_settings_t(kaitai::kstream* p__io, chk_t::data_ty
     }
 }
 
-void chk_t::force_settings_t::_read() {
+void chk_parser_t::force_settings_t::_read() {
     m_player_force = new std::vector<uint8_t>();
     const int l_player_force = 8;
     for (int i = 0; i < l_player_force; i++) {
@@ -1450,11 +1450,11 @@ void chk_t::force_settings_t::_read() {
     }
 }
 
-chk_t::force_settings_t::~force_settings_t() {
+chk_parser_t::force_settings_t::~force_settings_t() {
     _clean_up();
 }
 
-void chk_t::force_settings_t::_clean_up() {
+void chk_parser_t::force_settings_t::_clean_up() {
     if (m_player_force) {
         delete m_player_force; m_player_force = 0;
     }
@@ -1469,7 +1469,7 @@ void chk_t::force_settings_t::_clean_up() {
     }
 }
 
-chk_t::placed_units_array_t::placed_units_array_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::placed_units_array_t::placed_units_array_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_values = 0;
@@ -1482,7 +1482,7 @@ chk_t::placed_units_array_t::placed_units_array_t(kaitai::kstream* p__io, chk_t:
     }
 }
 
-void chk_t::placed_units_array_t::_read() {
+void chk_parser_t::placed_units_array_t::_read() {
     m_values = new std::vector<placed_units_t*>();
     {
         int i = 0;
@@ -1493,11 +1493,11 @@ void chk_t::placed_units_array_t::_read() {
     }
 }
 
-chk_t::placed_units_array_t::~placed_units_array_t() {
+chk_parser_t::placed_units_array_t::~placed_units_array_t() {
     _clean_up();
 }
 
-void chk_t::placed_units_array_t::_clean_up() {
+void chk_parser_t::placed_units_array_t::_clean_up() {
     if (m_values) {
         for (std::vector<placed_units_t*>::iterator it = m_values->begin(); it != m_values->end(); ++it) {
             delete *it;
@@ -1506,7 +1506,7 @@ void chk_t::placed_units_array_t::_clean_up() {
     }
 }
 
-chk_t::u4_array_t::u4_array_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::u4_array_t::u4_array_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_values = 0;
@@ -1519,7 +1519,7 @@ chk_t::u4_array_t::u4_array_t(kaitai::kstream* p__io, chk_t::data_type_t* p__par
     }
 }
 
-void chk_t::u4_array_t::_read() {
+void chk_parser_t::u4_array_t::_read() {
     m_values = new std::vector<uint32_t>();
     {
         int i = 0;
@@ -1530,17 +1530,17 @@ void chk_t::u4_array_t::_read() {
     }
 }
 
-chk_t::u4_array_t::~u4_array_t() {
+chk_parser_t::u4_array_t::~u4_array_t() {
     _clean_up();
 }
 
-void chk_t::u4_array_t::_clean_up() {
+void chk_parser_t::u4_array_t::_clean_up() {
     if (m_values) {
         delete m_values; m_values = 0;
     }
 }
 
-chk_t::u1_array_t::u1_array_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::u1_array_t::u1_array_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_values = 0;
@@ -1553,7 +1553,7 @@ chk_t::u1_array_t::u1_array_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent
     }
 }
 
-void chk_t::u1_array_t::_read() {
+void chk_parser_t::u1_array_t::_read() {
     m_values = new std::vector<uint8_t>();
     {
         int i = 0;
@@ -1564,17 +1564,17 @@ void chk_t::u1_array_t::_read() {
     }
 }
 
-chk_t::u1_array_t::~u1_array_t() {
+chk_parser_t::u1_array_t::~u1_array_t() {
     _clean_up();
 }
 
-void chk_t::u1_array_t::_clean_up() {
+void chk_parser_t::u1_array_t::_clean_up() {
     if (m_values) {
         delete m_values; m_values = 0;
     }
 }
 
-chk_t::map_type_t::map_type_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::map_type_t::map_type_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1586,18 +1586,18 @@ chk_t::map_type_t::map_type_t(kaitai::kstream* p__io, chk_t::data_type_t* p__par
     }
 }
 
-void chk_t::map_type_t::_read() {
+void chk_parser_t::map_type_t::_read() {
     m_map_type = m__io->read_u4le();
 }
 
-chk_t::map_type_t::~map_type_t() {
+chk_parser_t::map_type_t::~map_type_t() {
     _clean_up();
 }
 
-void chk_t::map_type_t::_clean_up() {
+void chk_parser_t::map_type_t::_clean_up() {
 }
 
-chk_t::cuwp_slots_array_t::cuwp_slots_array_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::cuwp_slots_array_t::cuwp_slots_array_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_values = 0;
@@ -1610,7 +1610,7 @@ chk_t::cuwp_slots_array_t::cuwp_slots_array_t(kaitai::kstream* p__io, chk_t::dat
     }
 }
 
-void chk_t::cuwp_slots_array_t::_read() {
+void chk_parser_t::cuwp_slots_array_t::_read() {
     m_values = new std::vector<cuwp_slots_t*>();
     const int l_values = 64;
     for (int i = 0; i < l_values; i++) {
@@ -1618,11 +1618,11 @@ void chk_t::cuwp_slots_array_t::_read() {
     }
 }
 
-chk_t::cuwp_slots_array_t::~cuwp_slots_array_t() {
+chk_parser_t::cuwp_slots_array_t::~cuwp_slots_array_t() {
     _clean_up();
 }
 
-void chk_t::cuwp_slots_array_t::_clean_up() {
+void chk_parser_t::cuwp_slots_array_t::_clean_up() {
     if (m_values) {
         for (std::vector<cuwp_slots_t*>::iterator it = m_values->begin(); it != m_values->end(); ++it) {
             delete *it;
@@ -1631,7 +1631,7 @@ void chk_t::cuwp_slots_array_t::_clean_up() {
     }
 }
 
-chk_t::starcraft_sprites_array_t::starcraft_sprites_array_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::starcraft_sprites_array_t::starcraft_sprites_array_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_values = 0;
@@ -1644,7 +1644,7 @@ chk_t::starcraft_sprites_array_t::starcraft_sprites_array_t(kaitai::kstream* p__
     }
 }
 
-void chk_t::starcraft_sprites_array_t::_read() {
+void chk_parser_t::starcraft_sprites_array_t::_read() {
     m_values = new std::vector<starcraft_sprites_t*>();
     {
         int i = 0;
@@ -1655,11 +1655,11 @@ void chk_t::starcraft_sprites_array_t::_read() {
     }
 }
 
-chk_t::starcraft_sprites_array_t::~starcraft_sprites_array_t() {
+chk_parser_t::starcraft_sprites_array_t::~starcraft_sprites_array_t() {
     _clean_up();
 }
 
-void chk_t::starcraft_sprites_array_t::_clean_up() {
+void chk_parser_t::starcraft_sprites_array_t::_clean_up() {
     if (m_values) {
         for (std::vector<starcraft_sprites_t*>::iterator it = m_values->begin(); it != m_values->end(); ++it) {
             delete *it;
@@ -1668,7 +1668,7 @@ void chk_t::starcraft_sprites_array_t::_clean_up() {
     }
 }
 
-chk_t::force_settings_flags_t::force_settings_flags_t(kaitai::kstream* p__io, chk_t::force_settings_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::force_settings_flags_t::force_settings_flags_t(kaitai::kstream* p__io, chk_parser_t::force_settings_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1680,7 +1680,7 @@ chk_t::force_settings_flags_t::force_settings_flags_t(kaitai::kstream* p__io, ch
     }
 }
 
-void chk_t::force_settings_flags_t::_read() {
+void chk_parser_t::force_settings_flags_t::_read() {
     m_random_start_location = m__io->read_bits_int_le(1);
     m_allies = m__io->read_bits_int_le(1);
     m_allied_victory = m__io->read_bits_int_le(1);
@@ -1688,14 +1688,14 @@ void chk_t::force_settings_flags_t::_read() {
     m_unused = m__io->read_bits_int_le(4);
 }
 
-chk_t::force_settings_flags_t::~force_settings_flags_t() {
+chk_parser_t::force_settings_flags_t::~force_settings_flags_t() {
     _clean_up();
 }
 
-void chk_t::force_settings_flags_t::_clean_up() {
+void chk_parser_t::force_settings_flags_t::_clean_up() {
 }
 
-chk_t::fog_of_war_layer_array_t::fog_of_war_layer_array_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::fog_of_war_layer_array_t::fog_of_war_layer_array_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_values = 0;
@@ -1708,7 +1708,7 @@ chk_t::fog_of_war_layer_array_t::fog_of_war_layer_array_t(kaitai::kstream* p__io
     }
 }
 
-void chk_t::fog_of_war_layer_array_t::_read() {
+void chk_parser_t::fog_of_war_layer_array_t::_read() {
     m_values = new std::vector<fog_of_war_layer_t*>();
     {
         int i = 0;
@@ -1719,11 +1719,11 @@ void chk_t::fog_of_war_layer_array_t::_read() {
     }
 }
 
-chk_t::fog_of_war_layer_array_t::~fog_of_war_layer_array_t() {
+chk_parser_t::fog_of_war_layer_array_t::~fog_of_war_layer_array_t() {
     _clean_up();
 }
 
-void chk_t::fog_of_war_layer_array_t::_clean_up() {
+void chk_parser_t::fog_of_war_layer_array_t::_clean_up() {
     if (m_values) {
         for (std::vector<fog_of_war_layer_t*>::iterator it = m_values->begin(); it != m_values->end(); ++it) {
             delete *it;
@@ -1732,7 +1732,7 @@ void chk_t::fog_of_war_layer_array_t::_clean_up() {
     }
 }
 
-chk_t::upgrade_settings_t::upgrade_settings_t(uint8_t p_repeat_len, kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::upgrade_settings_t::upgrade_settings_t(uint8_t p_repeat_len, kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_repeat_len = p_repeat_len;
@@ -1752,7 +1752,7 @@ chk_t::upgrade_settings_t::upgrade_settings_t(uint8_t p_repeat_len, kaitai::kstr
     }
 }
 
-void chk_t::upgrade_settings_t::_read() {
+void chk_parser_t::upgrade_settings_t::_read() {
     m_default_settings = new std::vector<uint8_t>();
     const int l_default_settings = repeat_len();
     for (int i = 0; i < l_default_settings; i++) {
@@ -1795,11 +1795,11 @@ void chk_t::upgrade_settings_t::_read() {
     }
 }
 
-chk_t::upgrade_settings_t::~upgrade_settings_t() {
+chk_parser_t::upgrade_settings_t::~upgrade_settings_t() {
     _clean_up();
 }
 
-void chk_t::upgrade_settings_t::_clean_up() {
+void chk_parser_t::upgrade_settings_t::_clean_up() {
     if (m_default_settings) {
         delete m_default_settings; m_default_settings = 0;
     }
@@ -1825,7 +1825,7 @@ void chk_t::upgrade_settings_t::_clean_up() {
     }
 }
 
-chk_t::trigger_actions_t::trigger_actions_t(kaitai::kstream* p__io, chk_t::triggers_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::trigger_actions_t::trigger_actions_t(kaitai::kstream* p__io, chk_parser_t::triggers_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1837,7 +1837,7 @@ chk_t::trigger_actions_t::trigger_actions_t(kaitai::kstream* p__io, chk_t::trigg
     }
 }
 
-void chk_t::trigger_actions_t::_read() {
+void chk_parser_t::trigger_actions_t::_read() {
     m_source = m__io->read_u4le();
     m_string_number = m__io->read_u4le();
     m_wav_string = m__io->read_u4le();
@@ -1851,14 +1851,14 @@ void chk_t::trigger_actions_t::_read() {
     m_internal_used = m__io->read_bytes(3);
 }
 
-chk_t::trigger_actions_t::~trigger_actions_t() {
+chk_parser_t::trigger_actions_t::~trigger_actions_t() {
     _clean_up();
 }
 
-void chk_t::trigger_actions_t::_clean_up() {
+void chk_parser_t::trigger_actions_t::_clean_up() {
 }
 
-chk_t::staredit_sprites_t::staredit_sprites_t(kaitai::kstream* p__io, chk_t::staredit_sprites_array_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::staredit_sprites_t::staredit_sprites_t(kaitai::kstream* p__io, chk_parser_t::staredit_sprites_array_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1870,7 +1870,7 @@ chk_t::staredit_sprites_t::staredit_sprites_t(kaitai::kstream* p__io, chk_t::sta
     }
 }
 
-void chk_t::staredit_sprites_t::_read() {
+void chk_parser_t::staredit_sprites_t::_read() {
     m_doodad_number = m__io->read_u2le();
     m_coord_x = m__io->read_u2le();
     m_coord_y = m__io->read_u2le();
@@ -1878,14 +1878,14 @@ void chk_t::staredit_sprites_t::_read() {
     m_disabled = m__io->read_u1();
 }
 
-chk_t::staredit_sprites_t::~staredit_sprites_t() {
+chk_parser_t::staredit_sprites_t::~staredit_sprites_t() {
     _clean_up();
 }
 
-void chk_t::staredit_sprites_t::_clean_up() {
+void chk_parser_t::staredit_sprites_t::_clean_up() {
 }
 
-chk_t::verification_code_t::verification_code_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::verification_code_t::verification_code_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_seed_values = 0;
@@ -1899,7 +1899,7 @@ chk_t::verification_code_t::verification_code_t(kaitai::kstream* p__io, chk_t::d
     }
 }
 
-void chk_t::verification_code_t::_read() {
+void chk_parser_t::verification_code_t::_read() {
     m_seed_values = new std::vector<uint32_t>();
     const int l_seed_values = 256;
     for (int i = 0; i < l_seed_values; i++) {
@@ -1912,11 +1912,11 @@ void chk_t::verification_code_t::_read() {
     }
 }
 
-chk_t::verification_code_t::~verification_code_t() {
+chk_parser_t::verification_code_t::~verification_code_t() {
     _clean_up();
 }
 
-void chk_t::verification_code_t::_clean_up() {
+void chk_parser_t::verification_code_t::_clean_up() {
     if (m_seed_values) {
         delete m_seed_values; m_seed_values = 0;
     }
@@ -1925,7 +1925,7 @@ void chk_t::verification_code_t::_clean_up() {
     }
 }
 
-chk_t::dimension_t::dimension_t(kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::dimension_t::dimension_t(kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
 
@@ -1937,19 +1937,19 @@ chk_t::dimension_t::dimension_t(kaitai::kstream* p__io, chk_t::data_type_t* p__p
     }
 }
 
-void chk_t::dimension_t::_read() {
+void chk_parser_t::dimension_t::_read() {
     m_width = m__io->read_u2le();
     m_height = m__io->read_u2le();
 }
 
-chk_t::dimension_t::~dimension_t() {
+chk_parser_t::dimension_t::~dimension_t() {
     _clean_up();
 }
 
-void chk_t::dimension_t::_clean_up() {
+void chk_parser_t::dimension_t::_clean_up() {
 }
 
-chk_t::chunk_type_t::chunk_type_t(kaitai::kstream* p__io, chk_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::chunk_type_t::chunk_type_t(kaitai::kstream* p__io, chk_parser_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_data = 0;
@@ -1963,7 +1963,7 @@ chk_t::chunk_type_t::chunk_type_t(kaitai::kstream* p__io, chk_t* p__parent, chk_
     }
 }
 
-void chk_t::chunk_type_t::_read() {
+void chk_parser_t::chunk_type_t::_read() {
     m_tag = kaitai::kstream::bytes_to_str(m__io->read_bytes(4), std::string("ASCII"));
     m_chunk_size = m__io->read_u4le();
     m__raw_data = m__io->read_bytes(chunk_size());
@@ -1971,11 +1971,11 @@ void chk_t::chunk_type_t::_read() {
     m_data = new data_type_t(m__io__raw_data, this, m__root);
 }
 
-chk_t::chunk_type_t::~chunk_type_t() {
+chk_parser_t::chunk_type_t::~chunk_type_t() {
     _clean_up();
 }
 
-void chk_t::chunk_type_t::_clean_up() {
+void chk_parser_t::chunk_type_t::_clean_up() {
     if (m__io__raw_data) {
         delete m__io__raw_data; m__io__raw_data = 0;
     }
@@ -1984,7 +1984,7 @@ void chk_t::chunk_type_t::_clean_up() {
     }
 }
 
-chk_t::tech_restrictions_t::tech_restrictions_t(uint8_t p_repeat_len, kaitai::kstream* p__io, chk_t::data_type_t* p__parent, chk_t* p__root) : kaitai::kstruct(p__io) {
+chk_parser_t::tech_restrictions_t::tech_restrictions_t(uint8_t p_repeat_len, kaitai::kstream* p__io, chk_parser_t::data_type_t* p__parent, chk_parser_t* p__root) : kaitai::kstruct(p__io) {
     m__parent = p__parent;
     m__root = p__root;
     m_repeat_len = p_repeat_len;
@@ -2008,7 +2008,7 @@ chk_t::tech_restrictions_t::tech_restrictions_t(uint8_t p_repeat_len, kaitai::ks
     }
 }
 
-void chk_t::tech_restrictions_t::_read() {
+void chk_parser_t::tech_restrictions_t::_read() {
     m__raw_availability = new std::vector<std::string>();
     m__io__raw_availability = new std::vector<kaitai::kstream*>();
     m_availability = new std::vector<u1_array_t*>();
@@ -2051,11 +2051,11 @@ void chk_t::tech_restrictions_t::_read() {
     }
 }
 
-chk_t::tech_restrictions_t::~tech_restrictions_t() {
+chk_parser_t::tech_restrictions_t::~tech_restrictions_t() {
     _clean_up();
 }
 
-void chk_t::tech_restrictions_t::_clean_up() {
+void chk_parser_t::tech_restrictions_t::_clean_up() {
     if (m__raw_availability) {
         delete m__raw_availability; m__raw_availability = 0;
     }
