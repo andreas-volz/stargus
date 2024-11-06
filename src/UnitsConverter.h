@@ -12,7 +12,10 @@
 #include "Storage.h"
 #include "dat/Unit.h"
 
-// system
+/* system */
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 namespace dat
 {

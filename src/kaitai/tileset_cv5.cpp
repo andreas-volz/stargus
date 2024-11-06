@@ -54,7 +54,7 @@ tileset_cv5_t::group_t::group_t(kaitai::kstream* p__io, tileset_cv5_t* p__parent
 }
 
 void tileset_cv5_t::group_t::_read() {
-    m_doodad = m__io->read_u2le();
+    m_terrain_type = m__io->read_u2le();
     m_ground = new ground_nibbles_t(m__io, this, m__root);
     m_unknown1 = m__io->read_u2le();
     m_unknown2 = m__io->read_u2le();

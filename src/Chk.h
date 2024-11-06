@@ -7,22 +7,22 @@
 #ifndef CHK_H_
 #define CHK_H_
 
-// Local
-#include "WorldMap.h"
+// project
 #include "Storage.h"
 #include "Converter.h"
+#include <kaitai/chk_parser.h>
+#include "tileset/TilesetHub.h"
 
-// System
+// system
 #include <memory>
+#include <vector>
+#include <nlohmann/json.hpp>
 
 // Forward declarations
 class Hurricane;
 
 /**
- * For .chk files generate a combination of .smp and .sms file
- * The .smp and .sms files are Lua scripts and are executed by stargus/stratagus
- * The generated files describe the map, units, tiles, triggers - simply the map behavior
- *
+ * representation of a specific map (.chk) and converter
  */
 class Chk : public Converter
 {
@@ -32,28 +32,19 @@ public:
 
   void setUnitNames(const std::vector<std::string> &unitNames);
 
-  virtual bool convert(const std::string &arcfile, Storage storage);
+  virtual bool convert(const std::string &arcfile,tileset::TilesetHub &tilesethub, Storage jsonfile);
+
+  std::shared_ptr<chk_parser_t> chk_parser;
 
 private:
-  /**
-   **	Load chk from buffer
-   **
-   **	@param chkdata	Buffer containing chk data
-   **	@param len	Length of chk buffer
-   **	@param map	The map
-   */
-  void loadFromBuffer(unsigned char *chkdata, int len);
-  void ConvertChk(Storage storage, unsigned char *chkdata, int chklen);
-
-  void SaveMap(Storage storage);
-
-  void SaveSMS(Storage storage);
-  void SaveTrigger(FILE *fd, Trigger *trigger);
-  void SaveSMP(Storage storage);
-  void FreeMap();
-
-  WorldMap *map;
   std::vector<std::string> mUnitNames;
+
+  std::shared_ptr<std::istream> m_chk_parser_stream;
+  std::shared_ptr<kaitai::kstream> m_chk_parser_ks;
+
+  void saveJson(json &j, const std::string &file, bool pretty);
+
+
 };
 
 #endif /* CHK_H_ */

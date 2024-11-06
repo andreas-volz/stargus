@@ -14,15 +14,19 @@
 #include "kaitai/tileset_vf4.h"
 #include "kaitai/tileset_vr4.h"
 #include "Storage.h"
+#include "Size.h"
 
 // system
 #include <memory>
 #include <string>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 namespace tileset
 {
 /**
- * The TileSetHub parses the complete data structures inside those files:
+ * The TilesetHub parses the complete data structures inside those files:
  * - tileset\\<tileset>.cv5|vx4|vf4|vr4
  *
  * The Kaitai parsed objects in this class are by intension public. There's no benefit in putting dozen silly
@@ -40,17 +44,26 @@ public:
   TilesetHub(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile);
   virtual ~TilesetHub();
 
+  // TODO: rename
   bool convert(std::shared_ptr<AbstractPalette> palette, Storage storage);
 
-  void generateLua(const std::string &name, const std::string &image, Storage luafile);
+  void generateTilesetJson(Storage jsonfile);
+
+  const std::string getTilesetName();
 
   std::shared_ptr<tileset_cv5_t> cv5;
   std::shared_ptr<tileset_vx4_t> vx4;
   std::shared_ptr<tileset_vf4_t> vf4;
   std::shared_ptr<tileset_vr4_t> vr4;
 
+  static constexpr int MEGATILE_COLUMNS = 16;
+  static const Size MEGATILE_SIZE;
+
 private:
-  void init(const std::string &arcfile);
+  void init();
+  void saveJson(json &j, const std::string &file, bool pretty);
+
+  std::string m_arcfile;
 
   std::shared_ptr<std::istream> m_cv5_stream;
   std::shared_ptr<std::istream> m_vx4_stream;
@@ -61,6 +74,8 @@ private:
   std::shared_ptr<kaitai::kstream> m_vx4_ks;
   std::shared_ptr<kaitai::kstream> m_vf4_ks;
   std::shared_ptr<kaitai::kstream> m_vr4_ks;
+
+
 };
 
 } /* namespace tileset */

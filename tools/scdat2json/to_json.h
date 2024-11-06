@@ -7,8 +7,14 @@
 #ifndef TO_JSON_H
 #define TO_JSON_H
 
+/* project */
 #include "dat/DataHub.h"
 #include "dat/Unit.h"
+
+/* system */
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 // -> units_dat.ksy
 

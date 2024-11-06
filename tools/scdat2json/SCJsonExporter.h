@@ -9,6 +9,11 @@
 
 #include "dat/DataHub.h"
 
+/* system */
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
+
 class SCJsonExporter
 {
 public:

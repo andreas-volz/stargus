@@ -73,7 +73,7 @@ bool Scm::convert(const std::string &arcfile, const std::vector<std::string> &un
     shared_ptr<Storm> storm = make_shared<Storm>(scm_path);
     Chk chk(storm);
     chk.setUnitNames(unitNames);
-    result = chk.convert("staredit\\scenario.chk", storage.getFullPath());
+    //result = chk.convert("staredit\\scenario.chk", storage.getFullPath());
 
     // delete the temporary .chk file -> below don't access 'breeze' any more!
     //platform::unlink(scm_path);

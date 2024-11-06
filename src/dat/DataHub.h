@@ -25,10 +25,7 @@
 #include "kaitai/mapdata_dat.h"
 
 // System
-#include <nlohmann/json.hpp>
 #include <map>
-
-using json = nlohmann::json;
 
 namespace dat
 {

@@ -7,11 +7,14 @@ seq:
   - id: elements
     type: group
     repeat: eos
+    doc: |
+      This file defines the various tile groups that are referenced by the TILE/MTXM 
+      sections of the CHK (0x7FF0 for the group index, 0x000F for the tile index).
 
 types:
   group:
     seq:
-      - id: doodad
+      - id: terrain_type
         type: u2
 
       - id: ground
@@ -60,3 +63,8 @@ types:
       - id: ground_height
         type: b4
         
+enums:
+  terrain_enum:
+    0: unplaceable
+    1: doodad
+    2: basic

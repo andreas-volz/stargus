@@ -57,7 +57,6 @@
 #include "Breeze.h"
 #include "Storage.h"
 #include "Wav.h"
-#include "tileset/TilesetHub.h"
 #include "platform.h"
 #include "UIConsole.h"
 #include "StringUtil.h"
@@ -677,7 +676,7 @@ int main(int argc, const char **argv)
 
           string luafile(string("tilesets/") + c[u].File + ".lua");
           string pngfile(string("tilesets/") + c[u].File + "/" + c[u].File + ".png");
-          terrain.generateLua(c[u].File, pngfile, luagen(luafile));
+          //terrain.generateLua(c[u].File, pngfile, luagen(luafile));
 
           printf("...%s\n", case_func ? "ok" : "nok");
         }
@@ -805,7 +804,7 @@ int main(int argc, const char **argv)
           printf("ConvertCampaign (.chk): %s, %s", c[u].File, c[u].ArcFile);
           Chk chk(storm);
           chk.setUnitNames(unitNames);
-          case_func = chk.convert(c[u].ArcFile, data(c[u].File));
+          //case_func = chk.convert(c[u].ArcFile, data(c[u].File));
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;

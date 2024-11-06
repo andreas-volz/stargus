@@ -198,8 +198,8 @@ RevealMap("known")
 
 --  Choose your default fog of war state (enabled #t/disabled #f).
 --    disabled is a C&C like fog of war.
-SetFogOfWar(true)
---SetFogOfWar(false)
+--SetFogOfWar(true)
+SetFogOfWar(false)
 SetFogOfWarBlur(2.0, 1.5, 3) -- radiuses for simple and bilinear FOW postprocessing, number of blur iterations
 -- Set opacity levels of fog for explored, "known"(when map revealed) and hidden tiles
 SetFogOfWarOpacityLevels(0x7F, 0xBE, 0xFE)

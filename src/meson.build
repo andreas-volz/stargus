@@ -25,7 +25,6 @@ starformat_lib_sources = files(
 	'Pcx.cpp',
 	'Scm.cpp',
 	'Storm.cpp',
-	'WorldMap.cpp',
 	'Dds.cpp',
 	'Breeze.cpp',
 	'Smacker.cpp',

@@ -8,6 +8,8 @@
 #include "optparser.h"
 #include "Logger.h"
 #include "StringUtil.h"
+#include "Chk.h"
+#include "tileset/TilesetHub.h"
 
 /* system */
 #include <string>
@@ -69,7 +71,7 @@ enum optionIndex
 const option::Descriptor usage[] =
 {
   {
-    UNKNOWN, 0, "", "", option::Arg::None, "USAGE: iscriptconverter [options] archive destination-directory\n\n"
+    UNKNOWN, 0, "", "", option::Arg::None, "USAGE: tiled_converter [options] archive destination-directory\n\n"
     "Options:"
   },
   { HELP, 0, "h", "help", option::Arg::None, "  --help, -h  \t\tPrint usage and exit" },
@@ -175,7 +177,25 @@ int main(int argc, const char **argv)
 
   parseOptions(argc, argv);
 
+  archive = "/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ_stardat.mpq/tileset";
   shared_ptr<Hurricane> hurricane = selectChoosenBackend();
+
+  Storage tilesets;
+  tilesets.setDataPath("/home/andreas/tmp");
+  tilesets.setDataType("tilesets");
+  tileset::TilesetHub tilesethub(hurricane, "platform");
+  tilesethub.generateTilesetJson(tilesets("platform.tsj"));
+
+  /*** Chk ***/
+
+  archive = "/home/andreas/src/git/stargus/chk";
+  shared_ptr<Hurricane> hurricane2 = selectChoosenBackend();
+
+  // TODO: just use this while development. Later it's more difficult with scm files...
+  string chk_file = "scenario.chk";
+
+  Chk chk(hurricane2);
+  chk.convert(chk_file, tilesethub, tilesets("platform.tmj"));
 
 
 

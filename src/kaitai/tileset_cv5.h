@@ -17,6 +17,12 @@ public:
     class group_t;
     class ground_nibbles_t;
 
+    enum terrain_enum_t {
+        TERRAIN_ENUM_UNPLACEABLE = 0,
+        TERRAIN_ENUM_DOODAD = 1,
+        TERRAIN_ENUM_BASIC = 2
+    };
+
     tileset_cv5_t(kaitai::kstream* p__io, kaitai::kstruct* p__parent = 0, tileset_cv5_t* p__root = 0);
 
 private:
@@ -40,7 +46,7 @@ public:
         ~group_t();
 
     private:
-        uint16_t m_doodad;
+        uint16_t m_terrain_type;
         ground_nibbles_t* m_ground;
         uint16_t m_unknown1;
         uint16_t m_unknown2;
@@ -55,7 +61,7 @@ public:
         tileset_cv5_t* m__parent;
 
     public:
-        uint16_t doodad() const { return m_doodad; }
+        uint16_t terrain_type() const { return m_terrain_type; }
         ground_nibbles_t* ground() const { return m_ground; }
         uint16_t unknown1() const { return m_unknown1; }
         uint16_t unknown2() const { return m_unknown2; }
@@ -106,6 +112,11 @@ private:
     kaitai::kstruct* m__parent;
 
 public:
+
+    /**
+     * This file defines the various tile groups that are referenced by the TILE/MTXM 
+     * sections of the CHK (0x7FF0 for the group index, 0x000F for the tile index).
+     */
     std::vector<group_t*>* elements() const { return m_elements; }
     tileset_cv5_t* _root() const { return m__root; }
     kaitai::kstruct* _parent() const { return m__parent; }
