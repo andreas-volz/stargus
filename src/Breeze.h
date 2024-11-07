@@ -32,7 +32,7 @@ public:
    * @param archivedFile is the source
    * @param extractedName is the target
    */
-  virtual bool extractFile(const std::string &archivedFile, const std::string &extractedName, bool compress);
+  virtual bool extractFile(const std::string &archivedFile, const std::string &extractedName, bool compress = false);
 
   /**
    * Attention: This function malloc() bufferLen memory which you've to free yourself!

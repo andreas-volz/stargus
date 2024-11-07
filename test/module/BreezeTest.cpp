@@ -110,3 +110,42 @@ void BreezeTest::test3_txt_extractFileCompressed()
 
   fs::remove(savename);
 }
+
+void BreezeTest::test4_bigdata_extractFile()
+{
+  string test_data_dir = "test/module/data/";
+  string arcfile = "png-1mb.png";
+  string savefile = "png-1mb_copy.png";
+
+  shared_ptr<Breeze> breeze = make_shared<Breeze>(test_data_dir);
+
+  bool result = breeze->extractFile(arcfile, savefile, false);
+
+  string line;
+  string arcfile_content;
+  ifstream arcfile_stream(arcfile);
+  if (arcfile_stream.is_open())
+  {
+    while (getline(arcfile_stream, line))
+    {
+      arcfile_content += line;
+    }
+    arcfile_stream.close();
+  }
+
+  string savefile_content;
+  ifstream savefile_stream(savefile);
+  if (savefile_stream.is_open())
+  {
+    while (getline(savefile_stream, line))
+    {
+      arcfile_content += line;
+    }
+    savefile_stream.close();
+  }
+
+  CPPUNIT_ASSERT(result == true);
+  CPPUNIT_ASSERT(arcfile_content == savefile_content);
+
+  fs::remove(savefile);
+}

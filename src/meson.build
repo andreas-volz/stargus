@@ -87,9 +87,9 @@ executable('startool',
 	dependencies : [log4cxx_dep, libstarformat_dep, nlohmann_json_dep, png_dep],
 	install : true)
 
-executable('stargus',
-	stargus_sources,
-	include_directories : [stratagus_incdir, config_incdir],
-	install : true)
+#executable('stargus',
+#	stargus_sources,
+#	include_directories : [stratagus_incdir, config_incdir],
+#	install : true)
 	
 

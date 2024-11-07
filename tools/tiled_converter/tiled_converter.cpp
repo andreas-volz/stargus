@@ -178,18 +178,29 @@ int main(int argc, const char **argv)
 
   parseOptions(argc, argv);
 
+  shared_ptr<Breeze> breeze = make_shared<Breeze>("/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/multimaps");
+  //string arcfile ("(2)space madness.scm");
+  string arcfile ("(4)power lines.scm");
+  string extr_file("/home/andreas/tmp/" + arcfile);
+  breeze->extractFile(arcfile, extr_file);
+
+  exit(0);
+
   Storage tilesets;
   tilesets.setDataPath("/home/andreas/tmp");
   tilesets.setDataType("tilesets");
 
-  archive = "/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/multimaps";
+  //archive = "/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/multimaps";
+  backend = "storm";
+  archive = "/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft/install.exe";
   shared_ptr<Hurricane> hurricane_scm = selectChoosenBackend();
 
-  Scm scm(hurricane_scm, "(2)space madness", tilesets); // broken: (4)power lines
+  Scm scm(hurricane_scm, "multimaps\\(4)power lines", tilesets); // broken: (4)power lines  # works: (2)space madness
   std::shared_ptr<Chk> chk = scm.chk;
   string tileset_str = chk->getTileSet();
 
   archive = "/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ_stardat.mpq/tileset";
+  backend = "breeze";
   shared_ptr<Hurricane> hurricane = selectChoosenBackend();
 
   tileset::TilesetHub tilesethub(hurricane, tileset_str);

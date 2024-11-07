@@ -55,6 +55,7 @@ Scm::Scm(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, Stora
   m_scm_path = storage(arcfile_scm).getFullPath();
 
   bool result = mHurricane->extractFile(arcfile_scm, m_scm_path); // TODO maybe the Breeze extractFile interface is broken????
+  assert(result);
   if (result)
   {
     m_storm = make_shared<Storm>(m_scm_path);
@@ -67,7 +68,7 @@ Scm::Scm(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, Stora
 Scm::~Scm()
 {
   // delete the temporary .chk file
-  platform::unlink(m_scm_path);
+  //platform::unlink(m_scm_path);
 }
 
 

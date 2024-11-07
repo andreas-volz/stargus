@@ -18,6 +18,7 @@ class BreezeTest : public CPPUNIT_NS::TestFixture
   CPPUNIT_TEST(test1_txt_extractMemory);
   CPPUNIT_TEST(test2_txt_extractFile);
   CPPUNIT_TEST(test3_txt_extractFileCompressed);
+  CPPUNIT_TEST(test4_bigdata_extractFile);
 
   CPPUNIT_TEST_SUITE_END();
 
@@ -41,6 +42,10 @@ protected:
    */
   void test3_txt_extractFileCompressed();
 
+  /**
+   * Extract a 1 MB size file from a file from that "archive" into a file, read it back and compare the content
+   */
+  void test4_bigdata_extractFile();
 
 private:
 
