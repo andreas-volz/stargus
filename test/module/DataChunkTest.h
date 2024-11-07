@@ -55,7 +55,8 @@ protected:
   void test5_read_write_compare();
 
 private:
-
+  static const std::string TEST_DATA_DIR;
+  static const std::string TEST_OUTPUT_DIR;
 };
 
 #endif // DATACHUNK_TEST_H

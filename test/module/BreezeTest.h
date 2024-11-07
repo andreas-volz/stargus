@@ -48,7 +48,8 @@ protected:
   void test4_bigdata_extractFile();
 
 private:
-
+  static const std::string TEST_DATA_DIR;
+  static const std::string TEST_OUTPUT_DIR;
 };
 
 #endif // BREEZE_TEST_H

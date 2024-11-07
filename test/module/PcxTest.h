@@ -55,7 +55,8 @@ protected:
 
 
 private:
-
+  static const std::string TEST_DATA_DIR;
+  static const std::string TEST_OUTPUT_DIR;
 };
 
 #endif // PCX_TEST_H

@@ -8,10 +8,14 @@
 // Project
 #include "BreezeTest.h"
 #include "platform.h"
+#include "TestHelpers.h"
 
 using namespace std;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(BreezeTest);
+
+const std::string BreezeTest::TEST_DATA_DIR("test/module/data/");
+const std::string BreezeTest::TEST_OUTPUT_DIR("test/module/output/");
 
 void BreezeTest::setUp()
 {
@@ -27,11 +31,10 @@ void BreezeTest::test1_txt_extractMemory()
 {
   unsigned char *text_str = NULL;
   size_t bufLen = 0;
-  string test_data_dir = "test/module/data/";
   string content_result = "breezetest";
   string arc_file = "breezetest.txt";
 
-  shared_ptr<Breeze> breeze = make_shared<Breeze>(test_data_dir);
+  shared_ptr<Breeze> breeze = make_shared<Breeze>(TEST_DATA_DIR);
 
   bool result = breeze->extractMemory(arc_file, &text_str, &bufLen);
 
@@ -44,48 +47,34 @@ void BreezeTest::test1_txt_extractMemory()
 
 void BreezeTest::test2_txt_extractFile()
 {
-  string test_data_dir = "test/module/data/";
   string content_result = "breezetest";
   string arc_file = "breezetest.txt";
   string savename = "breezetest_test.txt";
 
-  shared_ptr<Breeze> breeze = make_shared<Breeze>(test_data_dir);
+  shared_ptr<Breeze> breeze = make_shared<Breeze>(TEST_DATA_DIR);
 
-  bool result = breeze->extractFile(arc_file, savename, false);
-
-  string line;
-  string filecontent;
-  ifstream readfile(savename);
-  if (readfile.is_open())
-  {
-    while (getline(readfile, line))
-    {
-      filecontent += line;
-    }
-    readfile.close();
-  }
+  bool result = breeze->extractFile(arc_file, TEST_OUTPUT_DIR + savename, false);
 
   CPPUNIT_ASSERT(result == true);
-  CPPUNIT_ASSERT(content_result == filecontent);
+  CPPUNIT_ASSERT(compareFiles(TEST_DATA_DIR + arc_file, TEST_OUTPUT_DIR + savename));
 
-  fs::remove(savename);
+  fs::remove(TEST_OUTPUT_DIR + savename);
 }
 
 void BreezeTest::test3_txt_extractFileCompressed()
 {
-  string test_data_dir = "test/module/data/";
   string content_result = "breezetest";
   string arc_file = "breezetest.txt";
   string savename = "test.txt.gz";
   gzFile gzfile = nullptr;
 
-  shared_ptr<Breeze> breeze = make_shared<Breeze>(test_data_dir);
+  shared_ptr<Breeze> breeze = make_shared<Breeze>(TEST_DATA_DIR);
 
-  bool result = breeze->extractFile(arc_file, savename, true);
+  bool result = breeze->extractFile(arc_file, TEST_OUTPUT_DIR + savename, true);
 
   // read back & compare ->
 
-  gzfile = gzopen(savename.c_str(), "r");
+  gzfile = gzopen((TEST_OUTPUT_DIR + savename).c_str(), "r");
 
   int err;
   int bytes_read;
@@ -108,44 +97,20 @@ void BreezeTest::test3_txt_extractFileCompressed()
   CPPUNIT_ASSERT(result == true);
   CPPUNIT_ASSERT(content_result == dest);
 
-  fs::remove(savename);
+  fs::remove(TEST_OUTPUT_DIR + savename);
 }
 
 void BreezeTest::test4_bigdata_extractFile()
 {
-  string test_data_dir = "test/module/data/";
   string arcfile = "png-1mb.png";
   string savefile = "png-1mb_copy.png";
 
-  shared_ptr<Breeze> breeze = make_shared<Breeze>(test_data_dir);
+  shared_ptr<Breeze> breeze = make_shared<Breeze>(TEST_DATA_DIR);
 
-  bool result = breeze->extractFile(arcfile, savefile, false);
-
-  string line;
-  string arcfile_content;
-  ifstream arcfile_stream(arcfile);
-  if (arcfile_stream.is_open())
-  {
-    while (getline(arcfile_stream, line))
-    {
-      arcfile_content += line;
-    }
-    arcfile_stream.close();
-  }
-
-  string savefile_content;
-  ifstream savefile_stream(savefile);
-  if (savefile_stream.is_open())
-  {
-    while (getline(savefile_stream, line))
-    {
-      arcfile_content += line;
-    }
-    savefile_stream.close();
-  }
+  bool result = breeze->extractFile(arcfile, TEST_OUTPUT_DIR + savefile, false);
 
   CPPUNIT_ASSERT(result == true);
-  CPPUNIT_ASSERT(arcfile_content == savefile_content);
+  CPPUNIT_ASSERT(compareFiles(TEST_DATA_DIR + arcfile, TEST_OUTPUT_DIR + savefile));
 
-  fs::remove(savefile);
+  fs::remove(TEST_OUTPUT_DIR + savefile);
 }

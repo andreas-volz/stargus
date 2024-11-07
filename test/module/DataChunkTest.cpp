@@ -8,10 +8,14 @@
 // Project
 #include "DataChunkTest.h"
 #include "platform.h"
+#include "TestHelpers.h"
 
 using namespace std;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(DataChunkTest);
+
+const std::string DataChunkTest::TEST_DATA_DIR("test/module/data/");
+const std::string DataChunkTest::TEST_OUTPUT_DIR("test/module/output/");
 
 void DataChunkTest::setUp()
 {
@@ -93,7 +97,7 @@ void DataChunkTest::test4_write_compare()
 {
   DataChunk dc;
   int LENGTH = 5;
-  string savename = "datachunk.txt";
+  string savename = TEST_OUTPUT_DIR + "datachunk.txt";
 
   unsigned char rawdata[LENGTH];
   rawdata[0] = 0x1;
@@ -106,17 +110,7 @@ void DataChunkTest::test4_write_compare()
 
   dc.write(savename);
 
-  string line;
-  string filecontent;
-  ifstream readfile(savename);
-  if (readfile.is_open())
-  {
-    while (getline(readfile, line))
-    {
-      filecontent += line;
-    }
-    readfile.close();
-  }
+  string filecontent = getStringFromFile(savename);
 
   CPPUNIT_ASSERT(filecontent.at(0) == 0x1);
   CPPUNIT_ASSERT(filecontent.at(1) == 0x2);
@@ -131,7 +125,7 @@ void DataChunkTest::test5_read_write_compare()
 {
   DataChunk dc;
   int LENGTH = 5;
-  string savename = "datachunk.txt";
+  string savename = TEST_OUTPUT_DIR + "datachunk.txt";
 
   unsigned char rawdata[LENGTH];
   rawdata[0] = 0x1;

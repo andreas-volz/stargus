@@ -120,9 +120,12 @@ bool Breeze::extractMemory(const std::string &archivedFile, unsigned char **szEn
         szEntryBuffer = (unsigned char *) realloc(szEntryBuffer, len);
         memcpy(szEntryBuffer + (i * sizeof(szBuffer)), szBuffer, dwBytes);
       }
+      i++;
     }
-    i++;
-    *bufferLen = len;
+    if (bufferLen != NULL)
+    {
+      *bufferLen = len;
+    }
   }
   else
   {

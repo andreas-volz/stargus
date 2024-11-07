@@ -12,6 +12,7 @@
 // project
 #include "Storm.h"
 #include "StringUtil.h"
+#include "TestHelpers.h"
 
 class StormTest : public CPPUNIT_NS::TestFixture
 {
@@ -44,7 +45,8 @@ protected:
   void test3_mpq_txt_extractFileCompressed();
 
 private:
-
+  static const std::string TEST_DATA_DIR;
+  static const std::string TEST_OUTPUT_DIR;
 };
 
 #endif // STORM_TEST_H

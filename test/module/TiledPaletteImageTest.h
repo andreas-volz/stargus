@@ -38,6 +38,9 @@ protected:
 private:
   Palette generateTestPalette();
 
+  static const std::string TEST_DATA_DIR;
+  static const std::string TEST_OUTPUT_DIR;
+
   const unsigned char ColorBlack  = 0;
   const unsigned char ColorRed    = 1;
   const unsigned char ColorGreen  = 2;

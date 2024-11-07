@@ -16,6 +16,9 @@ using namespace std;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TiledPaletteImageTest);
 
+const std::string TiledPaletteImageTest::TEST_DATA_DIR("test/module/data/");
+const std::string TiledPaletteImageTest::TEST_OUTPUT_DIR("test/module/output/");
+
 void TiledPaletteImageTest::setUp()
 {
 
@@ -28,11 +31,10 @@ void TiledPaletteImageTest::tearDown()
 
 void TiledPaletteImageTest::test1_tileStrategyCompare()
 {
-  string test_data_dir = "test/module/data/";
   string reference_small_name_png = "TiledPaletteImage_small.png";
 
-  string save_num_name_png = "test1_tileStrategyCompare_num.png";
-  string save_pos_name_png = "test1_tileStrategyCompare_pos.png";
+  string save_num_name_png = TEST_OUTPUT_DIR + "test1_tileStrategyCompare_num.png";
+  string save_pos_name_png = TEST_OUTPUT_DIR + "test1_tileStrategyCompare_pos.png";
 
   Palette pal(generateTestPalette());
 
@@ -69,8 +71,8 @@ void TiledPaletteImageTest::test1_tileStrategyCompare()
 
   // this test just checks if adding the tiles by #num or Pos gives us the same result
   CPPUNIT_ASSERT(tiled_image_num == tiled_image_pos);
-  CPPUNIT_ASSERT(compareFiles(save_num_name_png, test_data_dir + "/" + reference_small_name_png));
-  CPPUNIT_ASSERT(compareFiles(save_pos_name_png, test_data_dir + "/" + reference_small_name_png));
+  CPPUNIT_ASSERT(compareFiles(save_num_name_png, TEST_DATA_DIR + "/" + reference_small_name_png));
+  CPPUNIT_ASSERT(compareFiles(save_pos_name_png, TEST_DATA_DIR + "/" + reference_small_name_png));
 
   // TODO: save both vectors into file and compare them with a working result!
   // maybe as other additional test??
@@ -81,10 +83,8 @@ void TiledPaletteImageTest::test1_tileStrategyCompare()
 
 void TiledPaletteImageTest::test2_tileHorizontalFlipping()
 {
-  string test_data_dir = "test/module/data/";
   string reference_big_flipped_name_png = "TiledPaletteImageTest2_big_flipped.png";
-
-  string save_name_flipped_png = "test2_tileHorizontalFlipping.png";
+  string save_name_flipped_png = TEST_OUTPUT_DIR + "test2_tileHorizontalFlipping.png";
 
   Palette pal(generateTestPalette());
 
@@ -117,7 +117,7 @@ void TiledPaletteImageTest::test2_tileHorizontalFlipping()
 
   PngExporter::saveRGB(save_name_flipped_png, tiled_image_big, pal, 255);
 
-  CPPUNIT_ASSERT(compareFiles(save_name_flipped_png, test_data_dir + "/" + reference_big_flipped_name_png));
+  CPPUNIT_ASSERT(compareFiles(save_name_flipped_png, TEST_DATA_DIR + "/" + reference_big_flipped_name_png));
 
   fs::remove(save_name_flipped_png);
 }

@@ -13,6 +13,9 @@ using namespace std;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(StormTest);
 
+const std::string StormTest::TEST_DATA_DIR("test/module/data/");
+const std::string StormTest::TEST_OUTPUT_DIR("test/module/output/");
+
 void StormTest::setUp()
 {
 
@@ -27,11 +30,10 @@ void StormTest::test1_mpq_txt_extractMemory()
 {
   unsigned char *text_str = NULL;
   size_t bufLen = 0;
-  string test_data_dir = "test/module/data/";
   string content_result = "stormtest";
   string mpq_arc_file = "test.txt";
 
-  shared_ptr<Storm> storm = make_shared<Storm>(test_data_dir + "StormTest_test1_mpq_txt.mpq");
+  shared_ptr<Storm> storm = make_shared<Storm>(TEST_DATA_DIR + "StormTest_test1_mpq_txt.mpq");
 
   bool result = storm->extractMemory(mpq_arc_file, &text_str, &bufLen);
 
@@ -44,48 +46,34 @@ void StormTest::test1_mpq_txt_extractMemory()
 
 void StormTest::test2_mpq_txt_extractFile()
 {
-  string test_data_dir = "test/module/data/";
   string content_result = "stormtest";
   string mpq_arc_file = "test.txt";
   string savename = "test.txt";
 
-  shared_ptr<Storm> storm = make_shared<Storm>(test_data_dir + "StormTest_test1_mpq_txt.mpq");
+  shared_ptr<Storm> storm = make_shared<Storm>(TEST_DATA_DIR + "StormTest_test1_mpq_txt.mpq");
 
-  bool result = storm->extractFile(mpq_arc_file, savename, false);
-
-  string line;
-  string filecontent;
-  ifstream readfile(savename);
-  if (readfile.is_open())
-  {
-    while (getline(readfile, line))
-    {
-      filecontent += line;
-    }
-    readfile.close();
-  }
+  bool result = storm->extractFile(mpq_arc_file, TEST_OUTPUT_DIR + savename, false);
 
   CPPUNIT_ASSERT(result == true);
-  CPPUNIT_ASSERT(content_result == filecontent);
+  CPPUNIT_ASSERT(content_result == getStringFromFile(TEST_OUTPUT_DIR + savename));
 
-  fs::remove(savename);
+  fs::remove(TEST_OUTPUT_DIR + savename);
 }
 
 void StormTest::test3_mpq_txt_extractFileCompressed()
 {
-  string test_data_dir = "test/module/data/";
   string content_result = "stormtest";
   string mpq_arc_file = "test.txt";
   string savename = "test.txt.gz";
   gzFile gzfile = nullptr;
 
-  shared_ptr<Storm> storm = make_shared<Storm>(test_data_dir + "StormTest_test1_mpq_txt.mpq");
+  shared_ptr<Storm> storm = make_shared<Storm>(TEST_DATA_DIR + "StormTest_test1_mpq_txt.mpq");
 
-  bool result = storm->extractFile(mpq_arc_file, savename, true);
+  bool result = storm->extractFile(mpq_arc_file, TEST_OUTPUT_DIR + savename, true);
 
   // read back & compare ->
 
-  gzfile = gzopen(savename.c_str(), "r");
+  gzfile = gzopen((TEST_OUTPUT_DIR + savename).c_str(), "r");
 
   int err;
   int bytes_read;
@@ -108,5 +96,5 @@ void StormTest::test3_mpq_txt_extractFileCompressed()
   CPPUNIT_ASSERT(result == true);
   CPPUNIT_ASSERT(content_result == dest);
 
-  fs::remove(savename);
+  fs::remove(TEST_OUTPUT_DIR + savename);
 }
