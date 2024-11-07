@@ -9,6 +9,7 @@
 #include "Logger.h"
 #include "StringUtil.h"
 #include "Chk.h"
+#include "Scm.h"
 #include "tileset/TilesetHub.h"
 
 /* system */
@@ -177,25 +178,35 @@ int main(int argc, const char **argv)
 
   parseOptions(argc, argv);
 
-  archive = "/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ_stardat.mpq/tileset";
-  shared_ptr<Hurricane> hurricane = selectChoosenBackend();
-
   Storage tilesets;
   tilesets.setDataPath("/home/andreas/tmp");
   tilesets.setDataType("tilesets");
-  tileset::TilesetHub tilesethub(hurricane, "platform");
-  tilesethub.generateTilesetJson(tilesets("platform.tsj"));
+
+  archive = "/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ/multimaps";
+  shared_ptr<Hurricane> hurricane_scm = selectChoosenBackend();
+
+  Scm scm(hurricane_scm, "(2)space madness", tilesets); // broken: (4)power lines
+  std::shared_ptr<Chk> chk = scm.chk;
+  string tileset_str = chk->getTileSet();
+
+  archive = "/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ_stardat.mpq/tileset";
+  shared_ptr<Hurricane> hurricane = selectChoosenBackend();
+
+  tileset::TilesetHub tilesethub(hurricane, tileset_str);
+  tilesethub.generateTilesetJson(tilesets);
+
+  chk->convert(tilesethub, tilesets);
 
   /*** Chk ***/
 
-  archive = "/home/andreas/src/git/stargus/chk";
-  shared_ptr<Hurricane> hurricane2 = selectChoosenBackend();
+  //archive = "/home/andreas/src/git/stargus/chk";
+  //shared_ptr<Hurricane> hurricane2 = selectChoosenBackend();
 
   // TODO: just use this while development. Later it's more difficult with scm files...
-  string chk_file = "scenario.chk";
 
-  Chk chk(hurricane2);
-  chk.convert(chk_file, tilesethub, tilesets("platform.tmj"));
+  //Chk chk(hurricane2);
+  //chk.convert(tilesethub, tilesets);
+
 
 
 

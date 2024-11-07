@@ -837,8 +837,8 @@ enums:
     
   tileset_enum:
     0: badlands
-    1: space_platform
-    2: installation
+    1: platform
+    2: install
     3: ashworld
     4: jungle
     5: dessert

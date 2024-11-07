@@ -23,28 +23,55 @@
 using json = nlohmann::json;
 
 using namespace std;
+/*
 
-Chk::Chk(std::shared_ptr<Hurricane> hurricane) :
-  Converter(hurricane)
+*/
+const std::vector<std::string> Chk::TILESET_MAPPING = {
+  "badlands",
+  "platform",
+  "install",
+  "ashworld",
+  "jungle",
+  "dessert",
+  "artic",
+  "twilight",
+};
+
+Chk::Chk(std::shared_ptr<Hurricane> hurricane, const std::string &map_name) :
+  Converter(hurricane),
+  m_map_name(map_name)
 {
+  const std::string arcfile = "staredit\\scenario.chk";
+  m_chk_parser_stream = mHurricane->extractStream(arcfile);
+  assert(m_chk_parser_stream);
+  m_chk_parser_ks = make_shared<kaitai::kstream>(&*m_chk_parser_stream);
+  assert(m_chk_parser_ks);
+  chk_parser = make_shared<chk_parser_t>(m_chk_parser_ks.get());
+  assert(chk_parser);
 }
 
 Chk::~Chk()
 {
-
 }
 
-void Chk::setUnitNames(const std::vector<std::string> &unitNames)
+const std::string Chk::getTileSet()
 {
-  mUnitNames = unitNames;
+  string tileset_str;
+
+  for(const chk_parser_t::chunk_type_t* chunk : *chk_parser->chunk())
+  {
+    if(chunk->tag() == "ERA ")
+    {
+      chk_parser_t::tileset_t *tileset = static_cast<chk_parser_t::tileset_t*>(chunk->data()->content());
+      tileset_str = TILESET_MAPPING[tileset->value()];
+    }
+  }
+
+  return tileset_str;
 }
 
-bool Chk::convert(const std::string &arcfile, tileset::TilesetHub &tilesethub, Storage jsonfile)
+bool Chk::convert(tileset::TilesetHub &tilesethub, Storage storage)
 {
-  m_chk_parser_stream = mHurricane->extractStream(arcfile);
-  m_chk_parser_ks = make_shared<kaitai::kstream>(&*m_chk_parser_stream);
-  chk_parser = make_shared<chk_parser_t>(m_chk_parser_ks.get());
-
   bool result = false;
 
   json j_tilemap;
@@ -63,7 +90,7 @@ bool Chk::convert(const std::string &arcfile, tileset::TilesetHub &tilesethub, S
   j_tilemap["tilesets"].push_back(j_tilesets_ref);
   json j_layer_0;
   j_layer_0["id"] = 1;
-  j_layer_0["name"] = tilesethub.getTilesetName() + " Layer";
+  j_layer_0["name"] = m_map_name + " Layer";
   j_layer_0["type"] = "tilelayer";
   j_layer_0["visible"] = true;
   j_layer_0["x"] = 0;
@@ -74,7 +101,7 @@ bool Chk::convert(const std::string &arcfile, tileset::TilesetHub &tilesethub, S
 
   for(const chk_parser_t::chunk_type_t* chunk : *chk_parser->chunk())
   {
-    if(chunk->tag() == "DIM ")
+   if(chunk->tag() == "DIM ")
     {
       chk_parser_t::dimension_t *dimension = static_cast<chk_parser_t::dimension_t*>(chunk->data()->content());
       j_tilemap["height"] = dimension->height();
@@ -86,38 +113,18 @@ bool Chk::convert(const std::string &arcfile, tileset::TilesetHub &tilesethub, S
     {
       chk_parser_t::u2_array_t *terrain_array = static_cast<chk_parser_t::u2_array_t*>(chunk->data()->content());
 
-      cout << "MTXM" << endl;
-      int line = 0;
-      int i = 0;
       for(uint16_t terrain : *terrain_array->values())
       {
         uint16_t groupIndex = (terrain & 0x7FF0) >> 4;
         uint16_t tileIndex = terrain & 0x000F;
 
-
         tileset_cv5_t::group_t* group = tilesethub.cv5->elements()->at(groupIndex);
         uint16_t megatile_ref = group->megatile_references()->at(tileIndex);
 
-        //cout << endl << "group: " << groupIndex << " tile: " << tileIndex << ": " ;
-
         megatile_ref += 1; // needed as Tiled always resets firstgid to 1...
-        //cout << megatile_ref << ",";
         j_layer_data.push_back(megatile_ref);
 
-        //cout << megatile_terrain;
-        //cout << endl;
-
-        /*if(line == 16)
-        {
-          cout << endl;
-          line = 0;
-        }*/
-
-
-        line++;
-        i++;
       }
-      cout << "count: " << i << endl;
     }
   }
 
@@ -125,7 +132,8 @@ bool Chk::convert(const std::string &arcfile, tileset::TilesetHub &tilesethub, S
 
   j_tilemap["layers"].push_back(j_layer_0);
 
-  string full_path = jsonfile.getFullPath();
+  storage.setFilename(m_map_name + ".tmj");
+  string full_path = storage.getFullPath();
   CheckPath(full_path);
   saveJson(j_tilemap, full_path, true);
 

@@ -27,20 +27,20 @@ class Hurricane;
 class Chk : public Converter
 {
 public:
-  Chk(std::shared_ptr<Hurricane> hurricane);
+  Chk(std::shared_ptr<Hurricane> hurricane, const std::string &map_name);
   virtual ~Chk();
 
-  void setUnitNames(const std::vector<std::string> &unitNames);
+  const std::string getTileSet();
 
-  virtual bool convert(const std::string &arcfile,tileset::TilesetHub &tilesethub, Storage jsonfile);
+  virtual bool convert(tileset::TilesetHub &tilesethub, Storage storage);
 
   std::shared_ptr<chk_parser_t> chk_parser;
 
 private:
-  std::vector<std::string> mUnitNames;
-
   std::shared_ptr<std::istream> m_chk_parser_stream;
   std::shared_ptr<kaitai::kstream> m_chk_parser_ks;
+  static const std::vector<std::string> TILESET_MAPPING;
+  std::string m_map_name;
 
   void saveJson(json &j, const std::string &file, bool pretty);
 

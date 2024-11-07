@@ -663,8 +663,8 @@ int main(int argc, const char **argv)
         case M: // WORKS!
         {
           printf("ConvertMap: %s, %s", c[u].File, c[u].ArcFile);
-          Scm scm(storm);
-          case_func = scm.convert(c[u].ArcFile, unitNames, data(c[u].File));
+          //Scm scm(storm);
+          //case_func = scm.convert(c[u].ArcFile, unitNames, data(c[u].File));
           printf("...%s\n", case_func ? "ok" : "nok");
         }
         break;
@@ -802,8 +802,8 @@ int main(int argc, const char **argv)
         case L:
         {
           printf("ConvertCampaign (.chk): %s, %s", c[u].File, c[u].ArcFile);
-          Chk chk(storm);
-          chk.setUnitNames(unitNames);
+          //Chk chk(storm);
+          //chk.setUnitNames(unitNames);
           //case_func = chk.convert(c[u].ArcFile, data(c[u].File));
           printf("...%s\n", case_func ? "ok" : "nok");
         }

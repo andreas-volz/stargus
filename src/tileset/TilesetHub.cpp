@@ -91,7 +91,7 @@ bool TilesetHub::convert(std::shared_ptr<AbstractPalette> palette, Storage stora
   return PngExporter::save(save_png, ultraTile, palette, 0);
 }
 
-void TilesetHub::generateTilesetJson(Storage jsonfile)
+void TilesetHub::generateTilesetJson(Storage storage)
 {
   if(!cv5) // if it isn't available just return with no action
   {
@@ -134,17 +134,17 @@ void TilesetHub::generateTilesetJson(Storage jsonfile)
     }*/
 
 
-    std::vector<uint16_t>* vx4_vf4_ref = group->megatile_references();
+    //std::vector<uint16_t>* vx4_vf4_ref = group->megatile_references();
 
     vector<string> tile_solids_vector;
 
-    for(auto elem : *vx4_vf4_ref)
-    {
+    //for(auto elem : *vx4_vf4_ref)
+    //{
       //cout << to_string(elem) << ",";
 
       /*tileset_vf4_t::minitile_t* minitile = vf4->elements()->at(elem);
 
-      std::string subtilePassableFlags = "";
+      std::string subtilePassableFlags = "";storage
       for(auto flags : *minitile->flags())
       {
         if (flags->walkable()) {
@@ -158,7 +158,7 @@ void TilesetHub::generateTilesetJson(Storage jsonfile)
       tile_solids_vector.push_back(lg::table(lg::quote(subtilePassableFlags)));*/
 
       //cout << ", ";
-    }
+    //}
     //cout << endl;
 
 
@@ -166,7 +166,8 @@ void TilesetHub::generateTilesetJson(Storage jsonfile)
   }
 
 
-  string full_path = jsonfile.getFullPath();
+  storage.setFilename(m_arcfile + ".tsj");
+  string full_path = storage.getFullPath();
   CheckPath(full_path);
   saveJson(j_tileset, full_path, true);
 

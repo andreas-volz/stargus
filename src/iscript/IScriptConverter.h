@@ -38,6 +38,7 @@ public:
 
 private:
   bool m_human_readable;
+  static const std::vector<std::string> ISCRIPT_ANIMATIONTYPE_MAPPING;
 };
 
 #endif /* ISCRIPTCONVERTER_H */

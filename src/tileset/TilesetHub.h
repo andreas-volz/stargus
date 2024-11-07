@@ -47,7 +47,7 @@ public:
   // TODO: rename
   bool convert(std::shared_ptr<AbstractPalette> palette, Storage storage);
 
-  void generateTilesetJson(Storage jsonfile);
+  void generateTilesetJson(Storage storage);
 
   const std::string getTilesetName();
 

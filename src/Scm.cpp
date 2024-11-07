@@ -34,7 +34,6 @@
 #include "Hurricane.h"
 #include "endian.h"
 #include "FileUtil.h"
-#include "Storm.h"
 #include "platform.h"
 
 // System
@@ -49,35 +48,26 @@
 
 using namespace std;
 
-Scm::Scm(std::shared_ptr<Hurricane> hurricane) :
+Scm::Scm(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile, Storage storage) :
   Converter(hurricane)
 {
+  string arcfile_scm = arcfile + ".scm";
+  m_scm_path = storage(arcfile_scm).getFullPath();
 
+  bool result = mHurricane->extractFile(arcfile_scm, m_scm_path); // TODO maybe the Breeze extractFile interface is broken????
+  if (result)
+  {
+    m_storm = make_shared<Storm>(m_scm_path);
+
+    // create the Chk files that will be deleted together with Scm
+    chk = make_shared<Chk>(m_storm, arcfile);
+  }
 }
 
 Scm::~Scm()
 {
-
+  // delete the temporary .chk file
+  platform::unlink(m_scm_path);
 }
 
-bool Scm::convert(const std::string &arcfile, const std::vector<std::string> &unitNames, Storage storage)
-{
-  bool result = true;
 
-  string scm_path = storage.getFullPath() + "scm";
-
-  result = mHurricane->extractFile(arcfile, scm_path);
-  if (result)
-  {
-    // call the Chk converter with temp file...
-    shared_ptr<Storm> storm = make_shared<Storm>(scm_path);
-    Chk chk(storm);
-    chk.setUnitNames(unitNames);
-    //result = chk.convert("staredit\\scenario.chk", storage.getFullPath());
-
-    // delete the temporary .chk file -> below don't access 'breeze' any more!
-    //platform::unlink(scm_path);
-  }
-
-  return result;
-}

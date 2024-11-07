@@ -108,8 +108,8 @@ public:
 
     enum tileset_enum_t {
         TILESET_ENUM_BADLANDS = 0,
-        TILESET_ENUM_SPACE_PLATFORM = 1,
-        TILESET_ENUM_INSTALLATION = 2,
+        TILESET_ENUM_PLATFORM = 1,
+        TILESET_ENUM_INSTALL = 2,
         TILESET_ENUM_ASHWORLD = 3,
         TILESET_ENUM_JUNGLE = 4,
         TILESET_ENUM_DESSERT = 5,

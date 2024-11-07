@@ -101,7 +101,7 @@ const std::vector<std::string> OPCODE_COMMAND_MAPPING = {
   "dogrddamage",
 };
 
-const std::vector<std::string> ISCRIPT_ANIMATIONTYPE_MAPPING = {
+const std::vector<std::string> IScriptConverter::ISCRIPT_ANIMATIONTYPE_MAPPING = {
   "Init",
   "Death",
   "GndAttkInit",
