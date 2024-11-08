@@ -26,6 +26,8 @@ public:
 
   virtual bool read(const std::string &filename);
 
+  virtual void shift(unsigned int start, unsigned int end, unsigned int amount) = 0;
+
   /**
    * Creator function for the abstract factory design
    */

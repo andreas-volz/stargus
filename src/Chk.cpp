@@ -86,7 +86,7 @@ bool Chk::convert(tileset::TilesetHub &tilesethub, Storage storage)
   j_tilemap["tiledversion"] = "1.8.0";
   json j_tilesets_ref;
   j_tilesets_ref["firstgid"] = 1;
-  j_tilesets_ref["source"] = tilesethub.getTilesetName() + ".tsj";
+  j_tilesets_ref["source"] = "../" + tilesethub.getTilesetName() + ".tsj";
   j_tilemap["tilesets"].push_back(j_tilesets_ref);
   json j_layer_0;
   j_layer_0["id"] = 1;

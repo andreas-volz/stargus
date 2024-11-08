@@ -98,4 +98,11 @@ unsigned int Palette2D::getSize()
   return mColorPalette2D.size();
 }
 
+void Palette2D::shift(unsigned int start, unsigned int end, unsigned int amount)
+{
+  for(auto palette : mColorPalette2D)
+  {
+    palette.shift(start, end, amount);
+  }
+}
 

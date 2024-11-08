@@ -44,6 +44,8 @@ public:
 
   void load(std::shared_ptr<DataChunk> rawPalette);
 
+  void shift(unsigned int start, unsigned int end, unsigned int amount);
+
 private:
   std::array<Color, 256> mColorPalette;
 };

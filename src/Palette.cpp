@@ -12,6 +12,7 @@
 // system
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -87,4 +88,18 @@ std::shared_ptr<DataChunk> Palette::createDataChunk()
 Color &Palette::at(unsigned int index)
 {
   return mColorPalette.at(index);
+}
+
+void Palette::shift(unsigned int start, unsigned int end, unsigned int amount)
+{
+  // Ensure amount is within the bounds of the subarray
+  int subarray_size = end - start + 1;
+  amount = amount % subarray_size;
+
+  // makes a temporal copy of a part of the vector
+  vector<Color> temp(mColorPalette.begin() + start, mColorPalette.begin() + end + 1);
+  rotate(temp.rbegin(), temp.rbegin() + amount, temp.rend());
+
+  // Copy the rotated part back into the original vector
+  copy(temp.begin(), temp.end(), mColorPalette.begin() + start);
 }

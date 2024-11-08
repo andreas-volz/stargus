@@ -8,6 +8,7 @@ StartoolUnitTest_sources = files(
   'PcxTest.cpp',
   'TiledPaletteImageTest.cpp',
   'luagenTest.cpp',
+  'PaletteTest.cpp'
   )
 
 executable('StartoolUnitTest',

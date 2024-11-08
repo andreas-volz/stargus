@@ -41,6 +41,8 @@ public:
 
   void load(std::shared_ptr<DataChunk> rawPalette);
 
+  void shift(unsigned int start, unsigned int end, unsigned int amount);
+
 private:
   std::vector<Palette> mColorPalette2D;
 };

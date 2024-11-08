@@ -109,7 +109,7 @@ void TilesetHub::generateTilesetJson(Storage storage)
   json j_tileset;
 
   j_tileset["columns"] = MEGATILE_COLUMNS;
-  j_tileset["image"] = m_arcfile + ".png";
+  j_tileset["image"] = "../" + m_arcfile + ".png";
   j_tileset["imageheight"] = image_size.getHeight();
   j_tileset["imagewidth"] = image_size.getWidth();
   j_tileset["margin"] = 0;

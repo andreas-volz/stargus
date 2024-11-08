@@ -191,31 +191,29 @@ int main(int argc, const char **argv)
   //archive = "/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft/install.exe";
   shared_ptr<Hurricane> hurricane_scm = selectChoosenBackend();
 
-  Scm scm(hurricane_scm, "multimaps\\(8)homeworld", tilesets); // broken: (4)power lines  # works: (2)space madness
+  Scm scm(hurricane_scm, "multimaps/(7)river war", tilesets); // broken: (4)power lines  # works: (2)space madness
   std::shared_ptr<Chk> chk = scm.chk;
   string tileset_str = chk->getTileSet();
 
-  archive = "/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ_stardat.mpq/tileset";
+  archive = "/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft_install.exe_MPQ_stardat.mpq";
   backend = "breeze";
   shared_ptr<Hurricane> hurricane = selectChoosenBackend();
 
-  tileset::TilesetHub tilesethub(hurricane, tileset_str);
+  tileset::TilesetHub tilesethub(hurricane, "tileset/" + tileset_str);
   tilesethub.generateTilesetJson(tilesets);
 
   chk->convert(tilesethub, tilesets);
 
-  /*** Chk ***/
+  shared_ptr<DataChunk> terrainWPE = hurricane->extractDataChunk("tileset\\badlands.wpe");
+  shared_ptr<Palette> terrainPalette = make_shared<Palette>(terrainWPE);
 
-  //archive = "/home/andreas/src/git/stargus/chk";
-  //shared_ptr<Hurricane> hurricane2 = selectChoosenBackend();
+  for(int i = 0; i < 16; i++)
+  {
+    terrainPalette->shift(7, 13, i);
 
-  // TODO: just use this while development. Later it's more difficult with scm files...
+    tilesethub.convert(terrainPalette, tilesets("map" + to_string(i)));
 
-  //Chk chk(hurricane2);
-  //chk.convert(tilesethub, tilesets);
-
-
-
+  }
 
   return 0;
 }
