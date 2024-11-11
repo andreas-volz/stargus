@@ -47,8 +47,6 @@ public:
   // TODO: rename
   bool convert(std::shared_ptr<AbstractPalette> palette, Storage storage);
 
-  void generateTilesetJson(Storage storage);
-
   const std::string getTilesetName();
 
   std::shared_ptr<tileset_cv5_t> cv5;
@@ -58,10 +56,17 @@ public:
 
   static constexpr int MEGATILE_COLUMNS = 16;
   static const Size MEGATILE_SIZE;
+  static constexpr int TILE_ANIMATION_FRAMES = 8;
 
 private:
   void init();
   void saveJson(json &j, const std::string &file, bool pretty);
+
+  void generateTilesetJson(Storage storage);
+  void generateAnimationTilesetJson(unsigned int animation_count, Storage storage);
+
+  std::vector<unsigned char> createRangeVector(unsigned char start_index, unsigned char end_index);
+  std::vector<std::pair<unsigned char, unsigned char>> createShiftVector(const std::vector<unsigned char> &rangeVector, unsigned int amount);
 
   std::string m_arcfile;
 

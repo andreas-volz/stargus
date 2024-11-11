@@ -4,8 +4,14 @@
  *      Author: Andreas Volz
  */
 
+/* project */
 #include "TiledPaletteImage.h"
 #include "Logger.h"
+
+/* system */
+#include <string>
+
+using namespace std;
 
 namespace tileset
 {
@@ -65,7 +71,7 @@ void TiledPaletteImage::copyTile(const PaletteImage &palette_image, const Pos &p
   }
   else
   {
-    LOG4CXX_WARN(logger, "copyTile() out of range!");
+    LOG4CXX_WARN(logger, "copyTile() out of range! Pos(" + to_string(pos.getX()) + "/" + to_string(pos.getY()) + ")");
   }
 }
 

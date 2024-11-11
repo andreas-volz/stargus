@@ -200,20 +200,14 @@ int main(int argc, const char **argv)
   shared_ptr<Hurricane> hurricane = selectChoosenBackend();
 
   tileset::TilesetHub tilesethub(hurricane, "tileset/" + tileset_str);
-  tilesethub.generateTilesetJson(tilesets);
 
   chk->convert(tilesethub, tilesets);
 
+  // generate some palette animation images
   shared_ptr<DataChunk> terrainWPE = hurricane->extractDataChunk("tileset\\badlands.wpe");
   shared_ptr<Palette> terrainPalette = make_shared<Palette>(terrainWPE);
 
-  for(int i = 0; i < 16; i++)
-  {
-    terrainPalette->shift(7, 13, i);
-
-    tilesethub.convert(terrainPalette, tilesets("map" + to_string(i)));
-
-  }
+  tilesethub.convert(terrainPalette, tilesets);
 
   return 0;
 }

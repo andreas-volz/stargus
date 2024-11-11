@@ -10,6 +10,7 @@
 // system
 #include <iostream>
 #include <math.h>
+#include <algorithm>
 
 using namespace std;
 
@@ -17,14 +18,28 @@ PaletteImage::PaletteImage(const DataChunk &datachunk, const Size &size) :
   mData(datachunk.getDataPointer(), datachunk.getDataPointer()+datachunk.getSize()),
   mSize(size)
 {
-
 }
 
 PaletteImage::PaletteImage(const Size &size) :
   mData(size.getWidth() * size.getHeight(), 0),
   mSize(size)
 {
+}
+PaletteImage::PaletteImage(const PaletteImage &paletteImage, const std::vector<std::pair<unsigned char, unsigned char>> &replacer) :
+    mData(paletteImage.mSize.getWidth() * paletteImage.mSize.getHeight(), 0),
+    mSize(paletteImage.mSize)
+{
+  transform(paletteImage.mData.begin(), paletteImage.mData.end(), mData.begin(), [&replacer](unsigned char c) {
+    for(auto r : replacer)
+    {
+      if(c == r.first)
+      {
+        return r.second;
+      }
+    }
 
+    return c;
+   });
 }
 
 PaletteImage::~PaletteImage()
@@ -119,6 +134,35 @@ bool PaletteImage::operator== (const PaletteImage& image_cmp)
   }
 
   return false;
+}
+
+bool PaletteImage::hasPaletteIndex(unsigned char index)
+{
+  bool found_index = false;
+
+  auto it_found = find(mData.begin(), mData.end(), index);
+  if(it_found != mData.end())
+  {
+    found_index = true;
+  }
+
+  return found_index;
+}
+
+bool PaletteImage::hasPaletteIndexRange(unsigned char start_index, unsigned char end_index)
+{
+  bool found_index = false;
+
+  for(unsigned char i = start_index; i <= end_index; i++)
+  {
+    found_index = hasPaletteIndex(i);
+    if(found_index)
+    {
+      break;
+    }
+  }
+
+  return found_index;
 }
 
 

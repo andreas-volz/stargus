@@ -32,6 +32,8 @@ public:
    */
   PaletteImage(const DataChunk &datachunk, const Size &size);
 
+  PaletteImage(const PaletteImage &paletteImage, const std::vector<std::pair<unsigned char, unsigned char>> &replacer);
+
   virtual ~PaletteImage();
 
   /**
@@ -66,11 +68,20 @@ public:
 
   bool operator== (const PaletteImage& image_cmp);
 
+  /**
+   * Search if the image uses a specific palette index in it's data.
+   */
+  bool hasPaletteIndex(unsigned char index);
+
+  /**
+   * Search if at least one palette index in the range between [start_index; end_index] is used in the data.
+   * This is helpful to identify if an image would be influenced by a specific palette cycle animation or not.
+   */
+  bool hasPaletteIndexRange(unsigned char start_index, unsigned char end_index);
+
 private:
   std::vector<unsigned char> mData;
   Size mSize;
 };
-
-//bool operator == (const PaletteImage& image1, const PaletteImage& image2);
 
 #endif /* PALETTEIMAGE_H */
