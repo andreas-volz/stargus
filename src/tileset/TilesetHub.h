@@ -49,6 +49,10 @@ public:
 
   const std::string getTilesetName();
 
+  std::vector<unsigned int> getAnimationTiles();
+
+  unsigned int getMaxStaticTiles();
+
   std::shared_ptr<tileset_cv5_t> cv5;
   std::shared_ptr<tileset_vx4_t> vx4;
   std::shared_ptr<tileset_vf4_t> vf4;
@@ -80,6 +84,8 @@ private:
   std::shared_ptr<kaitai::kstream> m_vf4_ks;
   std::shared_ptr<kaitai::kstream> m_vr4_ks;
 
+  std::vector<unsigned int> animation_tiles;
+  unsigned int max_static_tiles = 0;
 
 };
 

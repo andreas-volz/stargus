@@ -102,7 +102,6 @@ bool TilesetHub::convert(std::shared_ptr<AbstractPalette> palette, Storage stora
   int tiles_width = MEGATILE_COLUMNS;
   int tiles_height = static_cast<int>(ceil(static_cast<float>(num_tiles) / static_cast<float>(tiles_width)));
   Size ultra_tile_size = Size(tiles_width, tiles_height);
-  vector<unsigned int> animation_tiles;
 
   /*
    * identify how many tiles have palette animation to calculate maximum image size
@@ -112,7 +111,7 @@ bool TilesetHub::convert(std::shared_ptr<AbstractPalette> palette, Storage stora
     MegaTile mega(*this, i);
 
     std::shared_ptr<PaletteImage> palette_image = mega.getImage();
-    bool index_found = palette_image->hasPaletteIndexRange(7, 13);
+    bool index_found = palette_image->hasPaletteIndexRange(1, 6) || palette_image->hasPaletteIndexRange(7, 13);
     if(index_found)
     {
       animation_tiles.push_back(i);
@@ -135,7 +134,10 @@ bool TilesetHub::convert(std::shared_ptr<AbstractPalette> palette, Storage stora
     {
       for(unsigned int frame = 0; frame < TILE_ANIMATION_FRAMES; frame++)
       {
-        auto replacer = createShiftVector(createRangeVector(7, 13), frame);
+        auto replacer = createShiftVector(createRangeVector(1, 6), frame);
+        auto replacer2 = createShiftVector(createRangeVector(7, 13), frame);
+        replacer.insert(replacer.end(), replacer2.begin(), replacer2.end());
+
         PaletteImage replaced_image(*palette_image, replacer);
         ultraTileAnimation.copyTile(replaced_image, Pos(frame, anim_group));
       }
@@ -147,6 +149,7 @@ bool TilesetHub::convert(std::shared_ptr<AbstractPalette> palette, Storage stora
       // TODO: save animated tiles in static tileset and remember index
     }
 
+    max_static_tiles++;
     ultraTile.copyTile(*palette_image, i);
   }
 
@@ -253,7 +256,7 @@ void TilesetHub::generateAnimationTilesetJson(unsigned int animation_count, Stor
   }
 
   int tiles_width = TILE_ANIMATION_FRAMES;
-  int tiles_height = animation_count * MEGATILE_SIZE.getHeight();
+  int tiles_height = animation_count;
   const Size ultra_tile_size = Size(tiles_width, tiles_height);
   const Size image_size = ultra_tile_size * MEGATILE_SIZE;
   unsigned int duration = 200;
@@ -265,7 +268,7 @@ void TilesetHub::generateAnimationTilesetJson(unsigned int animation_count, Stor
   j_tileset["imageheight"] = image_size.getHeight();
   j_tileset["imagewidth"] = image_size.getWidth();
   j_tileset["margin"] = 0;
-  j_tileset["name"] = m_arcfile;
+  j_tileset["name"] = m_arcfile + " Animations";
   j_tileset["spacing"] = 0;
   j_tileset["tilecount"] = ultra_tile_size.getHeight() * ultra_tile_size.getWidth();
   j_tileset["tileheight"] = MEGATILE_SIZE.getHeight();
@@ -318,6 +321,20 @@ void TilesetHub::saveJson(json &j, const std::string &file, bool pretty)
 const std::string TilesetHub::getTilesetName()
 {
   return m_arcfile;
+}
+
+std::vector<unsigned int> TilesetHub::getAnimationTiles()
+{
+  return animation_tiles;
+}
+
+unsigned int TilesetHub::getMaxStaticTiles()
+{
+  /* calculate all tiles of complete image. this adds also empty tiles in the last line */
+  float max_tiles_f = static_cast<float>(max_static_tiles) / MEGATILE_COLUMNS + 1;
+  int max_tiles_i = static_cast<int>(max_tiles_f) * MEGATILE_COLUMNS;
+
+  return max_tiles_i;
 }
 
 } /* namespace tileset */

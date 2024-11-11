@@ -84,10 +84,16 @@ bool Chk::convert(tileset::TilesetHub &tilesethub, Storage storage)
   j_tilemap["renderorder"] = "right-down";
   j_tilemap["version"] = "1.8";
   j_tilemap["tiledversion"] = "1.8.0";
+
   json j_tilesets_ref;
   j_tilesets_ref["firstgid"] = 1;
   j_tilesets_ref["source"] = "../" + tilesethub.getTilesetName() + ".tsj";
+  json j_tilesets_anim_ref;
+  j_tilesets_anim_ref["firstgid"] = tilesethub.getMaxStaticTiles() + 1;
+  j_tilesets_anim_ref["source"] = "../" + tilesethub.getTilesetName() + "_animation.tsj";
   j_tilemap["tilesets"].push_back(j_tilesets_ref);
+  j_tilemap["tilesets"].push_back(j_tilesets_anim_ref);
+
   json j_layer_0;
   j_layer_0["id"] = 1;
   j_layer_0["name"] = m_map_name + " Layer";
@@ -96,9 +102,8 @@ bool Chk::convert(tileset::TilesetHub &tilesethub, Storage storage)
   j_layer_0["x"] = 0;
   j_layer_0["y"] = 0;
   j_layer_0["opacity"] = 1;
+
   json j_layer_data;
-
-
   for(const chk_parser_t::chunk_type_t* chunk : *chk_parser->chunk())
   {
    if(chunk->tag() == "DIM ")
@@ -119,10 +124,37 @@ bool Chk::convert(tileset::TilesetHub &tilesethub, Storage storage)
         uint16_t tileIndex = terrain & 0x000F;
 
         tileset_cv5_t::group_t* group = tilesethub.cv5->elements()->at(groupIndex);
-        uint16_t megatile_ref = group->megatile_references()->at(tileIndex);
+        unsigned int megatile_ref = group->megatile_references()->at(tileIndex);
 
-        megatile_ref += 1; // needed as Tiled always resets firstgid to 1...
-        j_layer_data.push_back(megatile_ref);
+        auto animation_tiles = tilesethub.getAnimationTiles();
+
+        if(megatile_ref == 1872)
+        {
+          cout << "";
+        }
+        else
+        {
+          cout << "";
+        }
+
+        //j_layer_data.push_back(megatile_ref);
+        //megatile_ref += 1; // needed as Tiled always resets firstgid to 1...
+        auto found_it = std::find(animation_tiles.begin(), animation_tiles.end(), megatile_ref);
+
+        if(found_it == animation_tiles.end())
+        {
+          // case for non-animation tile
+          j_layer_data.push_back(megatile_ref + 1); // +1 needed as Tiled always resets firstgid to 1...
+        }
+        else
+        {
+          // case for animation tile
+          unsigned int tiles_count = tilesethub.getMaxStaticTiles();
+          auto index = std::distance(animation_tiles.begin(), found_it);
+          unsigned int absolute_index = tiles_count + index * tileset::TilesetHub::TILE_ANIMATION_FRAMES + 1; // +1 needed as Tiled always resets firstgid to 1...
+          j_layer_data.push_back(absolute_index);
+        }
+
 
       }
     }

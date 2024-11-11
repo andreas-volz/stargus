@@ -191,7 +191,7 @@ int main(int argc, const char **argv)
   //archive = "/home/andreas/Games/DOS/Starcraft/Original_Backup/starcraft/install.exe";
   shared_ptr<Hurricane> hurricane_scm = selectChoosenBackend();
 
-  Scm scm(hurricane_scm, "multimaps/(7)river war", tilesets); // broken: (4)power lines  # works: (2)space madness
+  Scm scm(hurricane_scm, "multimaps/(4)ruins of the ancients", tilesets);
   std::shared_ptr<Chk> chk = scm.chk;
   string tileset_str = chk->getTileSet();
 
@@ -201,13 +201,14 @@ int main(int argc, const char **argv)
 
   tileset::TilesetHub tilesethub(hurricane, "tileset/" + tileset_str);
 
-  chk->convert(tilesethub, tilesets);
-
   // generate some palette animation images
-  shared_ptr<DataChunk> terrainWPE = hurricane->extractDataChunk("tileset\\badlands.wpe");
+  shared_ptr<DataChunk> terrainWPE = hurricane->extractDataChunk("tileset\\" + tileset_str + ".wpe"); // TODO: use the palette from central loaded store
   shared_ptr<Palette> terrainPalette = make_shared<Palette>(terrainWPE);
 
   tilesethub.convert(terrainPalette, tilesets);
+
+  // do this after all the other stuff
+  chk->convert(tilesethub, tilesets);
 
   return 0;
 }
