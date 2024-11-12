@@ -26,7 +26,7 @@ private:
    * check all smk files for a portrait, export them, convert to mng and save the raw name
    * @param portrait_list The function fills this vector to later export to LUA
    */
-  bool convertMngPortraits(const std::string &arcfile, std::vector<std::string> &portrait_list);
+  bool convertOgvPortraits(const std::string &arcfile, std::vector<std::string> &portrait_list);
 
 
   // if used more often put into a utils namespace...

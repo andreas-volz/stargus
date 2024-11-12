@@ -672,7 +672,7 @@ int main(int argc, const char **argv)
         {
           printf("ConvertTileset: %s, %s", c[u].File, c[u].ArcFile);
           tileset::TilesetHub terrain(storm, c[u].ArcFile);
-          case_func = terrain.convert(paletteMap.at(c[u].File), tilesets(c[u].File));
+          //case_func = terrain.convert(paletteMap.at(c[u].File), tilesets(c[u].File));
 
           string luafile(string("tilesets/") + c[u].File + ".lua");
           string pngfile(string("tilesets/") + c[u].File + "/" + c[u].File + ".png");
@@ -772,7 +772,7 @@ int main(int argc, const char **argv)
           {
             printf("ConvertPortrait: %s, %s", c[u].File, c[u].ArcFile);
             Smacker video(storm);
-            case_func = video.convertMNG(c[u].ArcFile, videos(c[u].File));
+            case_func = video.convertOGV(c[u].ArcFile, videos(c[u].File));
             printf("...%s\n", case_func ? "ok" : "nok");
           }
           break;
