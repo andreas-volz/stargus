@@ -70,7 +70,7 @@ const std::string Chk::getTileSet()
   return tileset_str;
 }
 
-bool Chk::convert(tileset::TilesetHub &tilesethub, Storage storage)
+bool Chk::convertTiled(tileset::TilesetHub &tilesethub, Storage storage)
 {
   bool result = false;
 
@@ -128,17 +128,6 @@ bool Chk::convert(tileset::TilesetHub &tilesethub, Storage storage)
 
         auto animation_tiles = tilesethub.getAnimationTiles();
 
-        if(megatile_ref == 1872)
-        {
-          cout << "";
-        }
-        else
-        {
-          cout << "";
-        }
-
-        //j_layer_data.push_back(megatile_ref);
-        //megatile_ref += 1; // needed as Tiled always resets firstgid to 1...
         auto found_it = std::find(animation_tiles.begin(), animation_tiles.end(), megatile_ref);
 
         if(found_it == animation_tiles.end())
@@ -169,7 +158,77 @@ bool Chk::convert(tileset::TilesetHub &tilesethub, Storage storage)
   CheckPath(full_path);
   saveJson(j_tilemap, full_path, true);
 
+  result = true;
   return result;
+}
+
+void Chk::generateMapJson(tileset::TilesetHub &tilesethub, Storage storage)
+{
+  json j_tilemap;
+  j_tilemap["infinite"] = false;
+  j_tilemap["compressionlevel"] = -1;
+  j_tilemap["tileheight"] = tilesethub.MEGATILE_SIZE.getHeight();
+  j_tilemap["tilewidth"] = tilesethub.MEGATILE_SIZE.getWidth();
+  j_tilemap["orientation"] = "orthogonal";
+  j_tilemap["type"] = "map";
+  j_tilemap["renderorder"] = "right-down";
+  j_tilemap["version"] = "1.8";
+  j_tilemap["tiledversion"] = "1.8.0";
+
+  json j_tilesets_ref;
+  j_tilesets_ref["firstgid"] = 1;
+  j_tilesets_ref["source"] = "../" + tilesethub.getTilesetName() + ".tsj";
+  json j_tilesets_anim_ref;
+  j_tilesets_anim_ref["firstgid"] = tilesethub.getMaxStaticTiles() + 1;
+  j_tilesets_anim_ref["source"] = "../" + tilesethub.getTilesetName() + "_animation.tsj";
+  j_tilemap["tilesets"].push_back(j_tilesets_ref);
+  j_tilemap["tilesets"].push_back(j_tilesets_anim_ref);
+
+  json j_layer_0;
+  j_layer_0["id"] = 1;
+  j_layer_0["name"] = m_map_name + " Layer";
+  j_layer_0["type"] = "tilelayer";
+  j_layer_0["visible"] = true;
+  j_layer_0["x"] = 0;
+  j_layer_0["y"] = 0;
+  j_layer_0["opacity"] = 1;
+
+  json j_layer_data;
+  for(const chk_parser_t::chunk_type_t* chunk : *chk_parser->chunk())
+  {
+   if(chunk->tag() == "DIM ")
+    {
+      chk_parser_t::dimension_t *dimension = static_cast<chk_parser_t::dimension_t*>(chunk->data()->content());
+      j_tilemap["height"] = dimension->height();
+      j_tilemap["width"] = dimension->width();
+      j_layer_0["height"] = dimension->height();
+      j_layer_0["width"] = dimension->width();
+    }
+    else if(chunk->tag() == "MTXM")
+    {
+      chk_parser_t::u2_array_t *terrain_array = static_cast<chk_parser_t::u2_array_t*>(chunk->data()->content());
+
+      for(uint16_t terrain : *terrain_array->values())
+      {
+        uint16_t groupIndex = (terrain & 0x7FF0) >> 4;
+        uint16_t tileIndex = terrain & 0x000F;
+
+        tileset_cv5_t::group_t* group = tilesethub.cv5->elements()->at(groupIndex);
+        unsigned int megatile_ref = group->megatile_references()->at(tileIndex);
+
+        j_layer_data.push_back(terrain);
+      }
+    }
+  }
+
+  j_layer_0["data"] = j_layer_data;
+
+  j_tilemap["layers"].push_back(j_layer_0);
+
+  storage.setFilename(m_map_name + "_chk.json");
+  string full_path = storage.getFullPath();
+  CheckPath(full_path);
+  saveJson(j_tilemap, full_path, true);
 }
 
 void Chk::saveJson(json &j, const std::string &file, bool pretty)

@@ -86,7 +86,7 @@ std::vector<std::pair<unsigned char, unsigned char>> TilesetHub::createShiftVect
 }
 
 
-bool TilesetHub::convert(std::shared_ptr<AbstractPalette> palette, Storage storage)
+bool TilesetHub::convertTiledFormat(std::shared_ptr<AbstractPalette> palette, Storage storage)
 {
   if(!vx4) // if it isn't available just return false
   {
@@ -146,7 +146,7 @@ bool TilesetHub::convert(std::shared_ptr<AbstractPalette> palette, Storage stora
     }
     else
     {
-      // TODO: save animated tiles in static tileset and remember index
+      // TODO: save animated tiles in static tileset and remember index, then no need to export the static tile (maybe)
     }
 
     max_static_tiles++;
@@ -167,6 +167,60 @@ bool TilesetHub::convert(std::shared_ptr<AbstractPalette> palette, Storage stora
   return true; // hack
 }
 
+void TilesetHub::generateCV5Json(Storage storage)
+{
+  json j_cv5;
+
+  for(auto element : *cv5->elements())
+  {
+    json j_megatiles;
+
+    for(auto megatile_ref : *element->megatile_references())
+    {
+      j_megatiles.push_back(megatile_ref);
+    }
+    //bool unwalkable = group->terrain_flags()->unwalkable();
+    j_cv5.push_back(j_megatiles);
+  }
+
+  storage.setFilename(m_arcfile + "_cv5.json");
+  string full_path = storage.getFullPath();
+  CheckPath(full_path);
+  saveJson(j_cv5, full_path, true);
+}
+
+void TilesetHub::generateVF4Json(Storage storage)
+{
+  json j_vf4;
+
+
+  for(auto element : *vf4->elements())
+  {
+    json j_minitiles;
+
+    for(auto flags : *element->flags())
+    {
+      bool walkable;
+      if (flags->walkable())
+      {
+        walkable = true;
+      }
+      else
+      {
+        walkable = false;
+      }
+      j_minitiles.push_back(walkable);
+    }
+
+    j_vf4.push_back(j_minitiles);
+  }
+
+  storage.setFilename(m_arcfile + "_vf4.json");
+  string full_path = storage.getFullPath();
+  CheckPath(full_path);
+  saveJson(j_vf4, full_path, true);
+}
+
 void TilesetHub::generateTilesetJson(Storage storage)
 {
   if(!cv5) // if it isn't available just return with no action
@@ -179,8 +233,6 @@ void TilesetHub::generateTilesetJson(Storage storage)
   int tiles_height = static_cast<int>(ceil(static_cast<float>(num_tiles) / static_cast<float>(tiles_width)));
   const Size ultra_tile_size = Size(tiles_width, tiles_height);
   const Size image_size = ultra_tile_size * MEGATILE_SIZE;
-
-  unsigned int num_cv5 = cv5->elements()->size();
 
   json j_tileset;
 
@@ -196,50 +248,6 @@ void TilesetHub::generateTilesetJson(Storage storage)
   j_tileset["tilewidth"] = MEGATILE_SIZE.getWidth();
   j_tileset["type"] = "tileset";
   j_tileset["version"] = "1.8";
-
-  vector<string> tile_slots_vector;
-
-  for(unsigned int i = 0; i < num_cv5; i++)
-  {
-    //tileset_cv5_t::group_t* group = cv5->elements()->at(i);
-
-    /*if(group->terrain_type() == tileset_cv5_t::terrain_enum_t::TERRAIN_ENUM_BASIC)
-    {
-      num_normal++;
-      cout << "normal(" << i << "): ";
-    }*/
-
-
-    //std::vector<uint16_t>* vx4_vf4_ref = group->megatile_references();
-
-    //vector<string> tile_solids_vector;
-
-    //for(auto elem : *vx4_vf4_ref)
-    //{
-      //cout << to_string(elem) << ",";
-
-      /*tileset_vf4_t::minitile_t* minitile = vf4->elements()->at(elem);
-
-      std::string subtilePassableFlags = "";storage
-      for(auto flags : *minitile->flags())
-      {
-        if (flags->walkable()) {
-          subtilePassableFlags += "p";
-        } else {
-          subtilePassableFlags += "u";
-        }
-      }
-
-      tile_solids_vector.push_back(to_string(elem));
-      tile_solids_vector.push_back(lg::table(lg::quote(subtilePassableFlags)));*/
-
-      //cout << ", ";
-    //}
-    //cout << endl;
-
-
-   // tile_slots_vector.push_back(solid_str);
-  }
 
   storage.setFilename(m_arcfile + ".tsj");
   string full_path = storage.getFullPath();

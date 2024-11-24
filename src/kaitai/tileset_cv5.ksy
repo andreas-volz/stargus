@@ -17,8 +17,8 @@ types:
       - id: terrain_type
         type: u2
 
-      - id: ground
-        type: ground_nibbles
+      - id: terrain_flags
+        type: terrain_flags_type
         
       - id: unknown1
         type: u2
@@ -49,19 +49,59 @@ types:
         repeat: expr
         repeat-expr: 16
         
-  ground_nibbles:
+  terrain_flags_type:
     seq:
-      - id: buildable
-        type: b4
+      - id: flags_raw
+        type: u2
         
-      - id: ground_type
-        type: b4
+    instances:
+      walkable:
+        value: flags_raw & 0x0001
         
-      - id: unknown1
-        type: b4
+      unknown1:
+        value: flags_raw & 0x0002
         
-      - id: ground_height
-        type: b4
+      unwalkable:
+        value: flags_raw & 0x0004
+        
+      unknown2:
+        value: flags_raw & 0x0008
+        
+      has_doodad_cover:
+        value: flags_raw & 0x0010
+        
+      unknown3:
+        value: flags_raw & 0x0020
+        
+      creep:
+        value: flags_raw & 0x0040
+        
+      unbuildable:
+        value: flags_raw & 0x0080
+        
+      blocks_view:
+        value: flags_raw & 0x0100
+        
+      mid_ground:
+        value: flags_raw & 0x0200
+        
+      high_ground:
+        value: flags_raw & 0x0400
+        
+      occupied:
+        value: flags_raw & 0x0800
+        
+      receding_creep:
+        value: flags_raw & 0x1000
+        
+      cliff_edge:
+        value: flags_raw & 0x2000
+        
+      temporary_creep:
+        value: flags_raw & 0x4000
+        
+      allow_beacons_startlocations_placeable:
+        value: flags_raw & 0x8000
         
 enums:
   terrain_enum:

@@ -44,8 +44,12 @@ public:
   TilesetHub(std::shared_ptr<Hurricane> hurricane, const std::string &arcfile);
   virtual ~TilesetHub();
 
-  // TODO: rename
-  bool convert(std::shared_ptr<AbstractPalette> palette, Storage storage);
+
+  bool convertTiledFormat(std::shared_ptr<AbstractPalette> palette, Storage storage);
+
+  void generateVF4Json(Storage storage);
+
+  void generateCV5Json(Storage storage);
 
   const std::string getTilesetName();
 

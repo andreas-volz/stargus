@@ -86,7 +86,6 @@ const option::Descriptor usage[] =
     UNKNOWN, 0, "", "", option::Arg::None,
     "\narchive \t\tDestination to the archive (mpq, casc or dummy folder) based on backend.\n"
     "\ndestination-directory \t\tWhere to save the extracted file with same relative path.\n\n"
-    "(Hint: The exporter expects the input in \"scripts/iscript.bin\")"
   },
   { 0, 0, 0, 0, 0, 0 }
 };
@@ -201,14 +200,23 @@ int main(int argc, const char **argv)
 
   tileset::TilesetHub tilesethub(hurricane, "tileset/" + tileset_str);
 
+
+  tilesethub.generateVF4Json(tilesets);
+  tilesethub.generateCV5Json(tilesets);
+
+
   // generate some palette animation images
   shared_ptr<DataChunk> terrainWPE = hurricane->extractDataChunk("tileset\\" + tileset_str + ".wpe"); // TODO: use the palette from central loaded store
   shared_ptr<Palette> terrainPalette = make_shared<Palette>(terrainWPE);
 
-  tilesethub.convert(terrainPalette, tilesets);
+  tilesethub.convertTiledFormat(terrainPalette, tilesets);
 
   // do this after all the other stuff
-  chk->convert(tilesethub, tilesets);
+  chk->convertTiled(tilesethub, tilesets);
+
+  chk->generateMapJson(tilesethub, tilesets);
+
+
 
   return 0;
 }

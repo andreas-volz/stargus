@@ -32,7 +32,9 @@ public:
 
   const std::string getTileSet();
 
-  virtual bool convert(tileset::TilesetHub &tilesethub, Storage storage);
+  bool convertTiled(tileset::TilesetHub &tilesethub, Storage storage);
+
+  void generateMapJson(tileset::TilesetHub &tilesethub, Storage storage);
 
   std::shared_ptr<chk_parser_t> chk_parser;
 
